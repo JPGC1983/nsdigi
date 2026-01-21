@@ -43,31 +43,29 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
             title="Municípios Ativos"
-            value={12}
-            subtitle="de 15 na microrregião"
+            value={0}
+            subtitle="na microrregião"
             icon={Building2}
             variant="primary"
-            trend={{ value: 8, isPositive: true }}
           />
           <StatCard
             title="Profissionais Cadastrados"
-            value={847}
-            subtitle="70% da microrregião"
+            value={0}
+            subtitle="aguardando cadastro"
             icon={Users}
             variant="secondary"
-            trend={{ value: 12, isPositive: true }}
           />
           <StatCard
             title="Cursos Disponíveis"
-            value={24}
-            subtitle="8 trilhas formativas"
+            value={0}
+            subtitle="trilhas formativas"
             icon={GraduationCap}
             variant="accent"
           />
           <StatCard
             title="Discussões Ativas"
-            value={38}
-            subtitle="5 fóruns temáticos"
+            value={0}
+            subtitle="fóruns temáticos"
             icon={MessageSquare}
           />
         </div>
@@ -121,29 +119,29 @@ const Dashboard = () => {
             </a>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-lg bg-success/5 border border-success/20">
+            <div className="p-4 rounded-lg bg-muted/30 border border-border">
               <div className="flex items-center gap-2 mb-2">
-                <TrendingUp className="h-4 w-4 text-success" />
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm font-medium text-foreground">Meta Atingida</span>
               </div>
-              <p className="text-2xl font-bold text-success">6/6</p>
+              <p className="text-2xl font-bold text-muted-foreground">-/-</p>
               <p className="text-xs text-muted-foreground">Reuniões do colegiado</p>
             </div>
-            <div className="p-4 rounded-lg bg-info/5 border border-info/20">
+            <div className="p-4 rounded-lg bg-muted/30 border border-border">
               <div className="flex items-center gap-2 mb-2">
-                <GraduationCap className="h-4 w-4 text-info" />
+                <GraduationCap className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm font-medium text-foreground">Formações</span>
               </div>
-              <p className="text-2xl font-bold text-info">124h</p>
-              <p className="text-xs text-muted-foreground">de 100h meta anual</p>
+              <p className="text-2xl font-bold text-muted-foreground">0h</p>
+              <p className="text-xs text-muted-foreground">meta anual a definir</p>
             </div>
-            <div className="p-4 rounded-lg bg-warning/5 border border-warning/20">
+            <div className="p-4 rounded-lg bg-muted/30 border border-border">
               <div className="flex items-center gap-2 mb-2">
-                <MessageSquare className="h-4 w-4 text-warning" />
+                <MessageSquare className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm font-medium text-foreground">Tempo Resposta</span>
               </div>
-              <p className="text-2xl font-bold text-warning">48h</p>
-              <p className="text-xs text-muted-foreground">média nos fóruns (meta: 72h)</p>
+              <p className="text-2xl font-bold text-muted-foreground">--</p>
+              <p className="text-xs text-muted-foreground">média nos fóruns</p>
             </div>
           </div>
         </div>

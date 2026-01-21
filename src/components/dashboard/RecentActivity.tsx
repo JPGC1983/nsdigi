@@ -1,4 +1,4 @@
-import { MessageSquare, GraduationCap, FileText, Users } from "lucide-react";
+import { MessageSquare, GraduationCap, FileText, Users, Inbox } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Activity {
@@ -10,37 +10,8 @@ interface Activity {
   user?: string;
 }
 
-const activities: Activity[] = [
-  {
-    id: "1",
-    type: "forum",
-    title: "Nova discussão no Fórum APS",
-    description: "Dúvida sobre integração e-SUS com prontuário",
-    time: "Há 15 min",
-    user: "Maria Silva",
-  },
-  {
-    id: "2",
-    type: "course",
-    title: "Novo curso disponível",
-    description: "Trilha de Gestor em Saúde Digital",
-    time: "Há 2 horas",
-  },
-  {
-    id: "3",
-    type: "document",
-    title: "Material atualizado",
-    description: "Guia de Boas Práticas - e-SUS v5.2",
-    time: "Há 4 horas",
-  },
-  {
-    id: "4",
-    type: "meeting",
-    title: "Reunião do Colegiado agendada",
-    description: "Próxima reunião: 28/01/2026 às 14h",
-    time: "Ontem",
-  },
-];
+// Empty array - data will be populated from backend
+const activities: Activity[] = [];
 
 const iconMap = {
   forum: MessageSquare,
@@ -60,36 +31,46 @@ const RecentActivity = () => {
   return (
     <div className="rounded-xl border border-border bg-card p-5 shadow-card">
       <h3 className="font-semibold text-foreground mb-4">Atividades Recentes</h3>
-      <div className="space-y-4">
-        {activities.map((activity) => {
-          const Icon = iconMap[activity.type];
-          return (
-            <div
-              key={activity.id}
-              className="flex items-start gap-3 group cursor-pointer"
-            >
-              <div className={cn(
-                "h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0",
-                colorMap[activity.type]
-              )}>
-                <Icon className="h-4 w-4" />
+      {activities.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-8 text-center">
+          <Inbox className="h-12 w-12 text-muted-foreground/40 mb-3" />
+          <p className="text-sm text-muted-foreground">Nenhuma atividade recente</p>
+          <p className="text-xs text-muted-foreground/60 mt-1">
+            As atividades aparecerão aqui
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {activities.map((activity) => {
+            const Icon = iconMap[activity.type];
+            return (
+              <div
+                key={activity.id}
+                className="flex items-start gap-3 group cursor-pointer"
+              >
+                <div className={cn(
+                  "h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0",
+                  colorMap[activity.type]
+                )}>
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                    {activity.title}
+                  </p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {activity.description}
+                  </p>
+                  <p className="text-xs text-muted-foreground/60 mt-1">
+                    {activity.time}
+                    {activity.user && ` • ${activity.user}`}
+                  </p>
+                </div>
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                  {activity.title}
-                </p>
-                <p className="text-xs text-muted-foreground truncate">
-                  {activity.description}
-                </p>
-                <p className="text-xs text-muted-foreground/60 mt-1">
-                  {activity.time}
-                  {activity.user && ` • ${activity.user}`}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
