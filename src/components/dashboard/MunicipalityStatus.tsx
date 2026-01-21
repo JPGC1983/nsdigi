@@ -1,4 +1,4 @@
-import { MapPin, TrendingUp, AlertCircle, CheckCircle } from "lucide-react";
+import { MapPin, TrendingUp, AlertCircle, CheckCircle, Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
 
@@ -10,13 +10,8 @@ interface Municipality {
   professionals: number;
 }
 
-const municipalities: Municipality[] = [
-  { id: "1", name: "São João del-Rei", maturityLevel: 78, status: "active", professionals: 145 },
-  { id: "2", name: "Barbacena", maturityLevel: 65, status: "active", professionals: 98 },
-  { id: "3", name: "Conselheiro Lafaiete", maturityLevel: 52, status: "pending", professionals: 76 },
-  { id: "4", name: "Ouro Branco", maturityLevel: 41, status: "attention", professionals: 34 },
-  { id: "5", name: "Congonhas", maturityLevel: 59, status: "pending", professionals: 52 },
-];
+// Empty array - data will be populated from backend
+const municipalities: Municipality[] = [];
 
 const statusConfig = {
   active: { icon: CheckCircle, color: "text-success", label: "Ativo" },
@@ -33,38 +28,48 @@ const MunicipalityStatus = () => {
           {municipalities.length} municípios
         </span>
       </div>
-      <div className="space-y-4">
-        {municipalities.map((municipality) => {
-          const StatusIcon = statusConfig[municipality.status].icon;
-          return (
-            <div
-              key={municipality.id}
-              className="group cursor-pointer"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                    {municipality.name}
-                  </span>
+      {municipalities.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-8 text-center">
+          <Building2 className="h-12 w-12 text-muted-foreground/40 mb-3" />
+          <p className="text-sm text-muted-foreground">Nenhum município cadastrado</p>
+          <p className="text-xs text-muted-foreground/60 mt-1">
+            Adicione os municípios da microrregião
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {municipalities.map((municipality) => {
+            const StatusIcon = statusConfig[municipality.status].icon;
+            return (
+              <div
+                key={municipality.id}
+                className="group cursor-pointer"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                      {municipality.name}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <StatusIcon className={cn("h-4 w-4", statusConfig[municipality.status].color)} />
+                    <span className="text-xs text-muted-foreground">
+                      {municipality.professionals} profissionais
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <StatusIcon className={cn("h-4 w-4", statusConfig[municipality.status].color)} />
-                  <span className="text-xs text-muted-foreground">
-                    {municipality.professionals} profissionais
+                <div className="flex items-center gap-3">
+                  <Progress value={municipality.maturityLevel} className="flex-1 h-2" />
+                  <span className="text-xs font-medium text-foreground w-10">
+                    {municipality.maturityLevel}%
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Progress value={municipality.maturityLevel} className="flex-1 h-2" />
-                <span className="text-xs font-medium text-foreground w-10">
-                  {municipality.maturityLevel}%
-                </span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
