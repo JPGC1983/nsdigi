@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, ExternalLink } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -34,6 +34,7 @@ export interface CursoData {
   duration: string;
   level: "basico" | "intermediario" | "avancado";
   format: "online" | "presencial" | "hibrido";
+  url: string;
 }
 
 const categories = [
@@ -52,6 +53,7 @@ const AddCursoModal = ({ open, onOpenChange, onAdd }: AddCursoModalProps) => {
     duration: "",
     level: "basico",
     format: "online",
+    url: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -71,6 +73,7 @@ const AddCursoModal = ({ open, onOpenChange, onAdd }: AddCursoModalProps) => {
       duration: "",
       level: "basico",
       format: "online",
+      url: "",
     });
     onOpenChange(false);
   };
@@ -164,6 +167,19 @@ const AddCursoModal = ({ open, onOpenChange, onAdd }: AddCursoModalProps) => {
                   <SelectItem value="hibrido">Híbrido</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="col-span-2">
+              <Label htmlFor="url" className="flex items-center gap-1">
+                <ExternalLink className="h-3.5 w-3.5" />
+                Link do Curso
+              </Label>
+              <Input
+                id="url"
+                type="url"
+                value={formData.url}
+                onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+                placeholder="https://exemplo.com/curso"
+              />
             </div>
             <div className="col-span-2">
               <Label htmlFor="description">Descrição</Label>
