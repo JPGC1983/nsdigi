@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import AddCursoModal, { CursoData } from "@/components/modals/AddCursoModal";
 
 interface Course {
   id: string;
@@ -35,10 +36,6 @@ interface Trail {
   progress?: number;
 }
 
-// Empty arrays - data will be populated from backend
-const courses: Course[] = [];
-const trails: Trail[] = [];
-
 const levelConfig = {
   basico: { label: "Básico", className: "bg-success/10 text-success border-success/20" },
   intermediario: { label: "Intermediário", className: "bg-warning/10 text-warning border-warning/20" },
@@ -54,6 +51,27 @@ const formatConfig = {
 const Educacao = () => {
   const [activeTab, setActiveTab] = useState("cursos");
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [trails] = useState<Trail[]>([]);
+
+  const handleAddCurso = (data: CursoData) => {
+    const newCourse: Course = {
+      id: crypto.randomUUID(),
+      title: data.title,
+      description: data.description,
+      duration: data.duration,
+      enrolled: 0,
+      category: data.category,
+      level: data.level,
+      format: data.format,
+    };
+    setCourses([...courses, newCourse]);
+  };
+
+  const filteredCourses = courses.filter((c) => {
+    return categoryFilter === "all" || c.category === categoryFilter;
+  });
 
   return (
     <MainLayout>
@@ -117,7 +135,7 @@ const Educacao = () => {
           </div>
 
           <TabsContent value="cursos" className="mt-4">
-            {courses.length === 0 ? (
+            {filteredCourses.length === 0 ? (
               <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">
                 <GraduationCap className="h-16 w-16 text-muted-foreground/40 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">
@@ -126,14 +144,14 @@ const Educacao = () => {
                 <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                   Os cursos e formações serão exibidos aqui quando forem cadastrados.
                 </p>
-                <Button className="gap-2">
+                <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
                   <Plus className="h-4 w-4" />
                   Adicionar Curso
                 </Button>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {courses.map((course) => (
+                {filteredCourses.map((course) => (
                   <div
                     key={course.id}
                     className="rounded-xl border border-border bg-card p-5 shadow-card hover:shadow-md transition-all cursor-pointer group"
@@ -160,7 +178,7 @@ const Educacao = () => {
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <span className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
-                        {course.duration}
+                        {course.duration || "A definir"}
                       </span>
                       <span className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
@@ -258,11 +276,19 @@ const Educacao = () => {
               <p className="text-muted-foreground mb-4 max-w-md mx-auto">
                 Quando você se inscrever em cursos, eles aparecerão aqui para acompanhamento.
               </p>
-              <Button variant="outline">Explorar Cursos</Button>
+              <Button variant="outline" onClick={() => setActiveTab("cursos")}>
+                Explorar Cursos
+              </Button>
             </div>
           </TabsContent>
         </Tabs>
       </div>
+
+      <AddCursoModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        onAdd={handleAddCurso}
+      />
     </MainLayout>
   );
 };

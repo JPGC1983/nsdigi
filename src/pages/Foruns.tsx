@@ -4,6 +4,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import AddForumModal, { ForumData } from "@/components/modals/AddForumModal";
 
 interface Forum {
   id: string;
@@ -27,12 +28,25 @@ interface Topic {
   isResolved?: boolean;
 }
 
-// Empty arrays - data will be populated from backend
-const forums: Forum[] = [];
-const recentTopics: Topic[] = [];
-
 const Foruns = () => {
   const [activeTab, setActiveTab] = useState("foruns");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [forums, setForums] = useState<Forum[]>([]);
+  const [recentTopics] = useState<Topic[]>([]);
+
+  const handleAddForum = (data: ForumData) => {
+    const newForum: Forum = {
+      id: crypto.randomUUID(),
+      name: data.name,
+      description: data.description,
+      topics: 0,
+      members: 0,
+      lastActivity: "Agora",
+      category: data.category,
+      pinned: false,
+    };
+    setForums([...forums, newForum]);
+  };
 
   const totalTopics = forums.reduce((acc, f) => acc + f.topics, 0);
   const totalMembers = forums.reduce((acc, f) => acc + f.members, 0);
@@ -48,7 +62,7 @@ const Foruns = () => {
               Comunidade de prática para troca de experiências e suporte mútuo
             </p>
           </div>
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
             <Plus className="h-4 w-4" />
             Nova Discussão
           </Button>
@@ -91,7 +105,7 @@ const Foruns = () => {
                 <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                   Crie os fóruns temáticos para que os profissionais possam trocar experiências e tirar dúvidas.
                 </p>
-                <Button className="gap-2">
+                <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
                   <Plus className="h-4 w-4" />
                   Criar Primeiro Fórum
                 </Button>
@@ -189,6 +203,12 @@ const Foruns = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+      <AddForumModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        onAdd={handleAddForum}
+      />
     </MainLayout>
   );
 };

@@ -26,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import AddMaterialModal, { MaterialData } from "@/components/modals/AddMaterialModal";
 
 interface Material {
   id: string;
@@ -37,9 +38,6 @@ interface Material {
   updatedAt: string;
   author: string;
 }
-
-// Empty array - data will be populated from backend
-const materials: Material[] = [];
 
 const typeConfig = {
   video: { icon: Video, label: "Vídeo", className: "bg-destructive/10 text-destructive" },
@@ -55,6 +53,22 @@ const Repositorio = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("Todos");
   const [typeFilter, setTypeFilter] = useState("all");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [materials, setMaterials] = useState<Material[]>([]);
+
+  const handleAddMaterial = (data: MaterialData) => {
+    const newMaterial: Material = {
+      id: crypto.randomUUID(),
+      title: data.title,
+      description: data.description,
+      type: data.type,
+      category: data.category,
+      downloads: 0,
+      updatedAt: new Date().toISOString(),
+      author: data.author,
+    };
+    setMaterials([...materials, newMaterial]);
+  };
 
   const filteredMaterials = materials.filter((m) => {
     const matchesSearch = m.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -74,7 +88,7 @@ const Repositorio = () => {
               Tutoriais, manuais, FAQs e documentos de referência
             </p>
           </div>
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
             <Plus className="h-4 w-4" />
             Enviar Material
           </Button>
@@ -150,7 +164,7 @@ const Repositorio = () => {
                 <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                   Os materiais de apoio como tutoriais, manuais e FAQs serão exibidos aqui.
                 </p>
-                <Button className="gap-2">
+                <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
                   <Plus className="h-4 w-4" />
                   Adicionar Material
                 </Button>
@@ -181,7 +195,7 @@ const Repositorio = () => {
                           <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-4">
                             <span className="flex items-center gap-1">
                               <User className="h-3 w-3" />
-                              {material.author}
+                              {material.author || "Autor não informado"}
                             </span>
                             <span className="flex items-center gap-1">
                               <Clock className="h-3 w-3" />
@@ -212,6 +226,12 @@ const Repositorio = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+      <AddMaterialModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        onAdd={handleAddMaterial}
+      />
     </MainLayout>
   );
 };

@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import AddMunicipioModal, { MunicipioData } from "@/components/modals/AddMunicipioModal";
 
 interface Municipality {
   id: string;
@@ -24,9 +25,6 @@ interface Municipality {
   coordinator: string;
 }
 
-// Empty array - data will be populated from backend
-const municipalities: Municipality[] = [];
-
 const statusConfig = {
   ativo: { label: "Ativo", variant: "default" as const, className: "bg-success/10 text-success border-success/20" },
   em_implantacao: { label: "Em Implantação", variant: "secondary" as const, className: "bg-warning/10 text-warning border-warning/20" },
@@ -36,6 +34,22 @@ const statusConfig = {
 const Municipios = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [municipalities, setMunicipalities] = useState<Municipality[]>([]);
+
+  const handleAddMunicipio = (data: MunicipioData) => {
+    const newMunicipio: Municipality = {
+      id: crypto.randomUUID(),
+      name: data.name,
+      population: data.population,
+      professionals: 0,
+      maturityLevel: 0,
+      status: data.status,
+      lastUpdate: new Date().toISOString(),
+      coordinator: data.coordinator,
+    };
+    setMunicipalities([...municipalities, newMunicipio]);
+  };
 
   const filteredMunicipalities = municipalities.filter((m) => {
     const matchesSearch = m.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -66,7 +80,7 @@ const Municipios = () => {
                 Gestão e acompanhamento dos municípios da microrregião
               </p>
             </div>
-            <Button className="gap-2 shadow-sm">
+            <Button className="gap-2 shadow-sm" onClick={() => setIsModalOpen(true)}>
               <Plus className="h-4 w-4" />
               Adicionar Município
             </Button>
@@ -128,7 +142,7 @@ const Municipios = () => {
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
               Adicione os municípios que compõem a microrregião para começar o acompanhamento da maturidade digital.
             </p>
-            <Button className="gap-2">
+            <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
               <Plus className="h-4 w-4" />
               Adicionar Primeiro Município
             </Button>
@@ -191,6 +205,12 @@ const Municipios = () => {
           </div>
         )}
       </div>
+
+      <AddMunicipioModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        onAdd={handleAddMunicipio}
+      />
     </MainLayout>
   );
 };
