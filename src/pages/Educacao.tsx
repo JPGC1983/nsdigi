@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AddCursoModal, { CursoData } from "@/components/modals/AddCursoModal";
+import AddTrilhaModal, { TrilhaData } from "@/components/modals/AddTrilhaModal";
 
 interface Course {
   id: string;
@@ -52,8 +53,9 @@ const Educacao = () => {
   const [activeTab, setActiveTab] = useState("cursos");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTrilhaModalOpen, setIsTrilhaModalOpen] = useState(false);
   const [courses, setCourses] = useState<Course[]>([]);
-  const [trails] = useState<Trail[]>([]);
+  const [trails, setTrails] = useState<Trail[]>([]);
 
   const handleAddCurso = (data: CursoData) => {
     const newCourse: Course = {
@@ -67,6 +69,18 @@ const Educacao = () => {
       format: data.format,
     };
     setCourses([...courses, newCourse]);
+  };
+
+  const handleAddTrilha = (data: TrilhaData) => {
+    const newTrail: Trail = {
+      id: crypto.randomUUID(),
+      title: data.title,
+      description: data.description,
+      courses: 0,
+      totalHours: data.totalHours,
+      enrolled: 0,
+    };
+    setTrails([...trails, newTrail]);
   };
 
   const filteredCourses = courses.filter((c) => {
@@ -216,7 +230,7 @@ const Educacao = () => {
                 <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                   As trilhas formativas serão exibidas aqui quando forem cadastradas.
                 </p>
-                <Button className="gap-2">
+                <Button className="gap-2" onClick={() => setIsTrilhaModalOpen(true)}>
                   <Plus className="h-4 w-4" />
                   Criar Trilha
                 </Button>
@@ -288,6 +302,12 @@ const Educacao = () => {
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
         onAdd={handleAddCurso}
+      />
+
+      <AddTrilhaModal
+        open={isTrilhaModalOpen}
+        onOpenChange={setIsTrilhaModalOpen}
+        onAdd={handleAddTrilha}
       />
     </MainLayout>
   );
