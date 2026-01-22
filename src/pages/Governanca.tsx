@@ -49,12 +49,19 @@ const Governanca = () => {
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
-        {/* Header */}
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Governança</h1>
-          <p className="text-muted-foreground">
-            Estrutura do Colegiado Microrregional de Saúde Digital
-          </p>
+        {/* Header with Breadcrumbs */}
+        <div className="space-y-4">
+          <nav className="flex items-center gap-1 text-sm text-muted-foreground">
+            <a href="/" className="hover:text-foreground transition-colors">Início</a>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-foreground font-medium">Governança</span>
+          </nav>
+          <div>
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">Governança</h1>
+            <p className="text-muted-foreground">
+              Estrutura do Colegiado Microrregional de Saúde Digital
+            </p>
+          </div>
         </div>
 
         {/* Governance Overview */}
