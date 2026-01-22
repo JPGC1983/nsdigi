@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { 
   Users, 
   Calendar,
@@ -14,6 +15,8 @@ import MainLayout from "@/components/layout/MainLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import AddMembroModal, { MembroData } from "@/components/modals/AddMembroModal";
+import AddReuniaoModal, { ReuniaoData } from "@/components/modals/AddReuniaoModal";
 
 interface Member {
   id: string;
@@ -40,12 +43,49 @@ interface Document {
   date: string;
 }
 
-// Empty arrays - data will be populated from backend
-const collegiateMembers: Member[] = [];
-const upcomingMeetings: Meeting[] = [];
-const documents: Document[] = [];
+const roleLabels: Record<string, string> = {
+  coordenador: "Coordenador do Núcleo",
+  ponto_focal: "Ponto Focal Municipal",
+  aps: "Representante APS",
+  regulacao: "Representante Regulação",
+  ti: "Representante TI",
+  ses: "Representante SES-MG",
+  educacao: "Educação Permanente",
+  vigilancia: "Vigilância em Saúde",
+};
 
 const Governanca = () => {
+  const [isMembroModalOpen, setIsMembroModalOpen] = useState(false);
+  const [isReuniaoModalOpen, setIsReuniaoModalOpen] = useState(false);
+  const [collegiateMembers, setCollegiateMembers] = useState<Member[]>([]);
+  const [upcomingMeetings, setUpcomingMeetings] = useState<Meeting[]>([]);
+  const [documents] = useState<Document[]>([]);
+
+  const handleAddMembro = (data: MembroData) => {
+    const newMember: Member = {
+      id: crypto.randomUUID(),
+      name: data.name,
+      role: roleLabels[data.role] || data.role,
+      municipality: data.municipality,
+      email: data.email,
+      phone: data.phone,
+      category: data.category,
+    };
+    setCollegiateMembers([...collegiateMembers, newMember]);
+  };
+
+  const handleAddReuniao = (data: ReuniaoData) => {
+    const newMeeting: Meeting = {
+      id: crypto.randomUUID(),
+      title: data.title,
+      date: data.date,
+      time: data.time,
+      type: data.type === "presencial" ? "Presencial" : data.type === "virtual" ? "Virtual" : "Híbrida",
+      status: "agendada",
+    };
+    setUpcomingMeetings([...upcomingMeetings, newMeeting]);
+  };
+
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
@@ -92,7 +132,7 @@ const Governanca = () => {
                 <Users className="h-5 w-5 text-primary" />
                 Composição do Colegiado
               </h3>
-              <Button size="sm" className="gap-2">
+              <Button size="sm" className="gap-2" onClick={() => setIsMembroModalOpen(true)}>
                 <UserPlus className="h-4 w-4" />
                 Adicionar Membro
               </Button>
@@ -194,7 +234,7 @@ const Governanca = () => {
                   <Calendar className="h-5 w-5 text-primary" />
                   Próximas Reuniões
                 </h3>
-                <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                <Button size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => setIsReuniaoModalOpen(true)}>
                   <CalendarPlus className="h-4 w-4" />
                 </Button>
               </div>
@@ -202,7 +242,7 @@ const Governanca = () => {
                 <div className="flex flex-col items-center justify-center py-6 border border-dashed border-border rounded-lg bg-muted/20">
                   <Calendar className="h-8 w-8 text-muted-foreground/40 mb-2" />
                   <p className="text-sm text-muted-foreground">Nenhuma reunião agendada</p>
-                  <Button size="sm" variant="link" className="mt-2 h-auto p-0">
+                  <Button size="sm" variant="link" className="mt-2 h-auto p-0" onClick={() => setIsReuniaoModalOpen(true)}>
                     Agendar primeira reunião
                   </Button>
                 </div>
@@ -276,6 +316,18 @@ const Governanca = () => {
           </div>
         </div>
       </div>
+
+      <AddMembroModal
+        open={isMembroModalOpen}
+        onOpenChange={setIsMembroModalOpen}
+        onAdd={handleAddMembro}
+      />
+
+      <AddReuniaoModal
+        open={isReuniaoModalOpen}
+        onOpenChange={setIsReuniaoModalOpen}
+        onAdd={handleAddReuniao}
+      />
     </MainLayout>
   );
 };
