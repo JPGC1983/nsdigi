@@ -52,18 +52,25 @@ const Municipios = () => {
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Municípios</h1>
-            <p className="text-muted-foreground">
-              Gestão e acompanhamento dos municípios da microrregião
-            </p>
+        {/* Header with Breadcrumbs */}
+        <div className="space-y-4">
+          <nav className="flex items-center gap-1 text-sm text-muted-foreground">
+            <a href="/" className="hover:text-foreground transition-colors">Início</a>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-foreground font-medium">Municípios</span>
+          </nav>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">Municípios</h1>
+              <p className="text-muted-foreground">
+                Gestão e acompanhamento dos municípios da microrregião
+              </p>
+            </div>
+            <Button className="gap-2 shadow-sm">
+              <Plus className="h-4 w-4" />
+              Adicionar Município
+            </Button>
           </div>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            Adicionar Município
-          </Button>
         </div>
 
         {/* Filters */}
