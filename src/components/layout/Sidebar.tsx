@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import governoMinasLogo from "@/assets/governo-minas-logo.png";
+import nsdigiLogo from "@/assets/nsdigi-logo.png";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -107,6 +108,15 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <span>Configurações</span>
             </NavLink>
             
+            {/* NSDIGI Logo */}
+            <div className="px-3 py-2">
+              <img 
+                src={nsdigiLogo} 
+                alt="NSDIGI" 
+                className="w-full h-auto max-w-[140px] mx-auto"
+              />
+            </div>
+
             {/* Governo de Minas Logo */}
             <div className="px-3 py-2">
               <img 
