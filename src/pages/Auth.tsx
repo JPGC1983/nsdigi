@@ -6,10 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Loader2, Mail, Lock, User, Briefcase, Phone, MapPin, Shield, ShieldCheck, ShieldAlert } from "lucide-react";
+import { Eye, EyeOff, Loader2, Mail, Lock, User, Briefcase, Phone, Shield, ShieldCheck, ShieldAlert } from "lucide-react";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -21,7 +21,6 @@ const signupSchema = z.object({
   fullName: z.string().min(2, "Nome deve ter no mínimo 2 caracteres").max(100, "Nome muito longo"),
   jobTitle: z.string().min(2, "Cargo deve ter no mínimo 2 caracteres"),
   phone: z.string().min(10, "Telefone inválido").max(15, "Telefone inválido"),
-  municipality: z.string().min(1, "Selecione um município"),
   email: z.string().email("Email inválido"),
   password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
   confirmPassword: z.string(),
@@ -30,23 +29,6 @@ const signupSchema = z.object({
   path: ["confirmPassword"],
 });
 
-const MUNICIPALITIES = [
-  "Alto Santo",
-  "Ererê", 
-  "Iracema",
-  "Jaguaretama",
-  "Jaguaribara",
-  "Jaguaribe",
-  "Limoeiro do Norte",
-  "Morada Nova",
-  "Palhano",
-  "Pereiro",
-  "Potiretama",
-  "Quixeré",
-  "Russas",
-  "São João do Jaguaribe",
-  "Tabuleiro do Norte",
-];
 
 const getPasswordStrength = (password: string): { score: number; label: string; color: string } => {
   let score = 0;
@@ -87,7 +69,7 @@ const Auth = () => {
   const [signupFullName, setSignupFullName] = useState("");
   const [signupJobTitle, setSignupJobTitle] = useState("");
   const [signupPhone, setSignupPhone] = useState("");
-  const [signupMunicipality, setSignupMunicipality] = useState("");
+  
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [signupConfirmPassword, setSignupConfirmPassword] = useState("");
@@ -163,7 +145,6 @@ const Auth = () => {
       fullName: signupFullName,
       jobTitle: signupJobTitle,
       phone: signupPhone.replace(/\D/g, ""),
-      municipality: signupMunicipality,
       email: signupEmail,
       password: signupPassword,
       confirmPassword: signupConfirmPassword,
@@ -208,7 +189,6 @@ const Auth = () => {
       await supabase.from("profiles").update({
         job_title: signupJobTitle,
         phone: signupPhone.replace(/\D/g, ""),
-        municipality: signupMunicipality,
       }).eq("id", data.user.id);
 
       toast({
@@ -388,23 +368,6 @@ const Auth = () => {
                     {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-municipality">Município</Label>
-                    <div className="relative">
-                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
-                      <Select value={signupMunicipality} onValueChange={setSignupMunicipality} disabled={isLoading}>
-                        <SelectTrigger id="signup-municipality" className="pl-10">
-                          <SelectValue placeholder="Selecione seu município" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {MUNICIPALITIES.map((mun) => (
-                            <SelectItem key={mun} value={mun}>{mun}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    {errors.municipality && <p className="text-sm text-destructive">{errors.municipality}</p>}
-                  </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="signup-email">Email</Label>
