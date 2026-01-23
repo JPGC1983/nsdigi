@@ -26,14 +26,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Configuracoes = () => {
-  const { user, profile } = useAuth();
+  const { user, profile, refreshProfile } = useAuth();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [fullName, setFullName] = useState(profile?.full_name || "");
   const [phone, setPhone] = useState(profile?.phone || "");
   const [jobTitle, setJobTitle] = useState(profile?.job_title || "");
-  const [avatarUrl, setAvatarUrl] = useState(profile?.avatar_url || "");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(profile?.avatar_url || null);
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
 
@@ -110,6 +110,9 @@ const Configuracoes = () => {
       if (updateError) throw updateError;
 
       setAvatarUrl(urlWithTimestamp);
+      
+      // Refresh profile to update context
+      await refreshProfile();
 
       toast({
         title: "Foto atualizada",
