@@ -38,6 +38,48 @@ export type Database = {
         }
         Relationships: []
       }
+      cib_meetings: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          deliberations: string | null
+          id: string
+          meeting_date: string
+          notes: string | null
+          participants: string | null
+          participation_type: string
+          territory_impacts: string | null
+          themes: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          deliberations?: string | null
+          id?: string
+          meeting_date: string
+          notes?: string | null
+          participants?: string | null
+          participation_type?: string
+          territory_impacts?: string | null
+          themes: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          deliberations?: string | null
+          id?: string
+          meeting_date?: string
+          notes?: string | null
+          participants?: string | null
+          participation_type?: string
+          territory_impacts?: string | null
+          themes?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
