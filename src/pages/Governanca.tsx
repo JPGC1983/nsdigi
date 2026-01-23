@@ -11,8 +11,13 @@ import {
   UserPlus,
   CalendarPlus,
   Landmark,
-  Save,
   Loader2,
+  ChevronDown,
+  ChevronUp,
+  MapPin,
+  MessageSquare,
+  Target,
+  Clock,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -21,9 +26,14 @@ import MainLayout from "@/components/layout/MainLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Textarea } from "@/components/ui/textarea";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import AddMembroModal, { MembroData } from "@/components/modals/AddMembroModal";
 import AddReuniaoModal, { ReuniaoData } from "@/components/modals/AddReuniaoModal";
+import AddCibMeetingModal, { CibMeetingData } from "@/components/modals/AddCibMeetingModal";
 
 interface Member {
   id: string;
@@ -50,6 +60,18 @@ interface Document {
   date: string;
 }
 
+interface CibMeeting {
+  id: string;
+  meeting_date: string;
+  themes: string;
+  deliberations: string | null;
+  territory_impacts: string | null;
+  participation_type: string;
+  participants: string | null;
+  notes: string | null;
+  created_at: string;
+}
+
 const roleLabels: Record<string, string> = {
   coordenador: "Coordenador do Núcleo",
   ponto_focal: "Ponto Focal Municipal",
@@ -72,11 +94,11 @@ const Governanca = () => {
   const [documents] = useState<Document[]>([]);
   
   // CIB State
-  const [cibDescription, setCibDescription] = useState("");
-  const [cibDocId, setCibDocId] = useState<string | null>(null);
-  const [isSavingCib, setIsSavingCib] = useState(false);
+  const [cibMeetings, setCibMeetings] = useState<CibMeeting[]>([]);
   const [isLoadingCib, setIsLoadingCib] = useState(true);
   const [canEditCib, setCanEditCib] = useState(false);
+  const [isCibMeetingModalOpen, setIsCibMeetingModalOpen] = useState(false);
+  const [expandedMeetings, setExpandedMeetings] = useState<Set<string>>(new Set());
 
   // Check if user can edit CIB (admin or coordenador)
   useEffect(() => {
@@ -100,77 +122,86 @@ const Governanca = () => {
     checkUserRole();
   }, [user]);
 
-  // Fetch CIB documentation
+  // Fetch CIB meetings
   useEffect(() => {
-    const fetchCibDoc = async () => {
+    const fetchCibMeetings = async () => {
       setIsLoadingCib(true);
       const { data, error } = await supabase
-        .from('cib_documentation')
+        .from('cib_meetings')
         .select('*')
-        .limit(1)
-        .maybeSingle();
+        .order('meeting_date', { ascending: false });
       
       if (!error && data) {
-        setCibDescription(data.description);
-        setCibDocId(data.id);
+        setCibMeetings(data as CibMeeting[]);
       }
       setIsLoadingCib(false);
     };
     
-    fetchCibDoc();
+    fetchCibMeetings();
   }, []);
 
-  const handleSaveCib = async () => {
-    if (!cibDescription.trim()) {
+  const handleAddCibMeeting = async (data: CibMeetingData) => {
+    const { data: newMeeting, error } = await supabase
+      .from('cib_meetings')
+      .insert({
+        meeting_date: data.meeting_date,
+        themes: data.themes,
+        deliberations: data.deliberations || null,
+        territory_impacts: data.territory_impacts || null,
+        participation_type: data.participation_type,
+        participants: data.participants || null,
+        notes: data.notes || null,
+        created_by: user?.id,
+      })
+      .select()
+      .single();
+
+    if (error) {
       toast({
-        title: "Campo obrigatório",
-        description: "Por favor, preencha a descrição das reuniões da CIB.",
+        title: "Erro ao registrar",
+        description: error.message || "Não foi possível registrar a reunião.",
         variant: "destructive",
       });
-      return;
+      throw error;
     }
 
-    setIsSavingCib(true);
-    try {
-      if (cibDocId) {
-        // Update existing
-        const { error } = await supabase
-          .from('cib_documentation')
-          .update({ 
-            description: cibDescription,
-            updated_by: user?.id 
-          })
-          .eq('id', cibDocId);
-        
-        if (error) throw error;
-      } else {
-        // Create new
-        const { data, error } = await supabase
-          .from('cib_documentation')
-          .insert({ 
-            description: cibDescription,
-            updated_by: user?.id 
-          })
-          .select()
-          .single();
-        
-        if (error) throw error;
-        if (data) setCibDocId(data.id);
-      }
-
+    if (newMeeting) {
+      setCibMeetings([newMeeting as CibMeeting, ...cibMeetings]);
       toast({
-        title: "Salvo com sucesso",
-        description: "As informações do Espaço CIB foram atualizadas.",
+        title: "Reunião registrada",
+        description: "A reunião da CIB foi registrada com sucesso.",
       });
-    } catch (error: any) {
-      toast({
-        title: "Erro ao salvar",
-        description: error.message || "Não foi possível salvar as informações.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSavingCib(false);
     }
+  };
+
+  const toggleMeetingExpand = (meetingId: string) => {
+    const newExpanded = new Set(expandedMeetings);
+    if (newExpanded.has(meetingId)) {
+      newExpanded.delete(meetingId);
+    } else {
+      newExpanded.add(meetingId);
+    }
+    setExpandedMeetings(newExpanded);
+  };
+
+  const getParticipationTypeLabel = (type: string) => {
+    const labels: Record<string, string> = {
+      presencial: "Presencial",
+      virtual: "Virtual",
+      hibrida: "Híbrida",
+      acompanhamento: "Acompanhamento",
+    };
+    return labels[type] || type;
+  };
+
+  const getParticipationTypeBadgeClass = (type: string) => {
+    const classes: Record<string, string> = {
+      presencial: "bg-success/10 text-success border-success/20",
+      virtual: "bg-info/10 text-info border-info/20",
+      hibrida: "bg-warning/10 text-warning border-warning/20",
+      acompanhamento: "bg-muted text-muted-foreground border-border",
+    };
+    return classes[type] || "bg-muted text-muted-foreground border-border";
   };
 
   const handleAddMembro = (data: MembroData) => {
@@ -237,75 +268,178 @@ const Governanca = () => {
 
         {/* Espaço CIB Section */}
         <div className="rounded-xl border border-border bg-card p-6 shadow-card">
-          <div className="flex items-start gap-4 mb-6">
-            <div className="h-12 w-12 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
-              <Landmark className="h-6 w-6 text-secondary" />
+          <div className="flex items-start justify-between gap-4 mb-6">
+            <div className="flex items-start gap-4">
+              <div className="h-12 w-12 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                <Landmark className="h-6 w-6 text-secondary" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-foreground mb-2">
+                  Espaço CIB
+                </h2>
+                <p className="text-muted-foreground text-sm">
+                  Registro da participação nas reuniões da Comissão Intergestores Bipartite (CIB) 
+                  e seus impactos na gestão e organização da rede de saúde do território.
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-lg font-semibold text-foreground mb-2">
-                Espaço CIB
-              </h2>
-              <p className="text-muted-foreground text-sm">
-                Documentação da participação nas reuniões da Comissão Intergestores Bipartite (CIB) 
-                e seus impactos na gestão e organização da rede de saúde do território.
-              </p>
-            </div>
+            {canEditCib && (
+              <Button 
+                onClick={() => setIsCibMeetingModalOpen(true)}
+                className="gap-2 shrink-0"
+              >
+                <Plus className="h-4 w-4" />
+                Registrar Reunião
+              </Button>
+            )}
           </div>
 
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
-                Descrição das reuniões da CIB <span className="text-destructive">*</span>
-              </label>
-              
-              {isLoadingCib ? (
-                <div className="flex items-center justify-center h-40 border border-border rounded-lg bg-muted/20">
-                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-                </div>
-              ) : (
-                <Textarea
-                  value={cibDescription}
-                  onChange={(e) => setCibDescription(e.target.value)}
-                  placeholder="Descreva de forma sintética o papel da CIB (Comissão Intergestores Bipartite) na governança do SUS no estado: espaço de negociação, pactuação e decisão entre Secretaria de Estado de Saúde e municípios sobre a operacionalização das políticas, organização da rede de serviços, financiamento e regionalização. Informe também como a equipe participa ou acompanha essas reuniões (por exemplo: frequência, temas principais discutidos, pactuações relevantes para o território e como as decisões são incorporadas ao planejamento local)."
-                  className="min-h-[200px] resize-y"
-                  disabled={!canEditCib}
-                />
-              )}
-              
-              <p className="text-xs text-muted-foreground">
-                Registre aqui o resumo das reuniões da CIB e seus principais efeitos para o território. 
-                Este campo pode ser atualizado sempre que necessário.
-              </p>
+          {isLoadingCib ? (
+            <div className="flex items-center justify-center h-32 border border-border rounded-lg bg-muted/20">
+              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
             </div>
-
-            {canEditCib && (
-              <div className="flex justify-end pt-2">
+          ) : cibMeetings.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 border border-dashed border-border rounded-lg bg-muted/20">
+              <Landmark className="h-12 w-12 text-muted-foreground/40 mb-4" />
+              <p className="text-muted-foreground font-medium mb-1">
+                Nenhuma reunião registrada
+              </p>
+              <p className="text-sm text-muted-foreground/60 text-center max-w-md mb-4">
+                Registre as reuniões da CIB para documentar as deliberações, pactuações e seus impactos no território.
+              </p>
+              {canEditCib && (
                 <Button 
-                  onClick={handleSaveCib} 
-                  disabled={isSavingCib || isLoadingCib}
+                  variant="outline" 
+                  onClick={() => setIsCibMeetingModalOpen(true)}
                   className="gap-2"
                 >
-                  {isSavingCib ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      Salvando...
-                    </>
-                  ) : (
-                    <>
-                      <Save className="h-4 w-4" />
-                      Salvar Alterações
-                    </>
-                  )}
+                  <Plus className="h-4 w-4" />
+                  Registrar primeira reunião
                 </Button>
-              </div>
-            )}
+              )}
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {cibMeetings.map((meeting) => {
+                const isExpanded = expandedMeetings.has(meeting.id);
+                return (
+                  <Collapsible
+                    key={meeting.id}
+                    open={isExpanded}
+                    onOpenChange={() => toggleMeetingExpand(meeting.id)}
+                  >
+                    <div className="border border-border rounded-lg overflow-hidden">
+                      <CollapsibleTrigger className="w-full">
+                        <div className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors">
+                          <div className="flex items-center gap-4">
+                            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                              <Calendar className="h-5 w-5 text-primary" />
+                            </div>
+                            <div className="text-left">
+                              <p className="font-medium text-foreground">
+                                Reunião CIB - {new Date(meeting.meeting_date + 'T12:00:00').toLocaleDateString("pt-BR", {
+                                  day: "2-digit",
+                                  month: "long",
+                                  year: "numeric",
+                                })}
+                              </p>
+                              <p className="text-sm text-muted-foreground line-clamp-1">
+                                {meeting.themes}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Badge className={getParticipationTypeBadgeClass(meeting.participation_type)}>
+                              {getParticipationTypeLabel(meeting.participation_type)}
+                            </Badge>
+                            {isExpanded ? (
+                              <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                            ) : (
+                              <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                            )}
+                          </div>
+                        </div>
+                      </CollapsibleTrigger>
+                      
+                      <CollapsibleContent>
+                        <div className="px-4 pb-4 pt-2 border-t border-border bg-muted/20">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-3">
+                              <div>
+                                <div className="flex items-center gap-2 text-sm font-medium text-foreground mb-1">
+                                  <MessageSquare className="h-4 w-4 text-primary" />
+                                  Temas Discutidos
+                                </div>
+                                <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                  {meeting.themes}
+                                </p>
+                              </div>
+                              
+                              {meeting.deliberations && (
+                                <div>
+                                  <div className="flex items-center gap-2 text-sm font-medium text-foreground mb-1">
+                                    <FileText className="h-4 w-4 text-primary" />
+                                    Deliberações e Pactuações
+                                  </div>
+                                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                    {meeting.deliberations}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                            
+                            <div className="space-y-3">
+                              {meeting.territory_impacts && (
+                                <div>
+                                  <div className="flex items-center gap-2 text-sm font-medium text-foreground mb-1">
+                                    <Target className="h-4 w-4 text-primary" />
+                                    Impactos para o Território
+                                  </div>
+                                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                    {meeting.territory_impacts}
+                                  </p>
+                                </div>
+                              )}
+                              
+                              {meeting.participants && (
+                                <div>
+                                  <div className="flex items-center gap-2 text-sm font-medium text-foreground mb-1">
+                                    <Users className="h-4 w-4 text-primary" />
+                                    Participantes
+                                  </div>
+                                  <p className="text-sm text-muted-foreground">
+                                    {meeting.participants}
+                                  </p>
+                                </div>
+                              )}
+                              
+                              {meeting.notes && (
+                                <div>
+                                  <div className="flex items-center gap-2 text-sm font-medium text-foreground mb-1">
+                                    <Clock className="h-4 w-4 text-primary" />
+                                    Observações
+                                  </div>
+                                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                    {meeting.notes}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </CollapsibleContent>
+                    </div>
+                  </Collapsible>
+                );
+              })}
+            </div>
+          )}
 
-            {!canEditCib && !isLoadingCib && (
-              <p className="text-xs text-muted-foreground/60 italic">
-                Apenas coordenadores e administradores podem editar este campo.
-              </p>
-            )}
-          </div>
+          {!canEditCib && !isLoadingCib && cibMeetings.length === 0 && (
+            <p className="text-xs text-muted-foreground/60 italic mt-2">
+              Apenas coordenadores e administradores podem registrar reuniões.
+            </p>
+          )}
         </div>
 
         {/* Main Grid */}
@@ -512,6 +646,12 @@ const Governanca = () => {
         open={isReuniaoModalOpen}
         onOpenChange={setIsReuniaoModalOpen}
         onAdd={handleAddReuniao}
+      />
+
+      <AddCibMeetingModal
+        open={isCibMeetingModalOpen}
+        onOpenChange={setIsCibMeetingModalOpen}
+        onAdd={handleAddCibMeeting}
       />
     </MainLayout>
   );
