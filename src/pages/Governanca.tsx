@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Users, 
   Calendar,
@@ -10,11 +10,18 @@ import {
   Plus,
   UserPlus,
   CalendarPlus,
+  Landmark,
+  Save,
+  Loader2,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import MainLayout from "@/components/layout/MainLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Textarea } from "@/components/ui/textarea";
 import AddMembroModal, { MembroData } from "@/components/modals/AddMembroModal";
 import AddReuniaoModal, { ReuniaoData } from "@/components/modals/AddReuniaoModal";
 
@@ -55,11 +62,116 @@ const roleLabels: Record<string, string> = {
 };
 
 const Governanca = () => {
+  const { user, profile } = useAuth();
+  const { toast } = useToast();
+  
   const [isMembroModalOpen, setIsMembroModalOpen] = useState(false);
   const [isReuniaoModalOpen, setIsReuniaoModalOpen] = useState(false);
   const [collegiateMembers, setCollegiateMembers] = useState<Member[]>([]);
   const [upcomingMeetings, setUpcomingMeetings] = useState<Meeting[]>([]);
   const [documents] = useState<Document[]>([]);
+  
+  // CIB State
+  const [cibDescription, setCibDescription] = useState("");
+  const [cibDocId, setCibDocId] = useState<string | null>(null);
+  const [isSavingCib, setIsSavingCib] = useState(false);
+  const [isLoadingCib, setIsLoadingCib] = useState(true);
+  const [canEditCib, setCanEditCib] = useState(false);
+
+  // Check if user can edit CIB (admin or coordenador)
+  useEffect(() => {
+    const checkUserRole = async () => {
+      if (!user) {
+        setCanEditCib(false);
+        return;
+      }
+      
+      const { data: roles } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id);
+      
+      if (roles) {
+        const hasEditRole = roles.some(r => r.role === 'admin' || r.role === 'coordenador');
+        setCanEditCib(hasEditRole);
+      }
+    };
+    
+    checkUserRole();
+  }, [user]);
+
+  // Fetch CIB documentation
+  useEffect(() => {
+    const fetchCibDoc = async () => {
+      setIsLoadingCib(true);
+      const { data, error } = await supabase
+        .from('cib_documentation')
+        .select('*')
+        .limit(1)
+        .maybeSingle();
+      
+      if (!error && data) {
+        setCibDescription(data.description);
+        setCibDocId(data.id);
+      }
+      setIsLoadingCib(false);
+    };
+    
+    fetchCibDoc();
+  }, []);
+
+  const handleSaveCib = async () => {
+    if (!cibDescription.trim()) {
+      toast({
+        title: "Campo obrigatório",
+        description: "Por favor, preencha a descrição das reuniões da CIB.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSavingCib(true);
+    try {
+      if (cibDocId) {
+        // Update existing
+        const { error } = await supabase
+          .from('cib_documentation')
+          .update({ 
+            description: cibDescription,
+            updated_by: user?.id 
+          })
+          .eq('id', cibDocId);
+        
+        if (error) throw error;
+      } else {
+        // Create new
+        const { data, error } = await supabase
+          .from('cib_documentation')
+          .insert({ 
+            description: cibDescription,
+            updated_by: user?.id 
+          })
+          .select()
+          .single();
+        
+        if (error) throw error;
+        if (data) setCibDocId(data.id);
+      }
+
+      toast({
+        title: "Salvo com sucesso",
+        description: "As informações do Espaço CIB foram atualizadas.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Erro ao salvar",
+        description: error.message || "Não foi possível salvar as informações.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSavingCib(false);
+    }
+  };
 
   const handleAddMembro = (data: MembroData) => {
     const newMember: Member = {
@@ -120,6 +232,79 @@ const Governanca = () => {
                 Reúne-se bimestralmente (preferencialmente presencial ou híbrida).
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* Espaço CIB Section */}
+        <div className="rounded-xl border border-border bg-card p-6 shadow-card">
+          <div className="flex items-start gap-4 mb-6">
+            <div className="h-12 w-12 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
+              <Landmark className="h-6 w-6 text-secondary" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-foreground mb-2">
+                Espaço CIB
+              </h2>
+              <p className="text-muted-foreground text-sm">
+                Documentação da participação nas reuniões da Comissão Intergestores Bipartite (CIB) 
+                e seus impactos na gestão e organização da rede de saúde do território.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">
+                Descrição das reuniões da CIB <span className="text-destructive">*</span>
+              </label>
+              
+              {isLoadingCib ? (
+                <div className="flex items-center justify-center h-40 border border-border rounded-lg bg-muted/20">
+                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                </div>
+              ) : (
+                <Textarea
+                  value={cibDescription}
+                  onChange={(e) => setCibDescription(e.target.value)}
+                  placeholder="Descreva de forma sintética o papel da CIB (Comissão Intergestores Bipartite) na governança do SUS no estado: espaço de negociação, pactuação e decisão entre Secretaria de Estado de Saúde e municípios sobre a operacionalização das políticas, organização da rede de serviços, financiamento e regionalização. Informe também como a equipe participa ou acompanha essas reuniões (por exemplo: frequência, temas principais discutidos, pactuações relevantes para o território e como as decisões são incorporadas ao planejamento local)."
+                  className="min-h-[200px] resize-y"
+                  disabled={!canEditCib}
+                />
+              )}
+              
+              <p className="text-xs text-muted-foreground">
+                Registre aqui o resumo das reuniões da CIB e seus principais efeitos para o território. 
+                Este campo pode ser atualizado sempre que necessário.
+              </p>
+            </div>
+
+            {canEditCib && (
+              <div className="flex justify-end pt-2">
+                <Button 
+                  onClick={handleSaveCib} 
+                  disabled={isSavingCib || isLoadingCib}
+                  className="gap-2"
+                >
+                  {isSavingCib ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Salvando...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="h-4 w-4" />
+                      Salvar Alterações
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+
+            {!canEditCib && !isLoadingCib && (
+              <p className="text-xs text-muted-foreground/60 italic">
+                Apenas coordenadores e administradores podem editar este campo.
+              </p>
+            )}
           </div>
         </div>
 
