@@ -11,6 +11,7 @@ import Educacao from "./pages/Educacao";
 import Repositorio from "./pages/Repositorio";
 import Indicadores from "./pages/Indicadores";
 import Governanca from "./pages/Governanca";
+import Configuracoes from "./pages/Configuracoes";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/repositorio" element={<Repositorio />} />
             <Route path="/indicadores" element={<Indicadores />} />
             <Route path="/governanca" element={<Governanca />} />
+            <Route path="/configuracoes" element={<Configuracoes />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
