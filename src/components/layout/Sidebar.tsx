@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import governoMinasLogo from "@/assets/governo-minas-logo.png";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -97,7 +98,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           </nav>
 
           {/* Footer */}
-          <div className="border-t border-sidebar-border p-3">
+          <div className="border-t border-sidebar-border p-3 space-y-3">
             <NavLink
               to="/configuracoes"
               className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors"
@@ -105,6 +106,15 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <Settings className="h-5 w-5" />
               <span>Configurações</span>
             </NavLink>
+            
+            {/* Governo de Minas Logo */}
+            <div className="px-3 py-2">
+              <img 
+                src={governoMinasLogo} 
+                alt="Governo de Minas - Aqui o trem prospera" 
+                className="w-full h-auto max-w-[180px] mx-auto opacity-90"
+              />
+            </div>
           </div>
         </div>
       </aside>
