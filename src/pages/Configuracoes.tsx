@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/shared/PageHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,18 +19,23 @@ import {
   Save,
   Phone,
   Mail,
-  Briefcase
+  Briefcase,
+  Camera,
+  Loader2
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Configuracoes = () => {
   const { user, profile } = useAuth();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [fullName, setFullName] = useState(profile?.full_name || "");
   const [phone, setPhone] = useState(profile?.phone || "");
   const [jobTitle, setJobTitle] = useState(profile?.job_title || "");
+  const [avatarUrl, setAvatarUrl] = useState(profile?.avatar_url || "");
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
 
   // Notification preferences (local state for now)
   const [emailNotifications, setEmailNotifications] = useState(true);
@@ -41,6 +46,88 @@ const Configuracoes = () => {
   const getInitials = (name: string | null | undefined) => {
     if (!name) return "U";
     return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+  };
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !user) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Arquivo inválido",
+        description: "Por favor, selecione uma imagem.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      toast({
+        title: "Arquivo muito grande",
+        description: "A imagem deve ter no máximo 2MB.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsUploadingAvatar(true);
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `avatar.${fileExt}`;
+      const filePath = `${user.id}/${fileName}`;
+
+      // Upload to storage
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Add timestamp to bust cache
+      const urlWithTimestamp = `${publicUrl}?t=${Date.now()}`;
+
+      // Update profile with new avatar URL
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ 
+          avatar_url: urlWithTimestamp,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', user.id);
+
+      if (updateError) throw updateError;
+
+      setAvatarUrl(urlWithTimestamp);
+
+      toast({
+        title: "Foto atualizada",
+        description: "Sua foto de perfil foi atualizada com sucesso.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Erro ao enviar foto",
+        description: error.message || "Não foi possível atualizar a foto.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploadingAvatar(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
   };
 
   const handleSaveProfile = async () => {
@@ -128,15 +215,37 @@ const Configuracoes = () => {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-center gap-6">
-                  <Avatar className="h-20 w-20">
-                    <AvatarImage src={profile?.avatar_url || ""} />
-                    <AvatarFallback className="text-xl bg-primary text-primary-foreground">
-                      {getInitials(fullName || profile?.full_name)}
-                    </AvatarFallback>
-                  </Avatar>
+                  <div className="relative group">
+                    <Avatar className="h-24 w-24 cursor-pointer" onClick={handleAvatarClick}>
+                      <AvatarImage src={avatarUrl || profile?.avatar_url || ""} />
+                      <AvatarFallback className="text-2xl bg-primary text-primary-foreground">
+                        {getInitials(fullName || profile?.full_name)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div 
+                      className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      onClick={handleAvatarClick}
+                    >
+                      {isUploadingAvatar ? (
+                        <Loader2 className="h-6 w-6 text-white animate-spin" />
+                      ) : (
+                        <Camera className="h-6 w-6 text-white" />
+                      )}
+                    </div>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleAvatarUpload}
+                    />
+                  </div>
                   <div>
                     <h3 className="font-semibold">{fullName || profile?.full_name || "Usuário"}</h3>
                     <p className="text-sm text-muted-foreground">{user?.email}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Clique na foto para alterar
+                    </p>
                   </div>
                 </div>
 
