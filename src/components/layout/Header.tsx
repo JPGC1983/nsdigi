@@ -1,6 +1,6 @@
+import { useState, useEffect } from "react";
 import { Menu, Bell, Search, Settings, LogOut, BookOpen, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NotificationPanel from "@/components/notifications/NotificationPanel";
 import { useNotifications } from "@/hooks/useNotifications";
+import GlobalSearchCommand from "@/components/search/GlobalSearchCommand";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -22,6 +23,7 @@ interface HeaderProps {
 const Header = ({ onMenuClick }: HeaderProps) => {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
+  const [searchOpen, setSearchOpen] = useState(false);
   const {
     notifications,
     unreadCount,
@@ -33,6 +35,19 @@ const Header = ({ onMenuClick }: HeaderProps) => {
     togglePanel,
     closePanel,
   } = useNotifications();
+
+  // Keyboard shortcut for search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();
@@ -71,14 +86,19 @@ const Header = ({ onMenuClick }: HeaderProps) => {
             </Link>
           </div>
 
-          <div className="flex-1 flex justify-center px-4">
-            <div className="relative w-full max-w-md group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <Input
-                placeholder="Buscar cursos, materiais, fóruns, municípios..."
-                className="pl-10 bg-muted/50 border-transparent focus:border-primary focus:bg-card transition-all"
-              />
-            </div>
+          <div className="flex-1 flex justify-center px-4" data-onboarding="search">
+            <Button
+              variant="outline"
+              className="relative w-full max-w-md justify-start text-muted-foreground hover:text-foreground bg-muted/50 border-transparent hover:border-border"
+              onClick={() => setSearchOpen(true)}
+            >
+              <Search className="h-4 w-4 mr-2" />
+              <span className="hidden sm:inline">Buscar cursos, materiais, fóruns...</span>
+              <span className="sm:hidden">Buscar...</span>
+              <kbd className="pointer-events-none absolute right-2 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </Button>
           </div>
 
           <div className="flex items-center gap-2">
@@ -88,6 +108,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
               size="icon" 
               className="relative hover:bg-muted"
               onClick={togglePanel}
+              data-onboarding="notifications"
             >
               <Bell className="h-5 w-5" />
               {unreadCount > 0 && (
@@ -161,6 +182,9 @@ const Header = ({ onMenuClick }: HeaderProps) => {
         onClearAll={clearAll}
         onDismiss={dismissNotification}
       />
+
+      {/* Global Search Command */}
+      <GlobalSearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
     </>
   );
 };
