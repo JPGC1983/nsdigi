@@ -61,27 +61,21 @@ const Header = ({ onMenuClick }: HeaderProps) => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 shadow-sm">
-        <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
+      <header className="sticky top-0 z-40 w-full border-b border-border bg-card/80 backdrop-blur-xl supports-[backdrop-filter]:bg-card/60">
+        <div className="flex h-14 items-center gap-4 px-4 lg:px-6">
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden hover:bg-muted"
+            className="hover:bg-muted"
             onClick={onMenuClick}
           >
             <Menu className="h-5 w-5" />
           </Button>
 
-          <div className="flex items-center gap-3">
-            <Link to="/" className="hidden lg:flex items-center gap-2 group">
-              <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center group-hover:scale-105 transition-transform">
-                <span className="text-primary-foreground font-bold text-sm">SD</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
-                  Núcleo Microrregional
-                </span>
-                <span className="text-xs text-muted-foreground">Saúde Digital</span>
+          <div className="flex items-center gap-3 lg:hidden">
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-xs">SD</span>
               </div>
             </Link>
           </div>
@@ -89,19 +83,19 @@ const Header = ({ onMenuClick }: HeaderProps) => {
           <div className="flex-1 flex justify-center px-4" data-onboarding="search">
             <Button
               variant="outline"
-              className="relative w-full max-w-md justify-start text-muted-foreground hover:text-foreground bg-muted/50 border-transparent hover:border-border"
+              className="relative w-full max-w-md justify-start text-muted-foreground hover:text-foreground bg-muted/30 border-border/50 hover:border-border hover:bg-muted/50 transition-all"
               onClick={() => setSearchOpen(true)}
             >
               <Search className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Buscar cursos, materiais, fóruns...</span>
-              <span className="sm:hidden">Buscar...</span>
-              <kbd className="pointer-events-none absolute right-2 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+              <span className="hidden sm:inline text-sm">Buscar cursos, materiais, fóruns...</span>
+              <span className="sm:hidden text-sm">Buscar...</span>
+              <kbd className="pointer-events-none absolute right-2 hidden h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground sm:flex">
                 <span className="text-xs">⌘</span>K
               </kbd>
             </Button>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             {/* Notifications Button */}
             <Button 
               variant="ghost" 

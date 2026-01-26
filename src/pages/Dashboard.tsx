@@ -12,16 +12,35 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
-import AnimatedStatCard from "@/components/dashboard/AnimatedStatCard";
+import SparklineCard from "@/components/dashboard/SparklineCard";
 import QuickAction from "@/components/dashboard/QuickAction";
-import EvolutionChart from "@/components/dashboard/EvolutionChart";
 import ActivityFeed from "@/components/dashboard/ActivityFeed";
 import CompactCalendar from "@/components/dashboard/CompactCalendar";
+import MunicipalitiesTable from "@/components/dashboard/MunicipalitiesTable";
 import OnboardingOverlay from "@/components/onboarding/OnboardingOverlay";
 import { useOnboarding } from "@/hooks/useOnboarding";
 import heroImage from "@/assets/hero-health-network.jpg";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+  },
+};
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -49,160 +68,161 @@ const Dashboard = () => {
     }
   }, [user, hasCompleted, isActive, startOnboarding]);
 
+  // Empty sparkline data for now
+  const emptySparkline: { value: number }[] = [];
+
   return (
     <MainLayout>
-      <div className="min-h-screen bg-muted/30">
-        <div className="flex">
-          {/* Main Content - 2 columns layout */}
-          <div className="flex-1 p-6">
-            {/* Hero Section */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative rounded-2xl overflow-hidden group mb-6"
-            >
-              <img
-                src={heroImage}
-                alt="Rede de Saúde Digital"
-                className="w-full h-40 lg:h-48 object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#1B7D4B]/90 via-[#1B7D4B]/70 to-transparent flex items-center">
-                <div className="p-6 lg:p-8">
-                  <motion.h1
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-xl lg:text-2xl font-bold text-white mb-2 tracking-tight"
-                  >
-                    Núcleo Microrregional de Saúde Digital
-                  </motion.h1>
-                  <motion.p
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3, duration: 0.5 }}
-                    className="text-white/90 max-w-lg text-sm mb-4"
-                  >
-                    Plataforma integrada para educação permanente, suporte técnico e
-                    articulação entre municípios na transformação digital do SUS.
-                  </motion.p>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.5 }}
-                  >
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      className="gap-2 shadow-lg bg-white text-[#1B7D4B] hover:bg-white/90"
-                      onClick={() => navigate("/municipios")}
-                    >
-                      Explorar Municípios
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Button>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="min-h-screen"
+      >
+        {/* Hero Section */}
+        <motion.div
+          variants={itemVariants}
+          className="relative rounded-2xl overflow-hidden group mb-6"
+        >
+          <img
+            src={heroImage}
+            alt="Rede de Saúde Digital"
+            className="w-full h-40 lg:h-48 object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/60 to-transparent flex items-center">
+            <div className="p-6 lg:p-8">
+              <motion.h1
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="text-xl lg:text-2xl font-bold text-card mb-2 tracking-tight"
+              >
+                Núcleo Microrregional de Saúde Digital
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="text-card/80 max-w-lg text-sm mb-4"
+              >
+                Plataforma integrada para educação permanente, suporte técnico e
+                articulação entre municípios na transformação digital do SUS.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                <Button
+                  size="sm"
+                  className="gap-2 shadow-layered-lg bg-primary hover:bg-primary/90 text-primary-foreground"
+                  onClick={() => navigate("/municipios")}
+                >
+                  Explorar Municípios
+                  <ArrowUpRight className="h-4 w-4" />
+                </Button>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
 
-            {/* Stats Grid - 4 cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6" data-onboarding="stats">
-              <AnimatedStatCard
+        {/* Main Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column - Stats & Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Bento Grid - Stats */}
+            <motion.div
+              variants={itemVariants}
+              data-onboarding="stats"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            >
+              <SparklineCard
                 title="Municípios Ativos"
                 value={0}
                 subtitle="na microrregião"
                 icon={Building2}
-                variant="primary"
-                tooltip="Quantidade de municípios participando ativamente do núcleo"
+                sparklineData={emptySparkline}
                 delay={0.1}
               />
-              <AnimatedStatCard
-                title="Profissionais Cadastrados"
+              <SparklineCard
+                title="Profissionais"
                 value={0}
                 subtitle="em formação"
                 icon={Users}
-                variant="secondary"
-                tooltip="Total de profissionais de saúde cadastrados na plataforma"
+                sparklineData={emptySparkline}
                 delay={0.15}
               />
-              <AnimatedStatCard
+              <SparklineCard
                 title="Cursos Disponíveis"
                 value={0}
                 subtitle="trilhas formativas"
                 icon={GraduationCap}
-                variant="accent"
-                tooltip="Cursos e trilhas de capacitação disponíveis"
+                sparklineData={emptySparkline}
                 delay={0.2}
               />
-              <AnimatedStatCard
+              <SparklineCard
                 title="Discussões Ativas"
                 value={0}
                 subtitle="fóruns temáticos"
                 icon={MessageSquare}
-                tooltip="Tópicos ativos nos fóruns de discussão"
+                sparklineData={emptySparkline}
                 delay={0.25}
               />
-            </div>
+            </motion.div>
 
             {/* Quick Actions */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.25 }}
-              data-onboarding="quick-actions"
-              className="mb-6"
-            >
-              <h2 className="text-lg font-semibold text-foreground mb-4">
+            <motion.div variants={itemVariants} data-onboarding="quick-actions">
+              <h2 className="text-base font-semibold text-foreground mb-4 tracking-tight">
                 Ações Rápidas
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <QuickAction
                   title="Acessar Fóruns"
-                  description="Participe das discussões temáticas"
+                  description="Participe das discussões"
                   icon={MessageSquare}
                   href="/foruns"
-                  tooltip="Fóruns de APS, Regulação, Gestão, TI e Inovação"
+                  tooltip="Fóruns temáticos"
                 />
                 <QuickAction
                   title="Iniciar Curso"
-                  description="Continue sua trilha de aprendizado"
+                  description="Continue aprendendo"
                   icon={BookOpen}
                   href="/educacao"
-                  tooltip="Acesse cursos e trilhas de capacitação"
+                  tooltip="Cursos e trilhas"
                 />
                 <QuickAction
-                  title="Materiais de Apoio"
-                  description="Tutoriais, manuais e FAQs"
+                  title="Materiais"
+                  description="Tutoriais e manuais"
                   icon={FolderOpen}
                   href="/repositorio"
-                  tooltip="Biblioteca de materiais e documentos"
+                  tooltip="Biblioteca de materiais"
                 />
                 <QuickAction
                   title="Agendar Reunião"
-                  description="Próximo encontro do colegiado"
+                  description="Colegiado regional"
                   icon={Calendar}
                   href="/governanca"
-                  tooltip="Calendário do colegiado microrregional"
+                  tooltip="Calendário do colegiado"
                 />
               </div>
             </motion.div>
 
-            {/* Evolution Chart */}
-            <EvolutionChart />
+            {/* Municipalities Table */}
+            <motion.div variants={itemVariants} data-onboarding="municipalities">
+              <MunicipalitiesTable />
+            </motion.div>
           </div>
 
           {/* Right Column - Activity Feed & Calendar */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="hidden lg:block w-80 xl:w-96 p-6 pl-0 space-y-4"
+            variants={itemVariants}
+            className="space-y-4"
           >
             <ActivityFeed />
             <CompactCalendar />
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Onboarding Overlay */}
       <OnboardingOverlay
