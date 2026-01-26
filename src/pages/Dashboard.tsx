@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Building2,
@@ -15,11 +16,38 @@ import StatCard from "@/components/dashboard/StatCard";
 import QuickAction from "@/components/dashboard/QuickAction";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import MunicipalityStatus from "@/components/dashboard/MunicipalityStatus";
+import OnboardingOverlay from "@/components/onboarding/OnboardingOverlay";
+import { useOnboarding } from "@/hooks/useOnboarding";
 import heroImage from "@/assets/hero-health-network.jpg";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const {
+    isActive,
+    hasCompleted,
+    currentStep,
+    currentStepIndex,
+    totalSteps,
+    progress,
+    startOnboarding,
+    nextStep,
+    prevStep,
+    skipOnboarding,
+  } = useOnboarding();
+
+  // Auto-start onboarding for new users
+  useEffect(() => {
+    if (user && !hasCompleted && !isActive) {
+      // Small delay to ensure page is fully rendered
+      const timer = setTimeout(() => {
+        startOnboarding();
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [user, hasCompleted, isActive, startOnboarding]);
 
   return (
     <MainLayout>
@@ -54,7 +82,7 @@ const Dashboard = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-onboarding="stats">
           <StatCard
             title="Municípios Ativos"
             value={0}
@@ -89,7 +117,7 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Actions */}
-        <div>
+        <div data-onboarding="quick-actions">
           <h2 className="text-lg font-semibold text-foreground mb-4">
             Ações Rápidas
           </h2>
@@ -128,7 +156,7 @@ const Dashboard = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Municipality Status - Takes 2 columns */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2" data-onboarding="municipalities">
             <MunicipalityStatus />
           </div>
 
@@ -186,6 +214,18 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Onboarding Overlay */}
+      <OnboardingOverlay
+        isActive={isActive}
+        currentStep={currentStep}
+        currentStepIndex={currentStepIndex}
+        totalSteps={totalSteps}
+        progress={progress}
+        onNext={nextStep}
+        onPrev={prevStep}
+        onSkip={skipOnboarding}
+      />
     </MainLayout>
   );
 };
