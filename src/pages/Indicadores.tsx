@@ -9,6 +9,8 @@ import {
   AlertCircle,
 } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
+import PageHeader from "@/components/shared/PageHeader";
+import EmptyState from "@/components/shared/EmptyState";
 import { Progress } from "@/components/ui/progress";
 
 // Empty arrays - data will be populated from backend
@@ -36,13 +38,11 @@ const Indicadores = () => {
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
-        {/* Header */}
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Indicadores de Monitoramento</h1>
-          <p className="text-muted-foreground">
-            Acompanhamento de metas e desempenho do núcleo microrregional
-          </p>
-        </div>
+        <PageHeader
+          title="Indicadores de Monitoramento"
+          description="Acompanhamento de metas e desempenho do núcleo microrregional"
+          breadcrumbs={[{ label: "Indicadores" }]}
+        />
 
         {/* Summary Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -110,13 +110,12 @@ const Indicadores = () => {
             Indicadores de Processo
           </h3>
           {processIndicators.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-8 border border-dashed border-border rounded-lg bg-muted/20">
-              <AlertCircle className="h-10 w-10 text-muted-foreground/40 mb-3" />
-              <p className="text-sm text-muted-foreground">Nenhum indicador cadastrado</p>
-              <p className="text-xs text-muted-foreground/60 mt-1">
-                Configure os indicadores de processo para acompanhamento
-              </p>
-            </div>
+            <EmptyState
+              icon={Target}
+              title="Nenhum indicador de processo cadastrado"
+              description="Configure os indicadores de processo para acompanhar reuniões, formações e participação."
+              variant="compact"
+            />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {processIndicators.map((indicator) => (
@@ -144,13 +143,12 @@ const Indicadores = () => {
             Indicadores de Resultado
           </h3>
           {resultIndicators.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-8 border border-dashed border-border rounded-lg bg-muted/20">
-              <AlertCircle className="h-10 w-10 text-muted-foreground/40 mb-3" />
-              <p className="text-sm text-muted-foreground">Nenhum indicador cadastrado</p>
-              <p className="text-xs text-muted-foreground/60 mt-1">
-                Configure os indicadores de resultado para acompanhamento
-              </p>
-            </div>
+            <EmptyState
+              icon={BarChart3}
+              title="Nenhum indicador de resultado cadastrado"
+              description="Configure os indicadores de resultado para monitorar maturidade digital e certificações."
+              variant="compact"
+            />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {resultIndicators.map((indicator) => (

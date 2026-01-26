@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { MessageSquare, Users, Clock, ChevronRight, Pin, Plus, MessagesSquare } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
+import PageHeader from "@/components/shared/PageHeader";
+import EmptyState from "@/components/shared/EmptyState";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -54,19 +56,16 @@ const Foruns = () => {
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Fóruns de Discussão</h1>
-            <p className="text-muted-foreground">
-              Comunidade de prática para troca de experiências e suporte mútuo
-            </p>
-          </div>
-          <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
-            <Plus className="h-4 w-4" />
-            Nova Discussão
-          </Button>
-        </div>
+        <PageHeader
+          title="Fóruns de Discussão"
+          description="Comunidade de prática para troca de experiências e suporte mútuo"
+          breadcrumbs={[{ label: "Fóruns de Discussão" }]}
+          action={{
+            label: "Nova Discussão",
+            icon: Plus,
+            onClick: () => setIsModalOpen(true),
+          }}
+        />
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -97,19 +96,13 @@ const Foruns = () => {
 
           <TabsContent value="foruns" className="mt-4">
             {forums.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">
-                <MessagesSquare className="h-16 w-16 text-muted-foreground/40 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  Nenhum fórum criado
-                </h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  Crie os fóruns temáticos para que os profissionais possam trocar experiências e tirar dúvidas.
-                </p>
-                <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
-                  <Plus className="h-4 w-4" />
-                  Criar Primeiro Fórum
-                </Button>
-              </div>
+              <EmptyState
+                icon={MessagesSquare}
+                title="Crie o primeiro fórum temático para iniciar discussões"
+                description="Após criar fóruns, os profissionais poderão trocar experiências, tirar dúvidas e compartilhar boas práticas sobre saúde digital."
+                actionLabel="Criar Primeiro Fórum"
+                onAction={() => setIsModalOpen(true)}
+              />
             ) : (
               <div className="space-y-4">
                 {forums.map((forum) => (
@@ -154,15 +147,11 @@ const Foruns = () => {
 
           <TabsContent value="recentes" className="mt-4">
             {recentTopics.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">
-                <MessageSquare className="h-16 w-16 text-muted-foreground/40 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  Nenhuma discussão recente
-                </h3>
-                <p className="text-muted-foreground max-w-md mx-auto">
-                  As discussões mais recentes aparecerão aqui.
-                </p>
-              </div>
+              <EmptyState
+                icon={MessageSquare}
+                title="Nenhuma discussão recente"
+                description="As discussões mais recentes dos fóruns aparecerão aqui para fácil acompanhamento."
+              />
             ) : (
               <div className="rounded-xl border border-border bg-card shadow-card overflow-hidden">
                 <div className="divide-y divide-border">

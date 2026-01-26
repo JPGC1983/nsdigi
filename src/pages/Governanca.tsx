@@ -23,6 +23,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import MainLayout from "@/components/layout/MainLayout";
+import PageHeader from "@/components/shared/PageHeader";
+import EmptyState from "@/components/shared/EmptyState";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -344,20 +346,11 @@ const Governanca = () => {
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
-        {/* Header with Breadcrumbs */}
-        <div className="space-y-4">
-          <nav className="flex items-center gap-1 text-sm text-muted-foreground">
-            <a href="/" className="hover:text-foreground transition-colors">Início</a>
-            <span className="text-muted-foreground/50">/</span>
-            <span className="text-foreground font-medium">Governança</span>
-          </nav>
-          <div>
-            <h1 className="text-2xl font-bold text-foreground tracking-tight">Governança</h1>
-            <p className="text-muted-foreground">
-              Estrutura do Colegiado Microrregional de Saúde Digital
-            </p>
-          </div>
-        </div>
+        <PageHeader
+          title="Governança"
+          description="Estrutura do Colegiado Microrregional de Saúde Digital"
+          breadcrumbs={[{ label: "Governança" }]}
+        />
 
         {/* Governance Overview */}
         <div className="rounded-xl border border-primary/20 bg-primary/5 p-6">

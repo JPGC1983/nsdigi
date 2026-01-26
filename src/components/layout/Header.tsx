@@ -1,4 +1,4 @@
-import { Menu, Bell, User, Search, BellOff, Settings, LogOut, BookOpen, Award } from "lucide-react";
+import { Menu, Bell, Search, Settings, LogOut, BookOpen, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,27 +9,30 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import NotificationPanel from "@/components/notifications/NotificationPanel";
+import { useNotifications } from "@/hooks/useNotifications";
 
 interface HeaderProps {
   onMenuClick: () => void;
 }
 
-// Empty notifications - will be populated from backend
-const notifications: { id: string; title: string; time: string; read: boolean }[] = [];
-
 const Header = ({ onMenuClick }: HeaderProps) => {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const {
+    notifications,
+    unreadCount,
+    isOpen,
+    markAsRead,
+    markAllAsRead,
+    dismissNotification,
+    clearAll,
+    togglePanel,
+    closePanel,
+  } = useNotifications();
 
   const handleSignOut = async () => {
     await signOut();
@@ -42,90 +45,57 @@ const Header = ({ onMenuClick }: HeaderProps) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 shadow-sm">
-      <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="lg:hidden hover:bg-muted"
-          onClick={onMenuClick}
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
+    <>
+      <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 shadow-sm">
+        <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden hover:bg-muted"
+            onClick={onMenuClick}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
 
-        <div className="flex items-center gap-3">
-          <Link to="/" className="hidden lg:flex items-center gap-2 group">
-            <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center group-hover:scale-105 transition-transform">
-              <span className="text-primary-foreground font-bold text-sm">SD</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
-                Núcleo Microrregional
-              </span>
-              <span className="text-xs text-muted-foreground">Saúde Digital</span>
-            </div>
-          </Link>
-        </div>
-
-        <div className="flex-1 flex justify-center px-4">
-          <div className="relative w-full max-w-md group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-            <Input
-              placeholder="Buscar cursos, materiais, fóruns..."
-              className="pl-10 bg-muted/50 border-transparent focus:border-primary focus:bg-card transition-all"
-            />
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* Notifications Popover */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative hover:bg-muted">
-                <Bell className="h-5 w-5" />
-                {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-destructive animate-pulse" />
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align="end" className="w-80 p-0">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-                <h4 className="font-semibold text-sm">Notificações</h4>
-                {notifications.length > 0 && (
-                  <Button variant="ghost" size="sm" className="h-auto p-0 text-xs text-primary">
-                    Marcar todas como lidas
-                  </Button>
-                )}
+          <div className="flex items-center gap-3">
+            <Link to="/" className="hidden lg:flex items-center gap-2 group">
+              <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center group-hover:scale-105 transition-transform">
+                <span className="text-primary-foreground font-bold text-sm">SD</span>
               </div>
-              <ScrollArea className="h-[300px]">
-                {notifications.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-12 px-4">
-                    <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-3">
-                      <BellOff className="h-6 w-6 text-muted-foreground" />
-                    </div>
-                    <p className="text-sm font-medium text-foreground">Tudo em dia!</p>
-                    <p className="text-xs text-muted-foreground text-center mt-1">
-                      Você será notificado sobre novos cursos, fóruns e atualizações importantes.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="divide-y divide-border">
-                    {notifications.map((notif) => (
-                      <div
-                        key={notif.id}
-                        className={`px-4 py-3 hover:bg-muted/50 cursor-pointer transition-colors ${
-                          !notif.read ? "bg-primary/5" : ""
-                        }`}
-                      >
-                        <p className="text-sm text-foreground">{notif.title}</p>
-                        <p className="text-xs text-muted-foreground mt-1">{notif.time}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </ScrollArea>
-            </PopoverContent>
-          </Popover>
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                  Núcleo Microrregional
+                </span>
+                <span className="text-xs text-muted-foreground">Saúde Digital</span>
+              </div>
+            </Link>
+          </div>
+
+          <div className="flex-1 flex justify-center px-4">
+            <div className="relative w-full max-w-md group">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+              <Input
+                placeholder="Buscar cursos, materiais, fóruns, municípios..."
+                className="pl-10 bg-muted/50 border-transparent focus:border-primary focus:bg-card transition-all"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {/* Notifications Button */}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative hover:bg-muted"
+              onClick={togglePanel}
+            >
+              <Bell className="h-5 w-5" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 h-5 w-5 rounded-full bg-destructive text-destructive-foreground text-xs flex items-center justify-center font-medium animate-pulse">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              )}
+            </Button>
 
           {/* User Menu */}
           {user ? (
@@ -179,7 +149,19 @@ const Header = ({ onMenuClick }: HeaderProps) => {
           )}
         </div>
       </div>
-    </header>
+      </header>
+
+      {/* Notification Panel */}
+      <NotificationPanel
+        isOpen={isOpen}
+        onClose={closePanel}
+        notifications={notifications}
+        onMarkAsRead={markAsRead}
+        onMarkAllAsRead={markAllAsRead}
+        onClearAll={clearAll}
+        onDismiss={dismissNotification}
+      />
+    </>
   );
 };
 
