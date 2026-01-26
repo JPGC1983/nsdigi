@@ -44,7 +44,7 @@ const CompactCalendar = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.5 }}
-      className="rounded-xl border border-border bg-card p-4 shadow-sm hover:shadow-lg transition-shadow duration-300"
+      className="rounded-xl border border-border bg-card p-5 shadow-layered hover:shadow-layered-lg transition-shadow duration-300"
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
