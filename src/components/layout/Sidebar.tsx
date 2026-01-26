@@ -10,6 +10,7 @@ import {
   Settings,
   ChevronLeft,
   Activity,
+  UserCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
   { icon: Building2, label: "Municípios", path: "/municipios" },
   { icon: MessageSquare, label: "Fóruns", path: "/foruns" },
+  { icon: UserCheck, label: "Mentorias", path: "/mentorias" },
   { icon: GraduationCap, label: "Educação Permanente", path: "/educacao" },
   { icon: FolderOpen, label: "Repositório", path: "/repositorio" },
   { icon: BarChart3, label: "Indicadores", path: "/indicadores" },

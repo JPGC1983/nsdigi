@@ -528,6 +528,473 @@ export type Database = {
         }
         Relationships: []
       }
+      mentees: {
+        Row: {
+          created_at: string
+          experience_level: string | null
+          id: string
+          job_role: string | null
+          knowledge_gaps:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          learning_goals: string | null
+          municipality: string | null
+          organization: string | null
+          preferred_schedule: string | null
+          total_hours: number | null
+          total_sessions: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          experience_level?: string | null
+          id?: string
+          job_role?: string | null
+          knowledge_gaps?:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          learning_goals?: string | null
+          municipality?: string | null
+          organization?: string | null
+          preferred_schedule?: string | null
+          total_hours?: number | null
+          total_sessions?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          experience_level?: string | null
+          id?: string
+          job_role?: string | null
+          knowledge_gaps?:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          learning_goals?: string | null
+          municipality?: string | null
+          organization?: string | null
+          preferred_schedule?: string | null
+          total_hours?: number | null
+          total_sessions?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      mentor_availability: {
+        Row: {
+          created_at: string
+          day_of_week: number
+          end_time: string
+          id: string
+          is_active: boolean | null
+          mentor_id: string
+          start_time: string
+        }
+        Insert: {
+          created_at?: string
+          day_of_week: number
+          end_time: string
+          id?: string
+          is_active?: boolean | null
+          mentor_id: string
+          start_time: string
+        }
+        Update: {
+          created_at?: string
+          day_of_week?: number
+          end_time?: string
+          id?: string
+          is_active?: boolean | null
+          mentor_id?: string
+          start_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentor_availability_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentors: {
+        Row: {
+          availability_notes: string | null
+          avg_rating: number | null
+          bio: string | null
+          created_at: string
+          current_mentees: number | null
+          id: string
+          is_active: boolean | null
+          is_verified: boolean | null
+          linkedin_url: string | null
+          max_mentees: number | null
+          municipality: string | null
+          organization: string | null
+          rating_count: number | null
+          specialties:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          total_hours: number | null
+          total_sessions: number | null
+          updated_at: string
+          user_id: string
+          verified_at: string | null
+          verified_by: string | null
+          years_experience: number | null
+        }
+        Insert: {
+          availability_notes?: string | null
+          avg_rating?: number | null
+          bio?: string | null
+          created_at?: string
+          current_mentees?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          linkedin_url?: string | null
+          max_mentees?: number | null
+          municipality?: string | null
+          organization?: string | null
+          rating_count?: number | null
+          specialties?:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          total_hours?: number | null
+          total_sessions?: number | null
+          updated_at?: string
+          user_id: string
+          verified_at?: string | null
+          verified_by?: string | null
+          years_experience?: number | null
+        }
+        Update: {
+          availability_notes?: string | null
+          avg_rating?: number | null
+          bio?: string | null
+          created_at?: string
+          current_mentees?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          linkedin_url?: string | null
+          max_mentees?: number | null
+          municipality?: string | null
+          organization?: string | null
+          rating_count?: number | null
+          specialties?:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          total_hours?: number | null
+          total_sessions?: number | null
+          updated_at?: string
+          user_id?: string
+          verified_at?: string | null
+          verified_by?: string | null
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
+      mentorship_badges: {
+        Row: {
+          badge_description: string | null
+          badge_icon: string | null
+          badge_name: string
+          badge_type: string
+          created_at: string
+          earned_at: string
+          id: string
+          specialty: Database["public"]["Enums"]["mentorship_specialty"] | null
+          user_id: string
+        }
+        Insert: {
+          badge_description?: string | null
+          badge_icon?: string | null
+          badge_name: string
+          badge_type: string
+          created_at?: string
+          earned_at?: string
+          id?: string
+          specialty?: Database["public"]["Enums"]["mentorship_specialty"] | null
+          user_id: string
+        }
+        Update: {
+          badge_description?: string | null
+          badge_icon?: string | null
+          badge_name?: string
+          badge_type?: string
+          created_at?: string
+          earned_at?: string
+          id?: string
+          specialty?: Database["public"]["Enums"]["mentorship_specialty"] | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      mentorship_certificates: {
+        Row: {
+          certificate_code: string | null
+          certificate_type: string
+          created_at: string
+          description: string | null
+          hours_completed: number | null
+          id: string
+          is_public: boolean | null
+          issued_at: string
+          issued_by: string | null
+          match_id: string | null
+          sessions_completed: number | null
+          specialty: Database["public"]["Enums"]["mentorship_specialty"] | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          certificate_code?: string | null
+          certificate_type: string
+          created_at?: string
+          description?: string | null
+          hours_completed?: number | null
+          id?: string
+          is_public?: boolean | null
+          issued_at?: string
+          issued_by?: string | null
+          match_id?: string | null
+          sessions_completed?: number | null
+          specialty?: Database["public"]["Enums"]["mentorship_specialty"] | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          certificate_code?: string | null
+          certificate_type?: string
+          created_at?: string
+          description?: string | null
+          hours_completed?: number | null
+          id?: string
+          is_public?: boolean | null
+          issued_at?: string
+          issued_by?: string | null
+          match_id?: string | null
+          sessions_completed?: number | null
+          specialty?: Database["public"]["Enums"]["mentorship_specialty"] | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentorship_certificates_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "mentorship_matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentorship_goals: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          id: string
+          match_id: string
+          progress_percentage: number | null
+          specialty: Database["public"]["Enums"]["mentorship_specialty"] | null
+          status: string | null
+          target_date: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          match_id: string
+          progress_percentage?: number | null
+          specialty?: Database["public"]["Enums"]["mentorship_specialty"] | null
+          status?: string | null
+          target_date?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          match_id?: string
+          progress_percentage?: number | null
+          specialty?: Database["public"]["Enums"]["mentorship_specialty"] | null
+          status?: string | null
+          target_date?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentorship_goals_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "mentorship_matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentorship_matches: {
+        Row: {
+          created_at: string
+          current_phase: string | null
+          end_date: string | null
+          goals: string | null
+          id: string
+          match_score: number | null
+          matched_specialties:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          mentee_id: string
+          mentor_id: string
+          phase_progress: number | null
+          progress_notes: string | null
+          start_date: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          current_phase?: string | null
+          end_date?: string | null
+          goals?: string | null
+          id?: string
+          match_score?: number | null
+          matched_specialties?:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          mentee_id: string
+          mentor_id: string
+          phase_progress?: number | null
+          progress_notes?: string | null
+          start_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          current_phase?: string | null
+          end_date?: string | null
+          goals?: string | null
+          id?: string
+          match_score?: number | null
+          matched_specialties?:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          mentee_id?: string
+          mentor_id?: string
+          phase_progress?: number | null
+          progress_notes?: string | null
+          start_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentorship_matches_mentee_id_fkey"
+            columns: ["mentee_id"]
+            isOneToOne: false
+            referencedRelation: "mentees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentorship_matches_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentorship_sessions: {
+        Row: {
+          action_items: string[] | null
+          agenda: string | null
+          completed_at: string | null
+          created_at: string
+          duration_minutes: number | null
+          id: string
+          match_id: string
+          meeting_link: string | null
+          mentee_feedback: string | null
+          mentor_feedback: string | null
+          notes: string | null
+          rating: number | null
+          resources_shared: string[] | null
+          scheduled_at: string
+          session_number: number | null
+          session_type: Database["public"]["Enums"]["mentorship_session_type"]
+          skills_practiced:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          status: Database["public"]["Enums"]["mentorship_session_status"]
+          updated_at: string
+        }
+        Insert: {
+          action_items?: string[] | null
+          agenda?: string | null
+          completed_at?: string | null
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          match_id: string
+          meeting_link?: string | null
+          mentee_feedback?: string | null
+          mentor_feedback?: string | null
+          notes?: string | null
+          rating?: number | null
+          resources_shared?: string[] | null
+          scheduled_at: string
+          session_number?: number | null
+          session_type: Database["public"]["Enums"]["mentorship_session_type"]
+          skills_practiced?:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          status?: Database["public"]["Enums"]["mentorship_session_status"]
+          updated_at?: string
+        }
+        Update: {
+          action_items?: string[] | null
+          agenda?: string | null
+          completed_at?: string | null
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          match_id?: string
+          meeting_link?: string | null
+          mentee_feedback?: string | null
+          mentor_feedback?: string | null
+          notes?: string | null
+          rating?: number | null
+          resources_shared?: string[] | null
+          scheduled_at?: string
+          session_number?: number | null
+          session_type?: Database["public"]["Enums"]["mentorship_session_type"]
+          skills_practiced?:
+            | Database["public"]["Enums"]["mentorship_specialty"][]
+            | null
+          status?: Database["public"]["Enums"]["mentorship_session_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentorship_sessions_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "mentorship_matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -608,6 +1075,21 @@ export type Database = {
         | "best_practice"
         | "qa"
         | "announcement"
+      mentorship_session_status:
+        | "pending"
+        | "confirmed"
+        | "in_progress"
+        | "completed"
+        | "cancelled"
+        | "no_show"
+      mentorship_session_type: "diagnostic" | "practical" | "evaluation"
+      mentorship_specialty:
+        | "esus_ab"
+        | "esus_regulacao"
+        | "telessaude"
+        | "seguranca_lgpd"
+        | "rnds"
+        | "implementacao"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -748,6 +1230,23 @@ export const Constants = {
         "best_practice",
         "qa",
         "announcement",
+      ],
+      mentorship_session_status: [
+        "pending",
+        "confirmed",
+        "in_progress",
+        "completed",
+        "cancelled",
+        "no_show",
+      ],
+      mentorship_session_type: ["diagnostic", "practical", "evaluation"],
+      mentorship_specialty: [
+        "esus_ab",
+        "esus_regulacao",
+        "telessaude",
+        "seguranca_lgpd",
+        "rnds",
+        "implementacao",
       ],
     },
   },
