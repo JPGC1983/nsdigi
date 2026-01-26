@@ -34,22 +34,22 @@ const QuickAction = ({
   };
 
   const content = (
-    <div className="flex items-center gap-3">
-      <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-105 transition-all duration-300">
-        <Icon className="h-5 w-5 text-primary group-hover:text-primary-foreground transition-colors" />
+    <div className="flex items-center gap-2.5">
+      <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-105 transition-all duration-300 flex-shrink-0">
+        <Icon className="h-4 w-4 text-primary group-hover:text-primary-foreground transition-colors" />
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+        <h3 className="text-xs font-medium text-foreground group-hover:text-primary transition-colors leading-tight">
           {title}
         </h3>
-        <p className="text-xs text-muted-foreground truncate">{description}</p>
+        <p className="text-[10px] text-muted-foreground truncate leading-tight">{description}</p>
       </div>
-      <ArrowRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition-all opacity-0 group-hover:opacity-100" />
+      <ArrowRight className="h-3 w-3 text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition-all opacity-0 group-hover:opacity-100 flex-shrink-0" />
     </div>
   );
 
   const baseClasses = cn(
-    "w-full text-left rounded-xl border border-border bg-card p-4 shadow-layered transition-all duration-300 hover:shadow-layered-lg group cursor-pointer",
+    "w-full text-left rounded-lg border border-border bg-card p-3 shadow-layered transition-all duration-300 hover:shadow-layered-lg group cursor-pointer",
     variants[variant]
   );
 
