@@ -432,8 +432,16 @@ const Configuracoes = () => {
                         Adicione uma camada extra de segurança
                       </p>
                     </div>
-                    <Button variant="outline" disabled>
-                      Em breve
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
+                        toast({
+                          title: "Em desenvolvimento",
+                          description: "A autenticação em dois fatores será implementada em breve.",
+                        });
+                      }}
+                    >
+                      Configurar
                     </Button>
                   </div>
 
@@ -444,8 +452,16 @@ const Configuracoes = () => {
                         Gerencie dispositivos conectados
                       </p>
                     </div>
-                    <Button variant="outline" disabled>
-                      Em breve
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
+                        toast({
+                          title: "Em desenvolvimento",
+                          description: "O gerenciamento de sessões será implementado em breve.",
+                        });
+                      }}
+                    >
+                      Ver Sessões
                     </Button>
                   </div>
                 </div>
