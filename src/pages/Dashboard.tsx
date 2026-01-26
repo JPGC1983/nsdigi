@@ -15,7 +15,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import SparklineCard from "@/components/dashboard/SparklineCard";
 import QuickAction from "@/components/dashboard/QuickAction";
 import ActivityFeed from "@/components/dashboard/ActivityFeed";
-import CompactCalendar from "@/components/dashboard/CompactCalendar";
+
 import MunicipalitiesTable from "@/components/dashboard/MunicipalitiesTable";
 import OnboardingOverlay from "@/components/onboarding/OnboardingOverlay";
 import { useOnboarding } from "@/hooks/useOnboarding";
@@ -219,7 +219,6 @@ const Dashboard = () => {
             className="space-y-4"
           >
             <ActivityFeed />
-            <CompactCalendar />
           </motion.div>
         </div>
       </motion.div>
