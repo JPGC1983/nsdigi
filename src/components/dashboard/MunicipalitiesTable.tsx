@@ -55,15 +55,18 @@ const MunicipalitiesTable = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
-      className="rounded-xl border border-border bg-card shadow-layered overflow-hidden h-full min-h-[200px] flex flex-col"
+      className="rounded-xl border border-border bg-white shadow-layered overflow-hidden h-full min-h-[200px] flex flex-col"
     >
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 border-b border-border">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 border-b border-border">
         <div>
-          <h3 className="text-base font-semibold text-foreground tracking-tight">
-            Municípios da Microrregião
-          </h3>
-          <p className="text-xs text-muted-foreground mt-0.5">
+          <div className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground tracking-tight">
+              Municípios da Microrregião
+            </h3>
+          </div>
+          <p className="text-[13px] text-muted-foreground mt-0.5">
             {filteredMunicipalities.length} municípios cadastrados
           </p>
         </div>
@@ -73,30 +76,29 @@ const MunicipalitiesTable = () => {
             placeholder="Buscar município..."
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
-            className="pl-9 h-9 text-sm bg-muted/50 border-border focus:bg-card transition-colors"
+            className="pl-9 h-9 text-sm bg-muted/50 border-border focus:bg-white transition-colors"
           />
         </div>
       </div>
 
       {/* Table / Empty State */}
       {paginatedData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center flex-1 py-6 px-6 text-center">
-          <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center mb-3">
-            <Building2 className="h-6 w-6 text-muted-foreground" />
+        <div className="flex flex-col items-center justify-center flex-1 py-10 px-6 text-center">
+          <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-4">
+            <Building2 className="h-7 w-7 text-muted-foreground/50" />
           </div>
-          <h4 className="text-sm font-medium text-foreground mb-1">
+          <h4 className="text-base font-medium text-muted-foreground mb-1">
             Nenhum município cadastrado
           </h4>
-          <p className="text-xs text-muted-foreground max-w-xs mb-3">
-            Os municípios aparecerão aqui após o cadastro.
+          <p className="text-[13px] text-muted-foreground/70 max-w-xs mb-5">
+            Adicione municípios para acompanhar indicadores e atividades regionais.
           </p>
           <Button
-            size="sm"
             onClick={() => navigate("/municipios")}
-            className="gap-2 h-8 text-xs"
+            className="gap-2 bg-primary hover:bg-primary/90 px-6 py-2.5 h-auto rounded-lg"
           >
             Cadastrar Município
-            <ArrowUpRight className="h-3 w-3" />
+            <ArrowUpRight className="h-4 w-4" />
           </Button>
         </div>
       ) : (

@@ -1,4 +1,4 @@
-import { MessageSquare, GraduationCap, FileText, Users, Inbox, ExternalLink } from "lucide-react";
+import { MessageSquare, GraduationCap, FileText, Users, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
@@ -57,7 +57,6 @@ const ActivityFeed = () => {
   };
 
   const handleViewAll = () => {
-    // Navigate to forums page which has the most recent discussions
     navigate("/foruns");
   };
 
@@ -66,25 +65,25 @@ const ActivityFeed = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
-      className="rounded-xl border border-border bg-card p-5 shadow-layered hover:shadow-layered-lg transition-shadow duration-300 h-full min-h-[200px] flex flex-col"
+      className="rounded-xl border border-border bg-white p-6 shadow-layered h-full min-h-[200px] flex flex-col"
     >
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-foreground text-sm">Atividades Recentes</h3>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+      <div className="flex items-center justify-between mb-5">
+        <h3 className="font-semibold text-foreground text-base">Atividades Recentes</h3>
+        <button
           onClick={handleViewAll}
-          className="text-xs text-primary font-medium flex items-center gap-1 hover:underline"
+          className="text-xs text-primary font-medium hover:underline transition-all"
         >
-          Ver todas <ExternalLink className="h-3 w-3" />
-        </motion.button>
+          Ver todas
+        </button>
       </div>
       
       {activities.length === 0 ? (
-        <div className="flex flex-col items-center justify-center flex-1 text-center py-4">
-          <Inbox className="h-10 w-10 text-muted-foreground/40 mb-2" />
-          <p className="text-sm text-muted-foreground">Nenhuma atividade recente</p>
-          <p className="text-xs text-muted-foreground/60 mt-1">
+        <div className="flex flex-col items-center justify-center flex-1 text-center py-6">
+          <div className="h-14 w-14 rounded-full bg-muted flex items-center justify-center mb-3">
+            <Mail className="h-6 w-6 text-muted-foreground/40" />
+          </div>
+          <p className="text-sm text-muted-foreground mb-1">Nenhuma atividade recente</p>
+          <p className="text-xs text-muted-foreground/60">
             As atividades aparecerão aqui
           </p>
         </div>
