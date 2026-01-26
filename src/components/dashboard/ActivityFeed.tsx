@@ -91,8 +91,8 @@ const ActivityFeed = () => {
   };
 
   const handleViewAll = () => {
-    // Navigate to a page that shows all activities - for now, dashboard
-    navigate("/");
+    // Navigate to forums page which has the most recent discussions
+    navigate("/foruns");
   };
 
   return (
