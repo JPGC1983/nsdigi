@@ -15,7 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import governoMinasLogo from "@/assets/governo-minas-logo.png";
-import nsdigiLogo from "@/assets/nsdigi-logo.png";
+import nsdigiLogo from "@/assets/nsdigi-logo-new.png";
 
 interface SidebarProps {
   isOpen: boolean;
