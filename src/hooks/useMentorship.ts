@@ -121,11 +121,11 @@ export const useMentorProfile = () => {
         years_experience: data.years_experience || 0,
         municipality: data.municipality,
         organization: data.organization,
-        specialties: data.specialties || [],
+        specialties: data.specialties as any || [],
         max_mentees: data.max_mentees || 3,
         linkedin_url: data.linkedin_url,
         availability_notes: data.availability_notes,
-      })
+      } as any)
       .select()
       .single();
 
@@ -139,7 +139,7 @@ export const useMentorProfile = () => {
 
     const { data: updated, error } = await supabase
       .from("mentors")
-      .update(data)
+      .update(data as any)
       .eq("id", mentor.id)
       .select()
       .single();
@@ -228,9 +228,9 @@ export const useMenteeProfile = () => {
         job_role: data.job_role,
         experience_level: data.experience_level || 'beginner',
         learning_goals: data.learning_goals,
-        knowledge_gaps: data.knowledge_gaps || [],
+        knowledge_gaps: data.knowledge_gaps as any || [],
         preferred_schedule: data.preferred_schedule,
-      })
+      } as any)
       .select()
       .single();
 
@@ -244,7 +244,7 @@ export const useMenteeProfile = () => {
 
     const { data: updated, error } = await supabase
       .from("mentees")
-      .update(data)
+      .update(data as any)
       .eq("id", mentee.id)
       .select()
       .single();
@@ -316,9 +316,9 @@ export const useMentorshipMatches = () => {
       .insert({
         mentor_id: mentorId,
         mentee_id: menteeId,
-        matched_specialties: specialties,
+        matched_specialties: specialties as any,
         status: 'pending',
-      })
+      } as any)
       .select()
       .single();
 
@@ -402,7 +402,7 @@ export const useMentorshipSessions = (matchId?: string) => {
   const updateSession = async (sessionId: string, updates: Partial<MentorshipSession>) => {
     const { error } = await supabase
       .from("mentorship_sessions")
-      .update(updates)
+      .update(updates as any)
       .eq("id", sessionId);
 
     if (error) throw error;
@@ -463,7 +463,7 @@ export const useMentorshipGoals = (matchId?: string) => {
   const updateGoal = async (goalId: string, updates: Partial<MentorshipGoal>) => {
     const { error } = await supabase
       .from("mentorship_goals")
-      .update(updates)
+      .update(updates as any)
       .eq("id", goalId);
 
     if (error) throw error;
