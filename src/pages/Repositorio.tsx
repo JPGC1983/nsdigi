@@ -15,6 +15,8 @@ import {
   Plus,
 } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
+import PageHeader from "@/components/shared/PageHeader";
+import EmptyState from "@/components/shared/EmptyState";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -80,19 +82,16 @@ const Repositorio = () => {
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Repositório de Materiais</h1>
-            <p className="text-muted-foreground">
-              Tutoriais, manuais, FAQs e documentos de referência
-            </p>
-          </div>
-          <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
-            <Plus className="h-4 w-4" />
-            Enviar Material
-          </Button>
-        </div>
+        <PageHeader
+          title="Repositório de Materiais"
+          description="Tutoriais, manuais, FAQs e documentos de referência"
+          breadcrumbs={[{ label: "Repositório" }]}
+          action={{
+            label: "Enviar Material",
+            icon: Plus,
+            onClick: () => setIsModalOpen(true),
+          }}
+        />
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
@@ -156,19 +155,13 @@ const Repositorio = () => {
 
           <TabsContent value={categoryFilter} className="mt-4">
             {filteredMaterials.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">
-                <FolderOpen className="h-16 w-16 text-muted-foreground/40 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  Nenhum material disponível
-                </h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  Os materiais de apoio como tutoriais, manuais e FAQs serão exibidos aqui.
-                </p>
-                <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
-                  <Plus className="h-4 w-4" />
-                  Adicionar Material
-                </Button>
-              </div>
+              <EmptyState
+                icon={FolderOpen}
+                title="Biblioteca de materiais vazia"
+                description="Adicione tutoriais, manuais, FAQs e templates para apoiar os profissionais na utilização dos sistemas de saúde digital."
+                actionLabel="Adicionar Primeiro Material"
+                onAction={() => setIsModalOpen(true)}
+              />
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {filteredMaterials.map((material) => {

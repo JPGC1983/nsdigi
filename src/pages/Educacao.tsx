@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { GraduationCap, Clock, Users, BookOpen, Play, Award, ChevronRight, Filter, Plus } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
+import PageHeader from "@/components/shared/PageHeader";
+import EmptyState from "@/components/shared/EmptyState";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -90,19 +92,15 @@ const Educacao = () => {
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Educação Permanente</h1>
-            <p className="text-muted-foreground">
-              Cursos, trilhas formativas e oficinas para qualificação em saúde digital
-            </p>
-          </div>
-          <Button className="gap-2">
-            <Award className="h-4 w-4" />
-            Meus Certificados
-          </Button>
-        </div>
+        <PageHeader
+          title="Educação Permanente"
+          description="Cursos, trilhas formativas e oficinas para qualificação em saúde digital"
+          breadcrumbs={[{ label: "Educação Permanente" }]}
+          action={{
+            label: "Meus Certificados",
+            icon: Award,
+          }}
+        />
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -150,19 +148,13 @@ const Educacao = () => {
 
           <TabsContent value="cursos" className="mt-4">
             {filteredCourses.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">
-                <GraduationCap className="h-16 w-16 text-muted-foreground/40 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  Nenhum curso disponível
-                </h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  Os cursos e formações serão exibidos aqui quando forem cadastrados.
-                </p>
-                <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
-                  <Plus className="h-4 w-4" />
-                  Adicionar Curso
-                </Button>
-              </div>
+              <EmptyState
+                icon={GraduationCap}
+                title="Nenhuma trilha formativa ativa"
+                description="Após adicionar cursos, você acompanhará a progressão dos profissionais nas trilhas formativas e certificações emitidas."
+                actionLabel="Adicionar Curso"
+                onAction={() => setIsModalOpen(true)}
+              />
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {filteredCourses.map((course) => (
@@ -222,19 +214,13 @@ const Educacao = () => {
 
           <TabsContent value="trilhas" className="mt-4">
             {trails.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">
-                <BookOpen className="h-16 w-16 text-muted-foreground/40 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  Nenhuma trilha disponível
-                </h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  As trilhas formativas serão exibidas aqui quando forem cadastradas.
-                </p>
-                <Button className="gap-2" onClick={() => setIsTrilhaModalOpen(true)}>
-                  <Plus className="h-4 w-4" />
-                  Criar Trilha
-                </Button>
-              </div>
+              <EmptyState
+                icon={BookOpen}
+                title="Nenhuma trilha formativa disponível"
+                description="Crie trilhas para organizar cursos em jornadas de aprendizado estruturadas para os profissionais."
+                actionLabel="Criar Trilha"
+                onAction={() => setIsTrilhaModalOpen(true)}
+              />
             ) : (
               <div className="space-y-4">
                 {trails.map((trail) => (
@@ -284,16 +270,13 @@ const Educacao = () => {
           </TabsContent>
 
           <TabsContent value="meus" className="mt-4">
-            <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">
-              <GraduationCap className="h-16 w-16 text-muted-foreground/40 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">Nenhum curso iniciado</h3>
-              <p className="text-muted-foreground mb-4 max-w-md mx-auto">
-                Quando você se inscrever em cursos, eles aparecerão aqui para acompanhamento.
-              </p>
-              <Button variant="outline" onClick={() => setActiveTab("cursos")}>
-                Explorar Cursos
-              </Button>
-            </div>
+            <EmptyState
+              icon={GraduationCap}
+              title="Nenhum curso iniciado"
+              description="Quando você se inscrever em cursos, eles aparecerão aqui para acompanhar seu progresso e certificados."
+              actionLabel="Explorar Cursos"
+              onAction={() => setActiveTab("cursos")}
+            />
           </TabsContent>
         </Tabs>
       </div>

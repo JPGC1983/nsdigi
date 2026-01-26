@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Search, MapPin, Users, TrendingUp, Filter, Plus, Building2 } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
+import PageHeader from "@/components/shared/PageHeader";
+import EmptyState from "@/components/shared/EmptyState";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -66,26 +68,16 @@ const Municipios = () => {
   return (
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
-        {/* Header with Breadcrumbs */}
-        <div className="space-y-4">
-          <nav className="flex items-center gap-1 text-sm text-muted-foreground">
-            <a href="/" className="hover:text-foreground transition-colors">Início</a>
-            <span className="text-muted-foreground/50">/</span>
-            <span className="text-foreground font-medium">Municípios</span>
-          </nav>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground tracking-tight">Municípios</h1>
-              <p className="text-muted-foreground">
-                Gestão e acompanhamento dos municípios da microrregião
-              </p>
-            </div>
-            <Button className="gap-2 shadow-sm" onClick={() => setIsModalOpen(true)}>
-              <Plus className="h-4 w-4" />
-              Adicionar Município
-            </Button>
-          </div>
-        </div>
+        <PageHeader
+          title="Municípios"
+          description="Gestão e acompanhamento dos municípios da microrregião"
+          breadcrumbs={[{ label: "Municípios" }]}
+          action={{
+            label: "Adicionar Município",
+            icon: Plus,
+            onClick: () => setIsModalOpen(true),
+          }}
+        />
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4">
@@ -134,19 +126,13 @@ const Municipios = () => {
 
         {/* Municipality Cards or Empty State */}
         {filteredMunicipalities.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">
-            <Building2 className="h-16 w-16 text-muted-foreground/40 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">
-              Nenhum município cadastrado
-            </h3>
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Adicione os municípios que compõem a microrregião para começar o acompanhamento da maturidade digital.
-            </p>
-            <Button className="gap-2" onClick={() => setIsModalOpen(true)}>
-              <Plus className="h-4 w-4" />
-              Adicionar Primeiro Município
-            </Button>
-          </div>
+          <EmptyState
+            icon={Building2}
+            title="Comece adicionando os municípios da sua microrregião"
+            description="Após cadastrar os municípios, você acompanhará a maturidade digital, profissionais cadastrados e status de implantação de cada um."
+            actionLabel="Adicionar Primeiro Município"
+            onAction={() => setIsModalOpen(true)}
+          />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {filteredMunicipalities.map((municipality) => (
