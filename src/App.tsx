@@ -7,6 +7,8 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Dashboard from "./pages/Dashboard";
 import Municipios from "./pages/Municipios";
 import Foruns from "./pages/Foruns";
+import ForumDetail from "./pages/ForumDetail";
+import TopicDetail from "./pages/TopicDetail";
 import Educacao from "./pages/Educacao";
 import Repositorio from "./pages/Repositorio";
 import Indicadores from "./pages/Indicadores";
@@ -30,6 +32,8 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/municipios" element={<Municipios />} />
             <Route path="/foruns" element={<Foruns />} />
+            <Route path="/foruns/:slug" element={<ForumDetail />} />
+            <Route path="/foruns/:slug/topico/:topicId" element={<TopicDetail />} />
             <Route path="/educacao" element={<Educacao />} />
             <Route path="/repositorio" element={<Repositorio />} />
             <Route path="/indicadores" element={<Indicadores />} />
