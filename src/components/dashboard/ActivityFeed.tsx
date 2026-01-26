@@ -13,42 +13,8 @@ interface Activity {
   link: string;
 }
 
-// Mock data - will be populated from backend
-const activities: Activity[] = [
-  {
-    id: "1",
-    type: "forum",
-    title: "Nova discussão em e-SUS AB",
-    description: "Dúvida sobre sincronização de dados",
-    time: "há 2 horas",
-    user: "Dr. Carlos Silva",
-    link: "/foruns/esus-ab",
-  },
-  {
-    id: "2",
-    type: "course",
-    title: "Curso de RNDS concluído",
-    description: "15 profissionais certificados",
-    time: "há 4 horas",
-    link: "/educacao",
-  },
-  {
-    id: "3",
-    type: "meeting",
-    title: "Reunião do Colegiado",
-    description: "Pauta: Metas do trimestre",
-    time: "amanhã às 14h",
-    link: "/governanca",
-  },
-  {
-    id: "4",
-    type: "document",
-    title: "Novo material disponível",
-    description: "Guia de implantação e-SUS",
-    time: "há 1 dia",
-    link: "/repositorio",
-  },
-];
+// Empty activities - will be populated from backend
+const activities: Activity[] = [];
 
 const iconMap = {
   forum: MessageSquare,
