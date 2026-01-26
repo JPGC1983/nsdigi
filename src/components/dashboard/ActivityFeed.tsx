@@ -1,6 +1,7 @@
 import { MessageSquare, GraduationCap, FileText, Users, Inbox, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface Activity {
   id: string;
@@ -9,6 +10,7 @@ interface Activity {
   description: string;
   time: string;
   user?: string;
+  link: string;
 }
 
 // Mock data - will be populated from backend
@@ -20,6 +22,7 @@ const activities: Activity[] = [
     description: "Dúvida sobre sincronização de dados",
     time: "há 2 horas",
     user: "Dr. Carlos Silva",
+    link: "/foruns/esus-ab",
   },
   {
     id: "2",
@@ -27,6 +30,7 @@ const activities: Activity[] = [
     title: "Curso de RNDS concluído",
     description: "15 profissionais certificados",
     time: "há 4 horas",
+    link: "/educacao",
   },
   {
     id: "3",
@@ -34,6 +38,7 @@ const activities: Activity[] = [
     title: "Reunião do Colegiado",
     description: "Pauta: Metas do trimestre",
     time: "amanhã às 14h",
+    link: "/governanca",
   },
   {
     id: "4",
@@ -41,6 +46,7 @@ const activities: Activity[] = [
     title: "Novo material disponível",
     description: "Guia de implantação e-SUS",
     time: "há 1 dia",
+    link: "/repositorio",
   },
 ];
 
@@ -81,6 +87,17 @@ const itemVariants = {
 };
 
 const ActivityFeed = () => {
+  const navigate = useNavigate();
+
+  const handleActivityClick = (link: string) => {
+    navigate(link);
+  };
+
+  const handleViewAll = () => {
+    // Navigate to a page that shows all activities - for now, dashboard
+    navigate("/");
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -93,6 +110,7 @@ const ActivityFeed = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={handleViewAll}
           className="text-xs text-primary font-medium flex items-center gap-1 hover:underline"
         >
           Ver todas <ExternalLink className="h-3 w-3" />
@@ -124,6 +142,7 @@ const ActivityFeed = () => {
                   x: 4,
                   transition: { duration: 0.2 }
                 }}
+                onClick={() => handleActivityClick(activity.link)}
                 className="flex items-start gap-3 group cursor-pointer p-2 -mx-2 rounded-lg hover:bg-muted/50 transition-colors"
               >
                 <motion.div 
