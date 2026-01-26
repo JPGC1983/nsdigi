@@ -18,7 +18,8 @@ export type MentorshipSpecialty =
   | 'telessaude' 
   | 'seguranca_lgpd' 
   | 'rnds' 
-  | 'implementacao';
+  | 'implementacao'
+  | 'outros';
 
 export type MatchStatus = 'pending' | 'active' | 'paused' | 'completed' | 'cancelled';
 
@@ -75,6 +76,13 @@ export const SPECIALTY_CONFIG: Record<MentorshipSpecialty, {
     color: '#00BCD4',
     bgColor: '#E0F7FA',
     description: 'Gestão de mudança e capacitação',
+  },
+  outros: {
+    label: 'Outros',
+    icon: '📌',
+    color: '#607D8B',
+    bgColor: '#ECEFF1',
+    description: 'Outras especialidades e assuntos diversos',
   },
 };
 
