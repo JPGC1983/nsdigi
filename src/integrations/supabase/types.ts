@@ -1090,6 +1090,7 @@ export type Database = {
         | "seguranca_lgpd"
         | "rnds"
         | "implementacao"
+        | "outros"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1247,6 +1248,7 @@ export const Constants = {
         "seguranca_lgpd",
         "rnds",
         "implementacao",
+        "outros",
       ],
     },
   },
