@@ -80,6 +80,415 @@ export type Database = {
         }
         Relationships: []
       }
+      forum_experts: {
+        Row: {
+          acceptance_rate: number | null
+          created_at: string
+          forum_id: string
+          helpful_replies_count: number | null
+          id: string
+          is_verified: boolean | null
+          updated_at: string
+          user_id: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          acceptance_rate?: number | null
+          created_at?: string
+          forum_id: string
+          helpful_replies_count?: number | null
+          id?: string
+          is_verified?: boolean | null
+          updated_at?: string
+          user_id: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          acceptance_rate?: number | null
+          created_at?: string
+          forum_id?: string
+          helpful_replies_count?: number | null
+          id?: string
+          is_verified?: boolean | null
+          updated_at?: string
+          user_id?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_experts_forum_id_fkey"
+            columns: ["forum_id"]
+            isOneToOne: false
+            referencedRelation: "forums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_members: {
+        Row: {
+          accepted_rules: boolean | null
+          accepted_rules_at: string | null
+          created_at: string
+          forum_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          accepted_rules?: boolean | null
+          accepted_rules_at?: string | null
+          created_at?: string
+          forum_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          accepted_rules?: boolean | null
+          accepted_rules_at?: string | null
+          created_at?: string
+          forum_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_members_forum_id_fkey"
+            columns: ["forum_id"]
+            isOneToOne: false
+            referencedRelation: "forums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_replies: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string
+          id: string
+          is_accepted: boolean | null
+          parent_reply_id: string | null
+          topic_id: string
+          updated_at: string
+          votes_score: number | null
+        }
+        Insert: {
+          author_id: string
+          content: string
+          created_at?: string
+          id?: string
+          is_accepted?: boolean | null
+          parent_reply_id?: string | null
+          topic_id: string
+          updated_at?: string
+          votes_score?: number | null
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_accepted?: boolean | null
+          parent_reply_id?: string | null
+          topic_id?: string
+          updated_at?: string
+          votes_score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_replies_parent_reply_id_fkey"
+            columns: ["parent_reply_id"]
+            isOneToOne: false
+            referencedRelation: "forum_replies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_replies_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "forum_topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_tags: {
+        Row: {
+          color: string | null
+          created_at: string
+          forum_id: string
+          id: string
+          name: string
+          slug: string
+          usage_count: number | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          forum_id: string
+          id?: string
+          name: string
+          slug: string
+          usage_count?: number | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          forum_id?: string
+          id?: string
+          name?: string
+          slug?: string
+          usage_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_tags_forum_id_fkey"
+            columns: ["forum_id"]
+            isOneToOne: false
+            referencedRelation: "forums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_topic_materials: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          material_id: string
+          topic_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          material_id: string
+          topic_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          material_id?: string
+          topic_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_topic_materials_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "forum_topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_topic_tags: {
+        Row: {
+          created_at: string
+          id: string
+          tag_id: string
+          topic_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          tag_id: string
+          topic_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          tag_id?: string
+          topic_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_topic_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "forum_tags"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_topic_tags_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "forum_topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_topics: {
+        Row: {
+          author_id: string
+          best_reply_id: string | null
+          content: string
+          created_at: string
+          expires_at: string | null
+          forum_id: string
+          id: string
+          is_featured: boolean | null
+          is_locked: boolean | null
+          is_pinned: boolean | null
+          notification_sent: boolean | null
+          replies_count: number | null
+          status: Database["public"]["Enums"]["forum_topic_status"]
+          title: string
+          topic_type: Database["public"]["Enums"]["forum_topic_type"]
+          updated_at: string
+          views_count: number | null
+          votes_score: number | null
+        }
+        Insert: {
+          author_id: string
+          best_reply_id?: string | null
+          content: string
+          created_at?: string
+          expires_at?: string | null
+          forum_id: string
+          id?: string
+          is_featured?: boolean | null
+          is_locked?: boolean | null
+          is_pinned?: boolean | null
+          notification_sent?: boolean | null
+          replies_count?: number | null
+          status?: Database["public"]["Enums"]["forum_topic_status"]
+          title: string
+          topic_type?: Database["public"]["Enums"]["forum_topic_type"]
+          updated_at?: string
+          views_count?: number | null
+          votes_score?: number | null
+        }
+        Update: {
+          author_id?: string
+          best_reply_id?: string | null
+          content?: string
+          created_at?: string
+          expires_at?: string | null
+          forum_id?: string
+          id?: string
+          is_featured?: boolean | null
+          is_locked?: boolean | null
+          is_pinned?: boolean | null
+          notification_sent?: boolean | null
+          replies_count?: number | null
+          status?: Database["public"]["Enums"]["forum_topic_status"]
+          title?: string
+          topic_type?: Database["public"]["Enums"]["forum_topic_type"]
+          updated_at?: string
+          views_count?: number | null
+          votes_score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_topics_forum_id_fkey"
+            columns: ["forum_id"]
+            isOneToOne: false
+            referencedRelation: "forums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_votes: {
+        Row: {
+          created_at: string
+          id: string
+          reply_id: string | null
+          topic_id: string | null
+          user_id: string
+          vote_value: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reply_id?: string | null
+          topic_id?: string | null
+          user_id: string
+          vote_value: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reply_id?: string | null
+          topic_id?: string | null
+          user_id?: string
+          vote_value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_votes_reply_id_fkey"
+            columns: ["reply_id"]
+            isOneToOne: false
+            referencedRelation: "forum_replies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_votes_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "forum_topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forums: {
+        Row: {
+          color: string
+          created_at: string
+          description: string
+          display_order: number | null
+          faq_content: string | null
+          icon: string
+          id: string
+          is_active: boolean | null
+          members_count: number | null
+          moderator_id: string | null
+          name: string
+          rules: string | null
+          sla_hours: number | null
+          slug: string
+          topics_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          description: string
+          display_order?: number | null
+          faq_content?: string | null
+          icon?: string
+          id?: string
+          is_active?: boolean | null
+          members_count?: number | null
+          moderator_id?: string | null
+          name: string
+          rules?: string | null
+          sla_hours?: number | null
+          slug: string
+          topics_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          description?: string
+          display_order?: number | null
+          faq_content?: string | null
+          icon?: string
+          id?: string
+          is_active?: boolean | null
+          members_count?: number | null
+          moderator_id?: string | null
+          name?: string
+          rules?: string | null
+          sla_hours?: number | null
+          slug?: string
+          topics_count?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       governance_documents: {
         Row: {
           category: string
@@ -188,6 +597,17 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "coordenador" | "membro"
+      forum_topic_status:
+        | "open"
+        | "resolved"
+        | "awaiting_feedback"
+        | "validated"
+        | "archived"
+      forum_topic_type:
+        | "problem_solution"
+        | "best_practice"
+        | "qa"
+        | "announcement"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -316,6 +736,19 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "coordenador", "membro"],
+      forum_topic_status: [
+        "open",
+        "resolved",
+        "awaiting_feedback",
+        "validated",
+        "archived",
+      ],
+      forum_topic_type: [
+        "problem_solution",
+        "best_practice",
+        "qa",
+        "announcement",
+      ],
     },
   },
 } as const
