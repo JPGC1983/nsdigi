@@ -77,25 +77,25 @@ const Dashboard = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="min-h-screen"
+        className="min-h-screen space-y-6"
       >
-        {/* Hero Section */}
+        {/* Hero Section - More Compact */}
         <motion.div
           variants={itemVariants}
-          className="relative rounded-2xl overflow-hidden group mb-6"
+          className="relative rounded-2xl overflow-hidden group"
         >
           <img
             src={heroImage}
             alt="Rede de Saúde Digital"
-            className="w-full h-40 lg:h-48 object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-32 lg:h-40 object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/60 to-transparent flex items-center">
-            <div className="p-6 lg:p-8">
+            <div className="p-5 lg:p-6">
               <motion.h1
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
-                className="text-xl lg:text-2xl font-bold text-card mb-2 tracking-tight"
+                className="text-lg lg:text-xl font-bold text-card mb-1 tracking-tight"
               >
                 Núcleo Microrregional de Saúde Digital
               </motion.h1>
@@ -103,10 +103,9 @@ const Dashboard = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
-                className="text-card/80 max-w-lg text-sm mb-4"
+                className="text-card/80 max-w-md text-xs lg:text-sm mb-3"
               >
-                Plataforma integrada para educação permanente, suporte técnico e
-                articulação entre municípios na transformação digital do SUS.
+                Plataforma integrada para educação permanente e transformação digital do SUS.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -115,109 +114,103 @@ const Dashboard = () => {
               >
                 <Button
                   size="sm"
-                  className="gap-2 shadow-layered-lg bg-primary hover:bg-primary/90 text-primary-foreground"
+                  className="gap-2 shadow-layered-lg bg-primary hover:bg-primary/90 text-primary-foreground h-8 text-xs"
                   onClick={() => navigate("/municipios")}
                 >
                   Explorar Municípios
-                  <ArrowUpRight className="h-4 w-4" />
+                  <ArrowUpRight className="h-3 w-3" />
                 </Button>
               </motion.div>
             </div>
           </div>
         </motion.div>
 
-        {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Stats & Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Bento Grid - Stats */}
-            <motion.div
-              variants={itemVariants}
-              data-onboarding="stats"
-              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-            >
-              <SparklineCard
-                title="Municípios Ativos"
-                value={0}
-                subtitle="na microrregião"
-                icon={Building2}
-                sparklineData={emptySparkline}
-                delay={0.1}
-              />
-              <SparklineCard
-                title="Profissionais"
-                value={0}
-                subtitle="em formação"
-                icon={Users}
-                sparklineData={emptySparkline}
-                delay={0.15}
-              />
-              <SparklineCard
-                title="Cursos Disponíveis"
-                value={0}
-                subtitle="trilhas formativas"
-                icon={GraduationCap}
-                sparklineData={emptySparkline}
-                delay={0.2}
-              />
-              <SparklineCard
-                title="Discussões Ativas"
-                value={0}
-                subtitle="fóruns temáticos"
-                icon={MessageSquare}
-                sparklineData={emptySparkline}
-                delay={0.25}
-              />
-            </motion.div>
+        {/* Stats Row - 4 columns on desktop */}
+        <motion.div
+          variants={itemVariants}
+          data-onboarding="stats"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3"
+        >
+          <SparklineCard
+            title="Municípios Ativos"
+            value={0}
+            subtitle="na microrregião"
+            icon={Building2}
+            sparklineData={emptySparkline}
+            delay={0.1}
+          />
+          <SparklineCard
+            title="Profissionais"
+            value={0}
+            subtitle="em formação"
+            icon={Users}
+            sparklineData={emptySparkline}
+            delay={0.15}
+          />
+          <SparklineCard
+            title="Cursos Disponíveis"
+            value={0}
+            subtitle="trilhas formativas"
+            icon={GraduationCap}
+            sparklineData={emptySparkline}
+            delay={0.2}
+          />
+          <SparklineCard
+            title="Discussões Ativas"
+            value={0}
+            subtitle="fóruns temáticos"
+            icon={MessageSquare}
+            sparklineData={emptySparkline}
+            delay={0.25}
+          />
+        </motion.div>
 
-            {/* Quick Actions */}
-            <motion.div variants={itemVariants} data-onboarding="quick-actions">
-              <h2 className="text-base font-semibold text-foreground mb-4 tracking-tight">
-                Ações Rápidas
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <QuickAction
-                  title="Acessar Fóruns"
-                  description="Participe das discussões"
-                  icon={MessageSquare}
-                  href="/foruns"
-                  tooltip="Fóruns temáticos"
-                />
-                <QuickAction
-                  title="Iniciar Curso"
-                  description="Continue aprendendo"
-                  icon={BookOpen}
-                  href="/educacao"
-                  tooltip="Cursos e trilhas"
-                />
-                <QuickAction
-                  title="Materiais"
-                  description="Tutoriais e manuais"
-                  icon={FolderOpen}
-                  href="/repositorio"
-                  tooltip="Biblioteca de materiais"
-                />
-                <QuickAction
-                  title="Agendar Reunião"
-                  description="Colegiado regional"
-                  icon={Calendar}
-                  href="/governanca"
-                  tooltip="Calendário do colegiado"
-                />
-              </div>
-            </motion.div>
-
-            {/* Municipalities Table */}
-            <motion.div variants={itemVariants} data-onboarding="municipalities">
-              <MunicipalitiesTable />
-            </motion.div>
+        {/* Quick Actions - Inline Row */}
+        <motion.div variants={itemVariants} data-onboarding="quick-actions">
+          <h2 className="text-sm font-semibold text-foreground mb-3 tracking-tight">
+            Ações Rápidas
+          </h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <QuickAction
+              title="Acessar Fóruns"
+              description="Participe das discussões"
+              icon={MessageSquare}
+              href="/foruns"
+              tooltip="Fóruns temáticos"
+            />
+            <QuickAction
+              title="Iniciar Curso"
+              description="Continue aprendendo"
+              icon={BookOpen}
+              href="/educacao"
+              tooltip="Cursos e trilhas"
+            />
+            <QuickAction
+              title="Materiais"
+              description="Tutoriais e manuais"
+              icon={FolderOpen}
+              href="/repositorio"
+              tooltip="Biblioteca de materiais"
+            />
+            <QuickAction
+              title="Agendar Reunião"
+              description="Colegiado regional"
+              icon={Calendar}
+              href="/governanca"
+              tooltip="Calendário do colegiado"
+            />
           </div>
+        </motion.div>
 
-          {/* Right Column - Activity Feed & Calendar */}
-          <motion.div
-            variants={itemVariants}
-            className="space-y-4"
-          >
+        {/* Bottom Section - Two Columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Municipalities Table - Takes 2/3 */}
+          <motion.div variants={itemVariants} data-onboarding="municipalities" className="lg:col-span-2">
+            <MunicipalitiesTable />
+          </motion.div>
+
+          {/* Activity Feed - Takes 1/3 */}
+          <motion.div variants={itemVariants}>
             <ActivityFeed />
           </motion.div>
         </div>

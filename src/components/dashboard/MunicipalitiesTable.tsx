@@ -80,23 +80,23 @@ const MunicipalitiesTable = () => {
 
       {/* Table / Empty State */}
       {paginatedData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 px-6 text-center">
-          <div className="h-16 w-16 rounded-2xl bg-muted flex items-center justify-center mb-4">
-            <Building2 className="h-8 w-8 text-muted-foreground" />
+        <div className="flex flex-col items-center justify-center py-10 px-6 text-center">
+          <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center mb-3">
+            <Building2 className="h-6 w-6 text-muted-foreground" />
           </div>
           <h4 className="text-sm font-medium text-foreground mb-1">
             Nenhum município cadastrado
           </h4>
-          <p className="text-xs text-muted-foreground max-w-sm mb-4">
-            Os municípios da microrregião aparecerão aqui após o cadastro inicial.
+          <p className="text-xs text-muted-foreground max-w-xs mb-3">
+            Os municípios aparecerão aqui após o cadastro.
           </p>
           <Button
             size="sm"
             onClick={() => navigate("/municipios")}
-            className="gap-2"
+            className="gap-2 h-8 text-xs"
           >
             Cadastrar Município
-            <ArrowUpRight className="h-4 w-4" />
+            <ArrowUpRight className="h-3 w-3" />
           </Button>
         </div>
       ) : (
