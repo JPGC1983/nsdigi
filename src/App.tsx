@@ -14,6 +14,7 @@ import Repositorio from "./pages/Repositorio";
 import Indicadores from "./pages/Indicadores";
 import Governanca from "./pages/Governanca";
 import Configuracoes from "./pages/Configuracoes";
+import Mentorias from "./pages/Mentorias";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/foruns/:slug" element={<ForumDetail />} />
             <Route path="/foruns/:slug/topico/:topicId" element={<TopicDetail />} />
             <Route path="/educacao" element={<Educacao />} />
+            <Route path="/mentorias" element={<Mentorias />} />
             <Route path="/repositorio" element={<Repositorio />} />
             <Route path="/indicadores" element={<Indicadores />} />
             <Route path="/governanca" element={<Governanca />} />
