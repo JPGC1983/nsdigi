@@ -77,7 +77,7 @@ const Dashboard = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="min-h-screen space-y-6"
+        className="space-y-6 pb-6"
       >
         {/* Hero Section - More Compact */}
         <motion.div
