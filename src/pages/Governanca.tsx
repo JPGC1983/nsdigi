@@ -34,6 +34,7 @@ import {
 import AddMembroModal, { MembroData } from "@/components/modals/AddMembroModal";
 import AddReuniaoModal, { ReuniaoData } from "@/components/modals/AddReuniaoModal";
 import AddCibMeetingModal, { CibMeetingData } from "@/components/modals/AddCibMeetingModal";
+import AddDocumentoModal, { DocumentData } from "@/components/modals/AddDocumentoModal";
 
 interface Member {
   id: string;
@@ -57,7 +58,12 @@ interface Meeting {
 interface Document {
   id: string;
   name: string;
-  date: string;
+  description: string | null;
+  file_path: string;
+  file_type: string;
+  file_size: number | null;
+  category: string;
+  created_at: string;
 }
 
 interface CibMeeting {
@@ -89,9 +95,12 @@ const Governanca = () => {
   
   const [isMembroModalOpen, setIsMembroModalOpen] = useState(false);
   const [isReuniaoModalOpen, setIsReuniaoModalOpen] = useState(false);
+  const [isDocumentoModalOpen, setIsDocumentoModalOpen] = useState(false);
   const [collegiateMembers, setCollegiateMembers] = useState<Member[]>([]);
   const [upcomingMeetings, setUpcomingMeetings] = useState<Meeting[]>([]);
-  const [documents] = useState<Document[]>([]);
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [isLoadingDocuments, setIsLoadingDocuments] = useState(true);
+  const [canEditDocuments, setCanEditDocuments] = useState(false);
   
   // CIB State
   const [cibMeetings, setCibMeetings] = useState<CibMeeting[]>([]);
@@ -100,11 +109,12 @@ const Governanca = () => {
   const [isCibMeetingModalOpen, setIsCibMeetingModalOpen] = useState(false);
   const [expandedMeetings, setExpandedMeetings] = useState<Set<string>>(new Set());
 
-  // Check if user can edit CIB (admin or coordenador)
+  // Check if user can edit CIB and documents (admin or coordenador)
   useEffect(() => {
     const checkUserRole = async () => {
       if (!user) {
         setCanEditCib(false);
+        setCanEditDocuments(false);
         return;
       }
       
@@ -116,11 +126,30 @@ const Governanca = () => {
       if (roles) {
         const hasEditRole = roles.some(r => r.role === 'admin' || r.role === 'coordenador');
         setCanEditCib(hasEditRole);
+        setCanEditDocuments(hasEditRole);
       }
     };
     
     checkUserRole();
   }, [user]);
+
+  // Fetch governance documents
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      setIsLoadingDocuments(true);
+      const { data, error } = await supabase
+        .from('governance_documents')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (!error && data) {
+        setDocuments(data as Document[]);
+      }
+      setIsLoadingDocuments(false);
+    };
+    
+    fetchDocuments();
+  }, []);
 
   // Fetch CIB meetings
   useEffect(() => {
@@ -227,6 +256,80 @@ const Governanca = () => {
       status: "agendada",
     };
     setUpcomingMeetings([...upcomingMeetings, newMeeting]);
+  };
+
+  const handleAddDocumento = async (data: DocumentData) => {
+    const fileExt = data.file.name.split('.').pop();
+    const fileName = `${crypto.randomUUID()}.${fileExt}`;
+    const filePath = `documents/${fileName}`;
+
+    // Upload file to storage
+    const { error: uploadError } = await supabase.storage
+      .from('governance-documents')
+      .upload(filePath, data.file);
+
+    if (uploadError) {
+      toast({
+        title: "Erro no upload",
+        description: uploadError.message || "Não foi possível enviar o arquivo.",
+        variant: "destructive",
+      });
+      throw uploadError;
+    }
+
+    // Insert document record
+    const { data: newDoc, error: insertError } = await supabase
+      .from('governance_documents')
+      .insert({
+        name: data.name,
+        description: data.description || null,
+        file_path: filePath,
+        file_type: data.file.type || fileExt || 'unknown',
+        file_size: data.file.size,
+        category: data.category,
+        uploaded_by: user?.id,
+      })
+      .select()
+      .single();
+
+    if (insertError) {
+      toast({
+        title: "Erro ao salvar",
+        description: insertError.message || "Não foi possível salvar o documento.",
+        variant: "destructive",
+      });
+      throw insertError;
+    }
+
+    if (newDoc) {
+      setDocuments([newDoc as Document, ...documents]);
+      toast({
+        title: "Documento adicionado",
+        description: "O documento foi enviado com sucesso.",
+      });
+    }
+  };
+
+  const getCategoryLabel = (category: string) => {
+    const labels: Record<string, string> = {
+      atas: "Atas de Reunião",
+      deliberacoes: "Deliberações",
+      regimentos: "Regimentos",
+      portarias: "Portarias",
+      resolucoes: "Resoluções",
+      outros: "Outros",
+    };
+    return labels[category] || category;
+  };
+
+  const handleDownloadDocument = async (doc: Document) => {
+    const { data } = supabase.storage
+      .from('governance-documents')
+      .getPublicUrl(doc.file_path);
+    
+    if (data?.publicUrl) {
+      window.open(data.publicUrl, '_blank');
+    }
   };
 
   return (
@@ -602,31 +705,58 @@ const Governanca = () => {
                   <FileText className="h-5 w-5 text-primary" />
                   Documentos Oficiais
                 </h3>
-                <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
-                  <Plus className="h-4 w-4" />
-                </Button>
+                {canEditDocuments && (
+                  <Button 
+                    size="sm" 
+                    variant="ghost" 
+                    className="h-8 w-8 p-0"
+                    onClick={() => setIsDocumentoModalOpen(true)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
-              {documents.length === 0 ? (
+              {isLoadingDocuments ? (
+                <div className="flex items-center justify-center py-6">
+                  <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                </div>
+              ) : documents.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-6 border border-dashed border-border rounded-lg bg-muted/20">
                   <FileText className="h-8 w-8 text-muted-foreground/40 mb-2" />
                   <p className="text-sm text-muted-foreground">Nenhum documento</p>
                   <p className="text-xs text-muted-foreground/60 mt-1 text-center">
                     Deliberações, atas, regimentos
                   </p>
+                  {canEditDocuments && (
+                    <Button 
+                      size="sm" 
+                      variant="link" 
+                      className="mt-2 h-auto p-0"
+                      onClick={() => setIsDocumentoModalOpen(true)}
+                    >
+                      Adicionar documento
+                    </Button>
+                  )}
                 </div>
               ) : (
-                <div className="space-y-2">
+                <div className="space-y-2 max-h-[300px] overflow-y-auto">
                   {documents.map((doc) => (
                     <div 
                       key={doc.id} 
                       className="p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer group"
+                      onClick={() => handleDownloadDocument(doc)}
                     >
-                      <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                      <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
                         {doc.name}
                       </p>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(doc.date).toLocaleDateString("pt-BR")}
-                      </p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <Badge variant="outline" className="text-xs">
+                          {getCategoryLabel(doc.category)}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(doc.created_at).toLocaleDateString("pt-BR")}
+                        </span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -652,6 +782,12 @@ const Governanca = () => {
         open={isCibMeetingModalOpen}
         onOpenChange={setIsCibMeetingModalOpen}
         onAdd={handleAddCibMeeting}
+      />
+
+      <AddDocumentoModal
+        open={isDocumentoModalOpen}
+        onOpenChange={setIsDocumentoModalOpen}
+        onAdd={handleAddDocumento}
       />
     </MainLayout>
   );
