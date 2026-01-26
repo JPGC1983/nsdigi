@@ -96,10 +96,6 @@ const Educacao = () => {
           title="Educação Permanente"
           description="Cursos, trilhas formativas e oficinas para qualificação em saúde digital"
           breadcrumbs={[{ label: "Educação Permanente" }]}
-          action={{
-            label: "Meus Certificados",
-            icon: Award,
-          }}
         />
 
         {/* Stats */}
