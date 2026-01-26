@@ -109,27 +109,25 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6" data-onboarding="stats">
               <AnimatedStatCard
                 title="Municípios Ativos"
-                value={28}
+                value={0}
                 subtitle="na microrregião"
                 icon={Building2}
                 variant="primary"
                 tooltip="Quantidade de municípios participando ativamente do núcleo"
                 delay={0.1}
-                trend={{ value: 12, isPositive: true }}
               />
               <AnimatedStatCard
                 title="Profissionais Cadastrados"
-                value={156}
+                value={0}
                 subtitle="em formação"
                 icon={Users}
                 variant="secondary"
                 tooltip="Total de profissionais de saúde cadastrados na plataforma"
                 delay={0.15}
-                trend={{ value: 8, isPositive: true }}
               />
               <AnimatedStatCard
                 title="Cursos Disponíveis"
-                value={12}
+                value={0}
                 subtitle="trilhas formativas"
                 icon={GraduationCap}
                 variant="accent"
@@ -138,12 +136,11 @@ const Dashboard = () => {
               />
               <AnimatedStatCard
                 title="Discussões Ativas"
-                value={45}
+                value={0}
                 subtitle="fóruns temáticos"
                 icon={MessageSquare}
                 tooltip="Tópicos ativos nos fóruns de discussão"
                 delay={0.25}
-                trend={{ value: 23, isPositive: true }}
               />
             </div>
 

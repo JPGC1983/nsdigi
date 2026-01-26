@@ -11,12 +11,8 @@ interface Event {
   type: "meeting" | "deadline" | "training";
 }
 
-// Mock events - will be populated from backend
-const events: Event[] = [
-  { date: new Date(2026, 0, 28), title: "Reunião CIB", type: "meeting" },
-  { date: new Date(2026, 0, 30), title: "Prazo relatório", type: "deadline" },
-  { date: new Date(2026, 1, 5), title: "Capacitação e-SUS", type: "training" },
-];
+// Empty events - will be populated from backend
+const events: Event[] = [];
 
 const eventColors = {
   meeting: "bg-primary",
