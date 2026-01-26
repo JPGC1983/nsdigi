@@ -66,7 +66,7 @@ const ActivityFeed = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
-      className="rounded-xl border border-border bg-card p-5 shadow-layered hover:shadow-layered-lg transition-shadow duration-300"
+      className="rounded-xl border border-border bg-card p-5 shadow-layered hover:shadow-layered-lg transition-shadow duration-300 h-full min-h-[200px] flex flex-col"
     >
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-foreground text-sm">Atividades Recentes</h3>
@@ -81,8 +81,8 @@ const ActivityFeed = () => {
       </div>
       
       {activities.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-8 text-center">
-          <Inbox className="h-12 w-12 text-muted-foreground/40 mb-3" />
+        <div className="flex flex-col items-center justify-center flex-1 text-center py-4">
+          <Inbox className="h-10 w-10 text-muted-foreground/40 mb-2" />
           <p className="text-sm text-muted-foreground">Nenhuma atividade recente</p>
           <p className="text-xs text-muted-foreground/60 mt-1">
             As atividades aparecerão aqui

@@ -55,7 +55,7 @@ const MunicipalitiesTable = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
-      className="rounded-xl border border-border bg-card shadow-layered overflow-hidden"
+      className="rounded-xl border border-border bg-card shadow-layered overflow-hidden h-full min-h-[200px] flex flex-col"
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 border-b border-border">
@@ -80,7 +80,7 @@ const MunicipalitiesTable = () => {
 
       {/* Table / Empty State */}
       {paginatedData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-10 px-6 text-center">
+        <div className="flex flex-col items-center justify-center flex-1 py-6 px-6 text-center">
           <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center mb-3">
             <Building2 className="h-6 w-6 text-muted-foreground" />
           </div>
