@@ -113,20 +113,29 @@ const Governanca = () => {
   useEffect(() => {
     const checkUserRole = async () => {
       if (!user) {
+        console.log('No user found, disabling edit permissions');
         setCanEditCib(false);
         setCanEditDocuments(false);
         return;
       }
       
-      const { data: roles } = await supabase
+      console.log('Checking roles for user:', user.id);
+      const { data: roles, error } = await supabase
         .from('user_roles')
         .select('role')
         .eq('user_id', user.id);
       
-      if (roles) {
+      console.log('User roles response:', { roles, error });
+      
+      if (roles && roles.length > 0) {
         const hasEditRole = roles.some(r => r.role === 'admin' || r.role === 'coordenador');
+        console.log('Has edit role:', hasEditRole);
         setCanEditCib(hasEditRole);
         setCanEditDocuments(hasEditRole);
+      } else {
+        console.log('No roles found for user');
+        setCanEditCib(false);
+        setCanEditDocuments(false);
       }
     };
     
