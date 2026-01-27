@@ -7,7 +7,8 @@ import type { Database } from "@/integrations/supabase/types";
 
 export type MunicipioStatus = Database["public"]["Enums"]["municipio_status"];
 
-export interface Municipio {
+// Tipo público (sem dados de coordenador)
+export interface MunicipioPublic {
   id: string;
   municipio: string;
   cod_ibge: string;
@@ -18,14 +19,18 @@ export interface Municipio {
   urs: string;
   grs: string | null;
   status: MunicipioStatus;
-  coordenador_nome: string | null;
-  coordenador_email: string | null;
-  coordenador_telefone: string | null;
   populacao: number;
   profissionais: number;
   maturidade_digital: number;
   created_at: string;
   updated_at: string;
+}
+
+// Tipo completo (com dados de coordenador - apenas para admin/coordenador)
+export interface Municipio extends MunicipioPublic {
+  coordenador_nome: string | null;
+  coordenador_email: string | null;
+  coordenador_telefone: string | null;
 }
 
 export interface MunicipioUpdateData {

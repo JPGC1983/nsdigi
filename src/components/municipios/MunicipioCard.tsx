@@ -11,13 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Municipio, MunicipioStatus, MunicipioUpdateData } from "@/hooks/useMunicipios";
+import { Municipio, MunicipioPublic, MunicipioStatus, MunicipioUpdateData } from "@/hooks/useMunicipios";
 import { cn } from "@/lib/utils";
 
 interface MunicipioCardProps {
-  municipio: Municipio;
+  municipio: Municipio | MunicipioPublic;
   onUpdate?: (id: string, data: MunicipioUpdateData) => void;
   canEdit?: boolean;
+  showCoordinatorData?: boolean; // Nova prop para controlar exibição
 }
 
 const statusConfig: Record<MunicipioStatus, { label: string; className: string }> = {
@@ -27,13 +28,20 @@ const statusConfig: Record<MunicipioStatus, { label: string; className: string }
   inativo: { label: "Inativo", className: "bg-destructive/10 text-destructive border-destructive/20" },
 };
 
-export const MunicipioCard = ({ municipio, onUpdate, canEdit = false }: MunicipioCardProps) => {
+export const MunicipioCard = ({ municipio, onUpdate, canEdit = false, showCoordinatorData = false }: MunicipioCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  
+  // Verificar se o município tem dados de coordenador (tipo completo)
+  const hasCoordinatorData = 'coordenador_nome' in municipio;
+  const coordenadorNome = hasCoordinatorData ? (municipio as Municipio).coordenador_nome : null;
+  const coordenadorEmail = hasCoordinatorData ? (municipio as Municipio).coordenador_email : null;
+  const coordenadorTelefone = hasCoordinatorData ? (municipio as Municipio).coordenador_telefone : null;
+  
   const [editData, setEditData] = useState<MunicipioUpdateData>({
     status: municipio.status,
-    coordenador_nome: municipio.coordenador_nome || "",
-    coordenador_email: municipio.coordenador_email || "",
-    coordenador_telefone: municipio.coordenador_telefone || "",
+    coordenador_nome: coordenadorNome || "",
+    coordenador_email: coordenadorEmail || "",
+    coordenador_telefone: coordenadorTelefone || "",
   });
 
   const handleSave = () => {
@@ -46,9 +54,9 @@ export const MunicipioCard = ({ municipio, onUpdate, canEdit = false }: Municipi
   const handleCancel = () => {
     setEditData({
       status: municipio.status,
-      coordenador_nome: municipio.coordenador_nome || "",
-      coordenador_email: municipio.coordenador_email || "",
-      coordenador_telefone: municipio.coordenador_telefone || "",
+      coordenador_nome: coordenadorNome || "",
+      coordenador_email: coordenadorEmail || "",
+      coordenador_telefone: coordenadorTelefone || "",
     });
     setIsEditing(false);
   };
@@ -201,27 +209,35 @@ export const MunicipioCard = ({ municipio, onUpdate, canEdit = false }: Municipi
           </>
         ) : (
           <>
-            {municipio.coordenador_nome && (
-              <div className="flex items-center gap-2 text-sm">
-                <User className="h-4 w-4 text-muted-foreground" />
-                <span>{municipio.coordenador_nome}</span>
-              </div>
-            )}
-            {municipio.coordenador_email && (
-              <div className="flex items-center gap-2 text-sm">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">{municipio.coordenador_email}</span>
-              </div>
-            )}
-            {municipio.coordenador_telefone && (
-              <div className="flex items-center gap-2 text-sm">
-                <Phone className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">{municipio.coordenador_telefone}</span>
-              </div>
-            )}
-            {!municipio.coordenador_nome && !municipio.coordenador_email && (
+            {showCoordinatorData && hasCoordinatorData ? (
+              <>
+                {coordenadorNome && (
+                  <div className="flex items-center gap-2 text-sm">
+                    <User className="h-4 w-4 text-muted-foreground" />
+                    <span>{coordenadorNome}</span>
+                  </div>
+                )}
+                {coordenadorEmail && (
+                  <div className="flex items-center gap-2 text-sm">
+                    <Mail className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-muted-foreground">{coordenadorEmail}</span>
+                  </div>
+                )}
+                {coordenadorTelefone && (
+                  <div className="flex items-center gap-2 text-sm">
+                    <Phone className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-muted-foreground">{coordenadorTelefone}</span>
+                  </div>
+                )}
+                {!coordenadorNome && !coordenadorEmail && (
+                  <p className="text-sm text-muted-foreground italic">
+                    Coordenador não informado
+                  </p>
+                )}
+              </>
+            ) : (
               <p className="text-sm text-muted-foreground italic">
-                Coordenador não informado
+                Dados do coordenador restritos
               </p>
             )}
           </>

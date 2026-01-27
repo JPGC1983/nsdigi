@@ -1368,13 +1368,104 @@ export type Database = {
             referencedRelation: "municipios"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "user_territory_profiles_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      municipios_public: {
+        Row: {
+          cod_ibge: string | null
+          cod_macro: string | null
+          cod_micro: string | null
+          created_at: string | null
+          grs: string | null
+          id: string | null
+          macrorregiao: string | null
+          maturidade_digital: number | null
+          microregiao: string | null
+          municipio: string | null
+          populacao: number | null
+          profissionais: number | null
+          status: Database["public"]["Enums"]["municipio_status"] | null
+          updated_at: string | null
+          urs: string | null
+        }
+        Insert: {
+          cod_ibge?: string | null
+          cod_macro?: string | null
+          cod_micro?: string | null
+          created_at?: string | null
+          grs?: string | null
+          id?: string | null
+          macrorregiao?: string | null
+          maturidade_digital?: number | null
+          microregiao?: string | null
+          municipio?: string | null
+          populacao?: number | null
+          profissionais?: number | null
+          status?: Database["public"]["Enums"]["municipio_status"] | null
+          updated_at?: string | null
+          urs?: string | null
+        }
+        Update: {
+          cod_ibge?: string | null
+          cod_macro?: string | null
+          cod_micro?: string | null
+          created_at?: string | null
+          grs?: string | null
+          id?: string | null
+          macrorregiao?: string | null
+          maturidade_digital?: number | null
+          microregiao?: string | null
+          municipio?: string | null
+          populacao?: number | null
+          profissionais?: number | null
+          status?: Database["public"]["Enums"]["municipio_status"] | null
+          updated_at?: string | null
+          urs?: string | null
+        }
+        Relationships: []
+      }
+      profiles_public: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string | null
+          job_title: string | null
+          municipality: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string | null
+          job_title?: string | null
+          municipality?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string | null
+          job_title?: string | null
+          municipality?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      can_view_private_profile: {
+        Args: { target_id: string; viewer_id: string }
+        Returns: boolean
+      }
       check_territory_access: {
         Args: {
           _target_microregiao?: string
@@ -1384,12 +1475,38 @@ export type Database = {
         }
         Returns: boolean
       }
+      get_municipio_full: { Args: { municipio_id: string }; Returns: Json }
+      get_profile_public: {
+        Args: { profile_id: string }
+        Returns: {
+          avatar_url: string
+          full_name: string
+          id: string
+          job_title: string
+          municipality: string
+        }[]
+      }
+      get_profile_safe: { Args: { target_id: string }; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      list_profiles_public: {
+        Args: {
+          limit_count?: number
+          offset_count?: number
+          search_term?: string
+        }
+        Returns: {
+          avatar_url: string
+          full_name: string
+          id: string
+          job_title: string
+          municipality: string
+        }[]
       }
       log_audit: {
         Args: {
