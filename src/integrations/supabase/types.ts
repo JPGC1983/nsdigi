@@ -14,6 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_log: {
+        Row: {
+          created_at: string
+          entity_id: string | null
+          entity_type: string
+          grs: string | null
+          id: string
+          ip_address: string | null
+          microregiao: string | null
+          municipio_id: string | null
+          new_values: Json | null
+          old_values: Json | null
+          operation: string
+          urs: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          entity_id?: string | null
+          entity_type: string
+          grs?: string | null
+          id?: string
+          ip_address?: string | null
+          microregiao?: string | null
+          municipio_id?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          operation: string
+          urs?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string
+          grs?: string | null
+          id?: string
+          ip_address?: string | null
+          microregiao?: string | null
+          municipio_id?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          operation?: string
+          urs?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       cib_documentation: {
         Row: {
           created_at: string
@@ -523,11 +574,13 @@ export type Database = {
           id: string
           is_active: boolean | null
           members_count: number | null
+          microregiao: string | null
           moderator_id: string | null
           name: string
           rules: string | null
           sla_hours: number | null
           slug: string
+          tipo_forum: string | null
           topics_count: number | null
           updated_at: string
         }
@@ -541,11 +594,13 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           members_count?: number | null
+          microregiao?: string | null
           moderator_id?: string | null
           name: string
           rules?: string | null
           sla_hours?: number | null
           slug: string
+          tipo_forum?: string | null
           topics_count?: number | null
           updated_at?: string
         }
@@ -559,11 +614,13 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           members_count?: number | null
+          microregiao?: string | null
           moderator_id?: string | null
           name?: string
           rules?: string | null
           sla_hours?: number | null
           slug?: string
+          tipo_forum?: string | null
           topics_count?: number | null
           updated_at?: string
         }
@@ -1075,6 +1132,69 @@ export type Database = {
           },
         ]
       }
+      municipios: {
+        Row: {
+          cod_ibge: string
+          cod_macro: string
+          cod_micro: string
+          coordenador_email: string | null
+          coordenador_nome: string | null
+          coordenador_telefone: string | null
+          created_at: string
+          grs: string | null
+          id: string
+          macrorregiao: string
+          maturidade_digital: number | null
+          microregiao: string
+          municipio: string
+          populacao: number | null
+          profissionais: number | null
+          status: Database["public"]["Enums"]["municipio_status"]
+          updated_at: string
+          urs: string
+        }
+        Insert: {
+          cod_ibge: string
+          cod_macro: string
+          cod_micro: string
+          coordenador_email?: string | null
+          coordenador_nome?: string | null
+          coordenador_telefone?: string | null
+          created_at?: string
+          grs?: string | null
+          id?: string
+          macrorregiao: string
+          maturidade_digital?: number | null
+          microregiao: string
+          municipio: string
+          populacao?: number | null
+          profissionais?: number | null
+          status?: Database["public"]["Enums"]["municipio_status"]
+          updated_at?: string
+          urs: string
+        }
+        Update: {
+          cod_ibge?: string
+          cod_macro?: string
+          cod_micro?: string
+          coordenador_email?: string | null
+          coordenador_nome?: string | null
+          coordenador_telefone?: string | null
+          created_at?: string
+          grs?: string | null
+          id?: string
+          macrorregiao?: string
+          maturidade_digital?: number | null
+          microregiao?: string
+          municipio?: string
+          populacao?: number | null
+          profissionais?: number | null
+          status?: Database["public"]["Enums"]["municipio_status"]
+          updated_at?: string
+          urs?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -1200,17 +1320,90 @@ export type Database = {
         }
         Relationships: []
       }
+      user_territory_profiles: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          grs: string | null
+          id: string
+          macrorregiao: string | null
+          microregiao: string | null
+          municipio_id: string | null
+          perfil_territorio: Database["public"]["Enums"]["user_territory_profile"]
+          updated_at: string
+          urs: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          grs?: string | null
+          id?: string
+          macrorregiao?: string | null
+          microregiao?: string | null
+          municipio_id?: string | null
+          perfil_territorio?: Database["public"]["Enums"]["user_territory_profile"]
+          updated_at?: string
+          urs?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          grs?: string | null
+          id?: string
+          macrorregiao?: string | null
+          microregiao?: string | null
+          municipio_id?: string | null
+          perfil_territorio?: Database["public"]["Enums"]["user_territory_profile"]
+          updated_at?: string
+          urs?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_territory_profiles_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      check_territory_access: {
+        Args: {
+          _target_microregiao?: string
+          _target_municipio_id?: string
+          _target_urs?: string
+          _user_id: string
+        }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      log_audit: {
+        Args: {
+          _entity_id: string
+          _entity_type: string
+          _grs?: string
+          _microregiao?: string
+          _municipio_id?: string
+          _new_values?: Json
+          _old_values?: Json
+          _operation: string
+          _urs?: string
+        }
+        Returns: string
       }
     }
     Enums: {
@@ -1242,6 +1435,12 @@ export type Database = {
         | "rnds"
         | "implementacao"
         | "outros"
+      municipio_status: "ativo" | "pendente" | "inativo" | "em_implantacao"
+      user_territory_profile:
+        | "municipal"
+        | "nsd_microrregional"
+        | "grs"
+        | "estado_nsdigi"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1400,6 +1599,13 @@ export const Constants = {
         "rnds",
         "implementacao",
         "outros",
+      ],
+      municipio_status: ["ativo", "pendente", "inativo", "em_implantacao"],
+      user_territory_profile: [
+        "municipal",
+        "nsd_microrregional",
+        "grs",
+        "estado_nsdigi",
       ],
     },
   },
