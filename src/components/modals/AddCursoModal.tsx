@@ -43,6 +43,7 @@ const categories = [
   { value: "Telessaúde", label: "Telessaúde" },
   { value: "Gestão", label: "Gestão" },
   { value: "Segurança", label: "Segurança" },
+  { value: "Saúde Digital", label: "Saúde Digital" },
 ];
 
 const AddCursoModal = ({ open, onOpenChange, onAdd }: AddCursoModalProps) => {
