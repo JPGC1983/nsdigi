@@ -1494,6 +1494,32 @@ export type Database = {
         }
         Returns: boolean
       }
+      list_municipios_safe: {
+        Args: {
+          macrorregiao_filter?: string
+          microregiao_filter?: string
+          search_term?: string
+          status_filter?: string
+          urs_filter?: string
+        }
+        Returns: {
+          cod_ibge: string
+          cod_macro: string
+          cod_micro: string
+          created_at: string
+          grs: string
+          id: string
+          macrorregiao: string
+          maturidade_digital: number
+          microregiao: string
+          municipio: string
+          populacao: number
+          profissionais: number
+          status: Database["public"]["Enums"]["municipio_status"]
+          updated_at: string
+          urs: string
+        }[]
+      }
       list_profiles_public: {
         Args: {
           limit_count?: number

@@ -55,7 +55,7 @@ export const useMunicipios = () => {
 
   const canEdit = isAdmin || isCoordinator;
 
-  // Fetch all municipalities
+  // Fetch all municipalities usando função segura (sem dados de coordenador)
   const {
     data: municipios = [],
     isLoading,
@@ -64,37 +64,17 @@ export const useMunicipios = () => {
   } = useQuery({
     queryKey: ["municipios", filters],
     queryFn: async () => {
-      let query = supabase
-        .from("municipios")
-        .select("*")
-        .order("municipio", { ascending: true });
-
-      if (filters.search) {
-        query = query.or(
-          `municipio.ilike.%${filters.search}%,cod_ibge.ilike.%${filters.search}%`
-        );
-      }
-
-      if (filters.status && filters.status !== "all") {
-        query = query.eq("status", filters.status as MunicipioStatus);
-      }
-
-      if (filters.microregiao) {
-        query = query.eq("microregiao", filters.microregiao);
-      }
-
-      if (filters.urs) {
-        query = query.eq("urs", filters.urs);
-      }
-
-      if (filters.macrorregiao) {
-        query = query.eq("macrorregiao", filters.macrorregiao);
-      }
-
-      const { data, error } = await query;
+      // Usar função RPC segura que não expõe dados de coordenador
+      const { data, error } = await supabase.rpc("list_municipios_safe", {
+        search_term: filters.search || null,
+        status_filter: filters.status || null,
+        microregiao_filter: filters.microregiao || null,
+        urs_filter: filters.urs || null,
+        macrorregiao_filter: filters.macrorregiao || null,
+      });
 
       if (error) throw error;
-      return data as Municipio[];
+      return (data || []) as MunicipioPublic[];
     },
   });
 
