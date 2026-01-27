@@ -80,6 +80,86 @@ export type Database = {
         }
         Relationships: []
       }
+      course_enrollments: {
+        Row: {
+          completed_at: string | null
+          course_id: string
+          id: string
+          progress: number
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          course_id: string
+          id?: string
+          progress?: number
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          course_id?: string
+          id?: string
+          progress?: number
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_enrollments_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      courses: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          duration: string | null
+          enrolled: number
+          format: string
+          id: string
+          level: string
+          title: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration?: string | null
+          enrolled?: number
+          format?: string
+          id?: string
+          level?: string
+          title: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration?: string | null
+          enrolled?: number
+          format?: string
+          id?: string
+          level?: string
+          title?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       forum_experts: {
         Row: {
           acceptance_rate: number | null
@@ -1024,6 +1104,77 @@ export type Database = {
           job_title?: string | null
           municipality?: string | null
           phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      trail_enrollments: {
+        Row: {
+          completed_at: string | null
+          id: string
+          progress: number
+          started_at: string
+          trail_id: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: string
+          progress?: number
+          started_at?: string
+          trail_id: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          id?: string
+          progress?: number
+          started_at?: string
+          trail_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trail_enrollments_trail_id_fkey"
+            columns: ["trail_id"]
+            isOneToOne: false
+            referencedRelation: "trails"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trails: {
+        Row: {
+          courses_count: number
+          created_at: string
+          created_by: string | null
+          description: string | null
+          enrolled: number
+          id: string
+          title: string
+          total_hours: number
+          updated_at: string
+        }
+        Insert: {
+          courses_count?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          enrolled?: number
+          id?: string
+          title: string
+          total_hours?: number
+          updated_at?: string
+        }
+        Update: {
+          courses_count?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          enrolled?: number
+          id?: string
+          title?: string
+          total_hours?: number
           updated_at?: string
         }
         Relationships: []

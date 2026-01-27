@@ -24,7 +24,7 @@ import { toast } from "sonner";
 interface AddCursoModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd?: (data: CursoData) => void;
+  onAdd?: (data: CursoData) => Promise<boolean>;
 }
 
 export interface CursoData {
@@ -57,7 +57,7 @@ const AddCursoModal = ({ open, onOpenChange, onAdd }: AddCursoModalProps) => {
     url: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.title || !formData.category) {
@@ -65,18 +65,19 @@ const AddCursoModal = ({ open, onOpenChange, onAdd }: AddCursoModalProps) => {
       return;
     }
 
-    onAdd?.(formData);
-    toast.success(`Curso "${formData.title}" adicionado com sucesso!`);
-    setFormData({
-      title: "",
-      description: "",
-      category: "",
-      duration: "",
-      level: "basico",
-      format: "online",
-      url: "",
-    });
-    onOpenChange(false);
+    const success = await onAdd?.(formData);
+    if (success) {
+      setFormData({
+        title: "",
+        description: "",
+        category: "",
+        duration: "",
+        level: "basico",
+        format: "online",
+        url: "",
+      });
+      onOpenChange(false);
+    }
   };
 
   return (

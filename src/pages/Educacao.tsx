@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GraduationCap, Clock, Users, BookOpen, Play, Award, ChevronRight, Filter, Plus } from "lucide-react";
+import { GraduationCap, Clock, Users, BookOpen, Play, ChevronRight, Filter, Loader2 } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/shared/PageHeader";
 import EmptyState from "@/components/shared/EmptyState";
@@ -14,30 +14,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import AddCursoModal, { CursoData } from "@/components/modals/AddCursoModal";
+import AddCursoModal from "@/components/modals/AddCursoModal";
 import AddTrilhaModal, { TrilhaData } from "@/components/modals/AddTrilhaModal";
-
-interface Course {
-  id: string;
-  title: string;
-  description: string;
-  duration: string;
-  enrolled: number;
-  category: string;
-  level: "basico" | "intermediario" | "avancado";
-  format: "online" | "presencial" | "hibrido";
-  progress?: number;
-}
-
-interface Trail {
-  id: string;
-  title: string;
-  description: string;
-  courses: number;
-  totalHours: number;
-  enrolled: number;
-  progress?: number;
-}
+import { useEducacao, CourseFormData } from "@/hooks/useEducacao";
+import { useAuth } from "@/hooks/useAuth";
 
 const levelConfig = {
   basico: { label: "Básico", className: "bg-success/10 text-success border-success/20" },
@@ -52,42 +32,44 @@ const formatConfig = {
 };
 
 const Educacao = () => {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("cursos");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTrilhaModalOpen, setIsTrilhaModalOpen] = useState(false);
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [trails, setTrails] = useState<Trail[]>([]);
 
-  const handleAddCurso = (data: CursoData) => {
-    const newCourse: Course = {
-      id: crypto.randomUUID(),
-      title: data.title,
-      description: data.description,
-      duration: data.duration,
-      enrolled: 0,
-      category: data.category,
-      level: data.level,
-      format: data.format,
-    };
-    setCourses([...courses, newCourse]);
+  const {
+    courses,
+    trails,
+    enrolledCourses,
+    isLoading,
+    stats,
+    addCourse,
+    addTrail,
+    enrollInCourse,
+  } = useEducacao();
+
+  const handleAddCurso = async (data: CourseFormData): Promise<boolean> => {
+    return await addCourse(data);
   };
 
-  const handleAddTrilha = (data: TrilhaData) => {
-    const newTrail: Trail = {
-      id: crypto.randomUUID(),
-      title: data.title,
-      description: data.description,
-      courses: 0,
-      totalHours: data.totalHours,
-      enrolled: 0,
-    };
-    setTrails([...trails, newTrail]);
+  const handleAddTrilha = async (data: TrilhaData): Promise<boolean> => {
+    return await addTrail(data);
   };
 
   const filteredCourses = courses.filter((c) => {
     return categoryFilter === "all" || c.category === categoryFilter;
   });
+
+  if (isLoading) {
+    return (
+      <MainLayout>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>
@@ -102,19 +84,19 @@ const Educacao = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="rounded-lg border border-border bg-card p-4">
             <p className="text-sm text-muted-foreground">Cursos Disponíveis</p>
-            <p className="text-2xl font-bold text-foreground">{courses.length}</p>
+            <p className="text-2xl font-bold text-foreground">{stats.totalCourses}</p>
           </div>
           <div className="rounded-lg border border-border bg-card p-4">
             <p className="text-sm text-muted-foreground">Trilhas Formativas</p>
-            <p className="text-2xl font-bold text-foreground">{trails.length}</p>
+            <p className="text-2xl font-bold text-foreground">{stats.totalTrails}</p>
           </div>
           <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
             <p className="text-sm text-muted-foreground">Em Andamento</p>
-            <p className="text-2xl font-bold text-primary">0</p>
+            <p className="text-2xl font-bold text-primary">{stats.inProgress}</p>
           </div>
           <div className="rounded-lg border border-success/20 bg-success/5 p-4">
             <p className="text-sm text-muted-foreground">Concluídos</p>
-            <p className="text-2xl font-bold text-success">0</p>
+            <p className="text-2xl font-bold text-success">{stats.completed}</p>
           </div>
         </div>
 
@@ -138,6 +120,7 @@ const Educacao = () => {
                 <SelectItem value="Telessaúde">Telessaúde</SelectItem>
                 <SelectItem value="Gestão">Gestão</SelectItem>
                 <SelectItem value="Segurança">Segurança</SelectItem>
+                <SelectItem value="Saúde Digital">Saúde Digital</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -146,10 +129,10 @@ const Educacao = () => {
             {filteredCourses.length === 0 ? (
               <EmptyState
                 icon={GraduationCap}
-                title="Nenhuma trilha formativa ativa"
+                title="Nenhum curso disponível"
                 description="Após adicionar cursos, você acompanhará a progressão dos profissionais nas trilhas formativas e certificações emitidas."
-                actionLabel="Adicionar Curso"
-                onAction={() => setIsModalOpen(true)}
+                actionLabel={user ? "Adicionar Curso" : undefined}
+                onAction={user ? () => setIsModalOpen(true) : undefined}
               />
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -197,9 +180,13 @@ const Educacao = () => {
                         <Progress value={course.progress} className="h-2" />
                       </div>
                     ) : (
-                      <Button variant="outline" className="w-full gap-2">
+                      <Button 
+                        variant="outline" 
+                        className="w-full gap-2"
+                        onClick={() => course.url ? window.open(course.url, '_blank') : enrollInCourse(course.id)}
+                      >
                         <Play className="h-4 w-4" />
-                        Iniciar Curso
+                        {course.url ? "Acessar Curso" : "Iniciar Curso"}
                       </Button>
                     )}
                   </div>
@@ -214,8 +201,8 @@ const Educacao = () => {
                 icon={BookOpen}
                 title="Nenhuma trilha formativa disponível"
                 description="Crie trilhas para organizar cursos em jornadas de aprendizado estruturadas para os profissionais."
-                actionLabel="Criar Trilha"
-                onAction={() => setIsTrilhaModalOpen(true)}
+                actionLabel={user ? "Criar Trilha" : undefined}
+                onAction={user ? () => setIsTrilhaModalOpen(true) : undefined}
               />
             ) : (
               <div className="space-y-4">
@@ -236,11 +223,11 @@ const Educacao = () => {
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <span className="flex items-center gap-1">
                             <GraduationCap className="h-4 w-4" />
-                            {trail.courses} cursos
+                            {trail.courses_count} cursos
                           </span>
                           <span className="flex items-center gap-1">
                             <Clock className="h-4 w-4" />
-                            {trail.totalHours}h total
+                            {trail.total_hours}h total
                           </span>
                           <span className="flex items-center gap-1">
                             <Users className="h-4 w-4" />
@@ -266,13 +253,41 @@ const Educacao = () => {
           </TabsContent>
 
           <TabsContent value="meus" className="mt-4">
-            <EmptyState
-              icon={GraduationCap}
-              title="Nenhum curso iniciado"
-              description="Quando você se inscrever em cursos, eles aparecerão aqui para acompanhar seu progresso e certificados."
-              actionLabel="Explorar Cursos"
-              onAction={() => setActiveTab("cursos")}
-            />
+            {enrolledCourses.length === 0 ? (
+              <EmptyState
+                icon={GraduationCap}
+                title="Nenhum curso iniciado"
+                description="Quando você se inscrever em cursos, eles aparecerão aqui para acompanhar seu progresso e certificados."
+                actionLabel="Explorar Cursos"
+                onAction={() => setActiveTab("cursos")}
+              />
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {enrolledCourses.map((course) => (
+                  <div
+                    key={course.id}
+                    className="rounded-xl border border-border bg-card p-5 shadow-card"
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <Badge variant="outline" className="text-xs">
+                        {course.category}
+                      </Badge>
+                      <Badge className={levelConfig[course.level].className}>
+                        {levelConfig[course.level].label}
+                      </Badge>
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">{course.title}</h3>
+                    <div className="mt-3">
+                      <div className="flex items-center justify-between text-sm mb-2">
+                        <span className="text-muted-foreground">Seu progresso</span>
+                        <span className="font-medium text-foreground">{course.progress}%</span>
+                      </div>
+                      <Progress value={course.progress} className="h-2" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       </div>
