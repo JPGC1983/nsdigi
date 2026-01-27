@@ -6,38 +6,30 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import { useMunicipios, type MunicipioStatus } from "@/hooks/useMunicipios";
 
-interface Municipality {
-  id: string;
-  name: string;
-  population: number;
-  professionals: number;
-  status: "active" | "pending" | "inactive";
-  maturityLevel: number;
-}
-
-// Empty state for now - will be populated from database
-const municipalities: Municipality[] = [];
-
-const statusConfig = {
-  active: { label: "Ativo", className: "bg-primary/10 text-primary border-primary/20" },
-  pending: { label: "Pendente", className: "bg-warning/10 text-warning border-warning/20" },
-  inactive: { label: "Inativo", className: "bg-muted text-muted-foreground border-border" },
+const statusConfig: Record<MunicipioStatus, { label: string; className: string }> = {
+  ativo: { label: "Ativo", className: "bg-primary/10 text-primary border-primary/20" },
+  pendente: { label: "Pendente", className: "bg-warning/10 text-warning border-warning/20" },
+  inativo: { label: "Inativo", className: "bg-muted text-muted-foreground border-border" },
+  em_implantacao: { label: "Em Implantação", className: "bg-info/10 text-info border-info/20" },
 };
 
 const ITEMS_PER_PAGE = 5;
 
 const MunicipalitiesTable = () => {
   const navigate = useNavigate();
+  const { municipios, isLoading } = useMunicipios();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredMunicipalities = useMemo(() => {
-    if (!searchQuery.trim()) return municipalities;
-    return municipalities.filter((m) =>
-      m.name.toLowerCase().includes(searchQuery.toLowerCase())
+    if (!searchQuery.trim()) return municipios;
+    return municipios.filter((m) =>
+      m.municipio.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      m.cod_ibge.includes(searchQuery)
     );
-  }, [searchQuery]);
+  }, [searchQuery, municipios]);
 
   const totalPages = Math.ceil(filteredMunicipalities.length / ITEMS_PER_PAGE);
   const paginatedData = filteredMunicipalities.slice(
@@ -49,6 +41,14 @@ const MunicipalitiesTable = () => {
     setSearchQuery(value);
     setCurrentPage(1);
   };
+
+  if (isLoading) {
+    return (
+      <div className="rounded-xl border border-border bg-white shadow-layered overflow-hidden h-full min-h-[200px] flex items-center justify-center">
+        <div className="animate-pulse text-muted-foreground">Carregando...</div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -91,13 +91,13 @@ const MunicipalitiesTable = () => {
             Nenhum município cadastrado
           </h4>
           <p className="text-[13px] text-muted-foreground/70 max-w-xs mb-5">
-            Adicione municípios para acompanhar indicadores e atividades regionais.
+            Os municípios serão carregados da base de regionalização de MG.
           </p>
           <Button
             onClick={() => navigate("/municipios")}
             className="gap-2 bg-primary hover:bg-primary/90 px-6 py-2.5 h-auto rounded-lg"
           >
-            Cadastrar Município
+            Ver Municípios
             <ArrowUpRight className="h-4 w-4" />
           </Button>
         </div>
@@ -111,10 +111,10 @@ const MunicipalitiesTable = () => {
                     Município
                   </th>
                   <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wide hidden sm:table-cell">
-                    População
+                    Microrregião
                   </th>
                   <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wide hidden md:table-cell">
-                    Profissionais
+                    URS
                   </th>
                   <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wide">
                     Status
@@ -139,21 +139,25 @@ const MunicipalitiesTable = () => {
                         <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
                           <MapPin className="h-4 w-4 text-primary" />
                         </div>
-                        <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                          {municipality.name}
-                        </span>
+                        <div>
+                          <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors block">
+                            {municipality.municipio}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {municipality.cod_ibge}
+                          </span>
+                        </div>
                       </div>
                     </td>
                     <td className="px-5 py-4 hidden sm:table-cell">
-                      <span className="text-sm text-muted-foreground">
-                        {municipality.population.toLocaleString()}
+                      <span className="text-sm text-muted-foreground line-clamp-1">
+                        {municipality.microregiao}
                       </span>
                     </td>
                     <td className="px-5 py-4 hidden md:table-cell">
-                      <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <Users className="h-3.5 w-3.5" />
-                        {municipality.professionals}
-                      </div>
+                      <span className="text-sm text-muted-foreground">
+                        {municipality.urs}
+                      </span>
                     </td>
                     <td className="px-5 py-4">
                       <Badge
@@ -168,11 +172,11 @@ const MunicipalitiesTable = () => {
                         <div className="h-1.5 w-16 rounded-full bg-muted overflow-hidden">
                           <div
                             className="h-full rounded-full bg-primary transition-all duration-500"
-                            style={{ width: `${municipality.maturityLevel}%` }}
+                            style={{ width: `${municipality.maturidade_digital}%` }}
                           />
                         </div>
                         <span className="text-xs text-muted-foreground">
-                          {municipality.maturityLevel}%
+                          {municipality.maturidade_digital}%
                         </span>
                       </div>
                     </td>
