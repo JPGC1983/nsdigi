@@ -78,6 +78,7 @@ const Municipios = () => {
                 municipio={municipio}
                 onUpdate={handleUpdate}
                 canEdit={canEdit}
+                showCoordinatorData={canEdit} // Apenas admin/coordenador vê dados do coordenador
               />
             ))}
           </div>
