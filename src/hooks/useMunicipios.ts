@@ -1,0 +1,214 @@
+import { useState, useCallback } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import type { Database } from "@/integrations/supabase/types";
+
+export type MunicipioStatus = Database["public"]["Enums"]["municipio_status"];
+
+export interface Municipio {
+  id: string;
+  municipio: string;
+  cod_ibge: string;
+  macrorregiao: string;
+  cod_macro: string;
+  microregiao: string;
+  cod_micro: string;
+  urs: string;
+  grs: string | null;
+  status: MunicipioStatus;
+  coordenador_nome: string | null;
+  coordenador_email: string | null;
+  coordenador_telefone: string | null;
+  populacao: number;
+  profissionais: number;
+  maturidade_digital: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface MunicipioUpdateData {
+  status?: MunicipioStatus;
+  coordenador_nome?: string;
+  coordenador_email?: string;
+  coordenador_telefone?: string;
+}
+
+export interface MunicipioFilters {
+  search?: string;
+  status?: string;
+  microregiao?: string;
+  urs?: string;
+  macrorregiao?: string;
+}
+
+export const useMunicipios = () => {
+  const { user, isAdmin, isCoordinator } = useAuth();
+  const queryClient = useQueryClient();
+  const [filters, setFilters] = useState<MunicipioFilters>({});
+
+  const canEdit = isAdmin || isCoordinator;
+
+  // Fetch all municipalities
+  const {
+    data: municipios = [],
+    isLoading,
+    error,
+    refetch
+  } = useQuery({
+    queryKey: ["municipios", filters],
+    queryFn: async () => {
+      let query = supabase
+        .from("municipios")
+        .select("*")
+        .order("municipio", { ascending: true });
+
+      if (filters.search) {
+        query = query.or(
+          `municipio.ilike.%${filters.search}%,cod_ibge.ilike.%${filters.search}%`
+        );
+      }
+
+      if (filters.status && filters.status !== "all") {
+        query = query.eq("status", filters.status as MunicipioStatus);
+      }
+
+      if (filters.microregiao) {
+        query = query.eq("microregiao", filters.microregiao);
+      }
+
+      if (filters.urs) {
+        query = query.eq("urs", filters.urs);
+      }
+
+      if (filters.macrorregiao) {
+        query = query.eq("macrorregiao", filters.macrorregiao);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+      return data as Municipio[];
+    },
+  });
+
+  // Get unique values for filters
+  const { data: filterOptions } = useQuery({
+    queryKey: ["municipios-filter-options"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("municipios")
+        .select("microregiao, urs, macrorregiao")
+        .order("microregiao");
+
+      if (error) throw error;
+
+      const microrregioes = [...new Set(data?.map(m => m.microregiao) || [])];
+      const ursList = [...new Set(data?.map(m => m.urs) || [])];
+      const macrorregioes = [...new Set(data?.map(m => m.macrorregiao) || [])];
+
+      return { microrregioes, ursList, macrorregioes };
+    },
+  });
+
+  // Update municipality
+  const updateMunicipio = useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: MunicipioUpdateData }) => {
+      if (!canEdit) {
+        throw new Error("Sem permissão para editar");
+      }
+
+      const { error } = await supabase
+        .from("municipios")
+        .update(data)
+        .eq("id", id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["municipios"] });
+      toast.success("Município atualizado com sucesso!");
+    },
+    onError: (error: Error) => {
+      toast.error(`Erro ao atualizar: ${error.message}`);
+    },
+  });
+
+  // Find municipality by IBGE code
+  const findByIBGE = useCallback(async (codIbge: string): Promise<Municipio | null> => {
+    const { data, error } = await supabase
+      .from("municipios")
+      .select("*")
+      .eq("cod_ibge", codIbge)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Error finding municipality:", error);
+      return null;
+    }
+
+    return data as Municipio | null;
+  }, []);
+
+  // Get statistics
+  const stats = {
+    total: municipios.length,
+    ativos: municipios.filter(m => m.status === "ativo").length,
+    pendentes: municipios.filter(m => m.status === "pendente").length,
+    emImplantacao: municipios.filter(m => m.status === "em_implantacao").length,
+    inativos: municipios.filter(m => m.status === "inativo").length,
+    maturidadeMedia: municipios.length > 0
+      ? Math.round(municipios.reduce((acc, m) => acc + (m.maturidade_digital || 0), 0) / municipios.length)
+      : 0,
+  };
+
+  return {
+    municipios,
+    isLoading,
+    error,
+    refetch,
+    filters,
+    setFilters,
+    filterOptions,
+    updateMunicipio,
+    findByIBGE,
+    stats,
+    canEdit,
+  };
+};
+
+// Hook for user territory profile
+export const useUserTerritory = () => {
+  const { user } = useAuth();
+
+  const { data: territoryProfile, isLoading } = useQuery({
+    queryKey: ["user-territory", user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+
+      const { data, error } = await supabase
+        .from("user_territory_profiles")
+        .select(`
+          *,
+          municipio:municipios(*)
+        `)
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!user?.id,
+  });
+
+  return {
+    territoryProfile,
+    isLoading,
+    perfilTerritorio: territoryProfile?.perfil_territorio || null,
+    municipio: territoryProfile?.municipio || null,
+    microregiao: territoryProfile?.microregiao || null,
+    urs: territoryProfile?.urs || null,
+    grs: territoryProfile?.grs || null,
+  };
+};
