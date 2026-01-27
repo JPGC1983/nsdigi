@@ -32,7 +32,7 @@ export interface TrilhaData {
 interface AddTrilhaModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd: (data: TrilhaData) => void;
+  onAdd: (data: TrilhaData) => Promise<boolean>;
 }
 
 const categories = [
@@ -53,7 +53,7 @@ const AddTrilhaModal = ({ open, onOpenChange, onAdd }: AddTrilhaModalProps) => {
     level: "basico",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.title.trim()) {
@@ -65,20 +65,17 @@ const AddTrilhaModal = ({ open, onOpenChange, onAdd }: AddTrilhaModalProps) => {
       return;
     }
 
-    onAdd(formData);
-    toast({
-      title: "Trilha criada",
-      description: `A trilha "${formData.title}" foi criada com sucesso.`,
-    });
-    
-    setFormData({
-      title: "",
-      description: "",
-      category: "",
-      totalHours: 0,
-      level: "basico",
-    });
-    onOpenChange(false);
+    const success = await onAdd(formData);
+    if (success) {
+      setFormData({
+        title: "",
+        description: "",
+        category: "",
+        totalHours: 0,
+        level: "basico",
+      });
+      onOpenChange(false);
+    }
   };
 
   return (
