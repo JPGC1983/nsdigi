@@ -1201,13 +1201,6 @@ export type Database = {
             foreignKeyName: "municipios_nucleo_id_fkey"
             columns: ["nucleo_id"]
             isOneToOne: false
-            referencedRelation: "nmsd_members_count"
-            referencedColumns: ["nucleo_id"]
-          },
-          {
-            foreignKeyName: "municipios_nucleo_id_fkey"
-            columns: ["nucleo_id"]
-            isOneToOne: false
             referencedRelation: "nucleos_microrregionais"
             referencedColumns: ["id"]
           },
@@ -1448,13 +1441,6 @@ export type Database = {
             foreignKeyName: "user_territory_profiles_nucleo_id_fkey"
             columns: ["nucleo_id"]
             isOneToOne: false
-            referencedRelation: "nmsd_members_count"
-            referencedColumns: ["nucleo_id"]
-          },
-          {
-            foreignKeyName: "user_territory_profiles_nucleo_id_fkey"
-            columns: ["nucleo_id"]
-            isOneToOne: false
             referencedRelation: "nucleos_microrregionais"
             referencedColumns: ["id"]
           },
@@ -1513,20 +1499,6 @@ export type Database = {
           status?: Database["public"]["Enums"]["municipio_status"] | null
           updated_at?: string | null
           urs?: string | null
-        }
-        Relationships: []
-      }
-      nmsd_members_count: {
-        Row: {
-          macrorregiao: string | null
-          maturidade_media: number | null
-          microregiao: string | null
-          nome_nucleo: string | null
-          nucleo_id: string | null
-          populacao_total: number | null
-          profissionais_total: number | null
-          qtd_municipios: number | null
-          urs: string | null
         }
         Relationships: []
       }
