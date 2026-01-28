@@ -78,22 +78,21 @@ export const useMunicipios = () => {
     },
   });
 
-  // Get unique values for filters
+  // Get unique values for filters using secure RPC
   const { data: filterOptions } = useQuery({
     queryKey: ["municipios-filter-options"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("municipios")
-        .select("microregiao, urs, macrorregiao")
-        .order("microregiao");
+      const { data, error } = await supabase.rpc("get_municipios_filter_options");
 
       if (error) throw error;
 
-      const microrregioes = [...new Set(data?.map(m => m.microregiao) || [])];
-      const ursList = [...new Set(data?.map(m => m.urs) || [])];
-      const macrorregioes = [...new Set(data?.map(m => m.macrorregiao) || [])];
+      const result = data as { microrregioes: string[]; ursList: string[]; macrorregioes: string[] } | null;
 
-      return { microrregioes, ursList, macrorregioes };
+      return {
+        microrregioes: result?.microrregioes || [],
+        ursList: result?.ursList || [],
+        macrorregioes: result?.macrorregioes || [],
+      };
     },
   });
 
