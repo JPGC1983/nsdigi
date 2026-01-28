@@ -21,12 +21,14 @@ import {
   Mail,
   Briefcase,
   Camera,
-  Loader2
+  Loader2,
+  Settings2
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import SeedRegionalizacaoButton from "@/components/admin/SeedRegionalizacaoButton";
 
 const Configuracoes = () => {
-  const { user, profile, refreshProfile } = useAuth();
+  const { user, profile, refreshProfile, isAdmin } = useAuth();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
@@ -185,7 +187,7 @@ const Configuracoes = () => {
         />
 
         <Tabs defaultValue="perfil" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 gap-2">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-2">
             <TabsTrigger value="perfil" className="flex items-center gap-2">
               <User className="h-4 w-4" />
               <span className="hidden sm:inline">Perfil</span>
@@ -202,6 +204,12 @@ const Configuracoes = () => {
               <Palette className="h-4 w-4" />
               <span className="hidden sm:inline">Aparência</span>
             </TabsTrigger>
+            {isAdmin && (
+              <TabsTrigger value="admin" className="flex items-center gap-2">
+                <Settings2 className="h-4 w-4" />
+                <span className="hidden sm:inline">Admin</span>
+              </TabsTrigger>
+            )}
           </TabsList>
 
           {/* Profile Tab */}
@@ -510,6 +518,26 @@ const Configuracoes = () => {
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* Admin Tab - Only visible for admins */}
+          {isAdmin && (
+            <TabsContent value="admin" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Settings2 className="h-5 w-5 text-primary" />
+                    Administração
+                  </CardTitle>
+                  <CardDescription>
+                    Configurações avançadas para administradores
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <SeedRegionalizacaoButton />
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
         </Tabs>
       </div>
     </MainLayout>

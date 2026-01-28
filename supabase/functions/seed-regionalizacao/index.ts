@@ -43,13 +43,13 @@ serve(async (req) => {
     console.log(`Processing ${data.total_microrregioes} microrregiões and ${data.total_municipios} municípios`);
 
     // Step 1: Insert all NMSDs (nucleos_microrregionais)
+    // Note: nome_nucleo is generated, so we don't set it
     const nucleosToInsert = data.microrregioes.map((micro) => ({
       microregiao: micro.microrregiao.toUpperCase().trim(),
       cod_micro: String(micro.codigo_micro),
       macrorregiao: micro.macrorregiao.toUpperCase().trim(),
       cod_macro: String(micro.codigo_macro),
       urs: micro.urs.trim(),
-      nome_nucleo: `NMSD ${micro.microrregiao}`,
       is_active: true,
     }));
 
