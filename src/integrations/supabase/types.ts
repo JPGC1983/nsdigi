@@ -1147,6 +1147,7 @@ export type Database = {
           maturidade_digital: number | null
           microregiao: string
           municipio: string
+          nucleo_id: string | null
           populacao: number | null
           profissionais: number | null
           status: Database["public"]["Enums"]["municipio_status"]
@@ -1167,6 +1168,7 @@ export type Database = {
           maturidade_digital?: number | null
           microregiao: string
           municipio: string
+          nucleo_id?: string | null
           populacao?: number | null
           profissionais?: number | null
           status?: Database["public"]["Enums"]["municipio_status"]
@@ -1187,9 +1189,66 @@ export type Database = {
           maturidade_digital?: number | null
           microregiao?: string
           municipio?: string
+          nucleo_id?: string | null
           populacao?: number | null
           profissionais?: number | null
           status?: Database["public"]["Enums"]["municipio_status"]
+          updated_at?: string
+          urs?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "municipios_nucleo_id_fkey"
+            columns: ["nucleo_id"]
+            isOneToOne: false
+            referencedRelation: "nucleos_microrregionais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nucleos_microrregionais: {
+        Row: {
+          cod_macro: string
+          cod_micro: string
+          coordenador_email: string | null
+          coordenador_nome: string | null
+          coordenador_telefone: string | null
+          created_at: string
+          id: string
+          is_active: boolean | null
+          macrorregiao: string
+          microregiao: string
+          nome_nucleo: string | null
+          updated_at: string
+          urs: string
+        }
+        Insert: {
+          cod_macro: string
+          cod_micro: string
+          coordenador_email?: string | null
+          coordenador_nome?: string | null
+          coordenador_telefone?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          macrorregiao: string
+          microregiao: string
+          nome_nucleo?: string | null
+          updated_at?: string
+          urs: string
+        }
+        Update: {
+          cod_macro?: string
+          cod_micro?: string
+          coordenador_email?: string | null
+          coordenador_nome?: string | null
+          coordenador_telefone?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          macrorregiao?: string
+          microregiao?: string
+          nome_nucleo?: string | null
           updated_at?: string
           urs?: string
         }
@@ -1329,6 +1388,7 @@ export type Database = {
           macrorregiao: string | null
           microregiao: string | null
           municipio_id: string | null
+          nucleo_id: string | null
           perfil_territorio: Database["public"]["Enums"]["user_territory_profile"]
           updated_at: string
           urs: string | null
@@ -1342,6 +1402,7 @@ export type Database = {
           macrorregiao?: string | null
           microregiao?: string | null
           municipio_id?: string | null
+          nucleo_id?: string | null
           perfil_territorio?: Database["public"]["Enums"]["user_territory_profile"]
           updated_at?: string
           urs?: string | null
@@ -1355,6 +1416,7 @@ export type Database = {
           macrorregiao?: string | null
           microregiao?: string | null
           municipio_id?: string | null
+          nucleo_id?: string | null
           perfil_territorio?: Database["public"]["Enums"]["user_territory_profile"]
           updated_at?: string
           urs?: string | null
@@ -1373,6 +1435,13 @@ export type Database = {
             columns: ["municipio_id"]
             isOneToOne: false
             referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_territory_profiles_nucleo_id_fkey"
+            columns: ["nucleo_id"]
+            isOneToOne: false
+            referencedRelation: "nucleos_microrregionais"
             referencedColumns: ["id"]
           },
         ]
@@ -1487,6 +1556,16 @@ export type Database = {
         }[]
       }
       get_profile_safe: { Args: { target_id: string }; Returns: Json }
+      get_user_nmsd: {
+        Args: { user_uuid: string }
+        Returns: {
+          macrorregiao: string
+          microregiao: string
+          nome_nucleo: string
+          nucleo_id: string
+          urs: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1518,6 +1597,18 @@ export type Database = {
           status: Database["public"]["Enums"]["municipio_status"]
           updated_at: string
           urs: string
+        }[]
+      }
+      list_nmsd_members: {
+        Args: { nmsd_microregiao: string }
+        Returns: {
+          cod_ibge: string
+          maturidade_digital: number
+          municipio: string
+          municipio_id: string
+          populacao: number
+          profissionais: number
+          status: Database["public"]["Enums"]["municipio_status"]
         }[]
       }
       list_profiles_public: {
