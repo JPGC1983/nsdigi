@@ -18,6 +18,7 @@ import NMSDTable from "@/components/dashboard/NMSDTable";
 import OnboardingOverlay from "@/components/onboarding/OnboardingOverlay";
 import { useOnboarding } from "@/hooks/useOnboarding";
 import { useAuth } from "@/hooks/useAuth";
+import { useNucleosMicrorregionais } from "@/hooks/useNucleosMicrorregionais";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -40,6 +41,7 @@ const itemVariants = {
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const { nucleos, stats } = useNucleosMicrorregionais();
   const {
     isActive,
     hasCompleted,
@@ -84,7 +86,7 @@ const Dashboard = () => {
         >
           <MetricCard
             title="NMSDs Ativos"
-            value={0}
+            value={stats.totalNucleos}
             subtitle="microrregiões"
             icon={Network}
             delay={0.1}
