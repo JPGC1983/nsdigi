@@ -96,13 +96,13 @@ export const MunicipioFilters = ({
           }
         >
           <SelectTrigger className="w-full sm:w-64">
-            <SelectValue placeholder="Microrregião" />
+            <SelectValue placeholder="NMSD (Núcleo Microrregional)" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todas as microrregiões</SelectItem>
+            <SelectItem value="all">Todos os NMSD</SelectItem>
             {filterOptions?.microrregioes.map((micro) => (
               <SelectItem key={micro} value={micro}>
-                {micro}
+                NMSD {micro}
               </SelectItem>
             ))}
           </SelectContent>

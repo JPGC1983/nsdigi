@@ -85,7 +85,7 @@ const Dashboard = () => {
           <MetricCard
             title="Municípios Ativos"
             value={0}
-            subtitle="na microrregião"
+            subtitle="no NMSD"
             icon={Building2}
             delay={0.1}
           />

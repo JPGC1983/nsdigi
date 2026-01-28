@@ -63,11 +63,11 @@ const MunicipalitiesTable = () => {
           <div className="flex items-center gap-2">
             <MapPin className="h-4 w-4 text-primary" />
             <h3 className="text-lg font-semibold text-foreground tracking-tight">
-              Municípios da Microrregião
+              Municípios do NMSD
             </h3>
           </div>
           <p className="text-[13px] text-muted-foreground mt-0.5">
-            {filteredMunicipalities.length} municípios cadastrados
+            {filteredMunicipalities.length} municípios no Núcleo Microrregional
           </p>
         </div>
         <div className="relative w-full sm:w-64">
@@ -111,7 +111,7 @@ const MunicipalitiesTable = () => {
                     Município
                   </th>
                   <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wide hidden sm:table-cell">
-                    Microrregião
+                    NMSD
                   </th>
                   <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wide hidden md:table-cell">
                     URS
@@ -150,8 +150,8 @@ const MunicipalitiesTable = () => {
                       </div>
                     </td>
                     <td className="px-5 py-4 hidden sm:table-cell">
-                      <span className="text-sm text-muted-foreground line-clamp-1">
-                        {municipality.microregiao}
+                      <span className="text-sm text-muted-foreground line-clamp-1" title={`NMSD ${municipality.microregiao}`}>
+                        NMSD {municipality.microregiao}
                       </span>
                     </td>
                     <td className="px-5 py-4 hidden md:table-cell">
