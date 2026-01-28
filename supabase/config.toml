@@ -1,1 +1,4 @@
 project_id = "ozsqdwxvikdzxsiggtml"
+
+[functions.seed-regionalizacao]
+verify_jwt = false
