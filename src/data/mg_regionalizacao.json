@@ -1,0 +1,4219 @@
+{
+  "total_microrregioes": 89,
+  "total_municipios": 853,
+  "microrregioes": [
+    {
+      "microrregiao": "ALFENAS/MACHADO",
+      "codigo_micro": 31001,
+      "macrorregiao": "SUDOESTE",
+      "codigo_macro": 3116,
+      "urs": "Alfenas",
+      "municipios": [
+        {
+          "municipio": "Alfenas",
+          "codigo_municipio": 3101607
+        },
+        {
+          "municipio": "Alterosa",
+          "codigo_municipio": 3102001
+        },
+        {
+          "municipio": "Areado",
+          "codigo_municipio": 3104304
+        },
+        {
+          "municipio": "Bandeira do Sul",
+          "codigo_municipio": 3105301
+        },
+        {
+          "municipio": "Botelhos",
+          "codigo_municipio": 3108404
+        },
+        {
+          "municipio": "Campestre",
+          "codigo_municipio": 3111002
+        },
+        {
+          "municipio": "Campo do Meio",
+          "codigo_municipio": 3111309
+        },
+        {
+          "municipio": "Campos Gerais",
+          "codigo_municipio": 3111606
+        },
+        {
+          "municipio": "Carvalhópolis",
+          "codigo_municipio": 3114709
+        },
+        {
+          "municipio": "Conceição da Aparecida",
+          "codigo_municipio": 3117108
+        },
+        {
+          "municipio": "Divisa Nova",
+          "codigo_municipio": 3122405
+        },
+        {
+          "municipio": "Fama",
+          "codigo_municipio": 3125200
+        },
+        {
+          "municipio": "Machado",
+          "codigo_municipio": 3139003
+        },
+        {
+          "municipio": "Paraguaçu",
+          "codigo_municipio": 3147204
+        },
+        {
+          "municipio": "Poço Fundo",
+          "codigo_municipio": 3151701
+        },
+        {
+          "municipio": "Serrania",
+          "codigo_municipio": 3166907
+        }
+      ]
+    },
+    {
+      "microrregiao": "GUAXUPÉ",
+      "codigo_micro": 31002,
+      "macrorregiao": "SUDOESTE",
+      "codigo_macro": 3116,
+      "urs": "Alfenas",
+      "municipios": [
+        {
+          "municipio": "Arceburgo",
+          "codigo_municipio": 3104106
+        },
+        {
+          "municipio": "Cabo Verde",
+          "codigo_municipio": 3109501
+        },
+        {
+          "municipio": "Guaranésia",
+          "codigo_municipio": 3128303
+        },
+        {
+          "municipio": "Guaxupé",
+          "codigo_municipio": 3128709
+        },
+        {
+          "municipio": "Juruaia",
+          "codigo_municipio": 3136900
+        },
+        {
+          "municipio": "Monte Belo",
+          "codigo_municipio": 3143005
+        },
+        {
+          "municipio": "Muzambinho",
+          "codigo_municipio": 3144102
+        },
+        {
+          "municipio": "São Pedro da União",
+          "codigo_municipio": 3163904
+        }
+      ]
+    },
+    {
+      "microrregiao": "BARBACENA",
+      "codigo_micro": 31013,
+      "macrorregiao": "CENTRO SUL",
+      "codigo_macro": 3102,
+      "urs": "Barbacena",
+      "municipios": [
+        {
+          "municipio": "Alfredo Vasconcelos",
+          "codigo_municipio": 3101631
+        },
+        {
+          "municipio": "Alto Rio Doce",
+          "codigo_municipio": 3102100
+        },
+        {
+          "municipio": "Antônio Carlos",
+          "codigo_municipio": 3102902
+        },
+        {
+          "municipio": "Barbacena",
+          "codigo_municipio": 3105608
+        },
+        {
+          "municipio": "Capela Nova",
+          "codigo_municipio": 3112208
+        },
+        {
+          "municipio": "Carandaí",
+          "codigo_municipio": 3113206
+        },
+        {
+          "municipio": "Cipotânea",
+          "codigo_municipio": 3116308
+        },
+        {
+          "municipio": "Desterro do Melo",
+          "codigo_municipio": 3121506
+        },
+        {
+          "municipio": "Ibertioga",
+          "codigo_municipio": 3129400
+        },
+        {
+          "municipio": "Paiva",
+          "codigo_municipio": 3146602
+        },
+        {
+          "municipio": "Ressaquinha",
+          "codigo_municipio": 3154408
+        },
+        {
+          "municipio": "Santa Bárbara do Tugúrio",
+          "codigo_municipio": 3157302
+        },
+        {
+          "municipio": "Santa Rita de Ibitipoca",
+          "codigo_municipio": 3159407
+        },
+        {
+          "municipio": "Santana do Garambéu",
+          "codigo_municipio": 3158706
+        },
+        {
+          "municipio": "Senhora dos Remédios",
+          "codigo_municipio": 3166204
+        }
+      ]
+    },
+    {
+      "microrregiao": "CONGONHAS",
+      "codigo_micro": 31078,
+      "macrorregiao": "CENTRO SUL",
+      "codigo_macro": 3102,
+      "urs": "Barbacena",
+      "municipios": [
+        {
+          "municipio": "Congonhas",
+          "codigo_municipio": 3118007
+        },
+        {
+          "municipio": "Desterro de Entre Rios",
+          "codigo_municipio": 3121407
+        },
+        {
+          "municipio": "Entre Rios de Minas",
+          "codigo_municipio": 3123908
+        },
+        {
+          "municipio": "Jeceaba",
+          "codigo_municipio": 3135407
+        },
+        {
+          "municipio": "Ouro Branco",
+          "codigo_municipio": 3145901
+        },
+        {
+          "municipio": "São Brás do Suaçuí",
+          "codigo_municipio": 3160900
+        }
+      ]
+    },
+    {
+      "microrregiao": "CONSELHEIRO LAFAIETE",
+      "codigo_micro": 31079,
+      "macrorregiao": "CENTRO SUL",
+      "codigo_macro": 3102,
+      "urs": "Barbacena",
+      "municipios": [
+        {
+          "municipio": "Caranaíba",
+          "codigo_municipio": 3113107
+        },
+        {
+          "municipio": "Casa Grande",
+          "codigo_municipio": 3114907
+        },
+        {
+          "municipio": "Catas Altas da Noruega",
+          "codigo_municipio": 3115409
+        },
+        {
+          "municipio": "Conselheiro Lafaiete",
+          "codigo_municipio": 3118304
+        },
+        {
+          "municipio": "Cristiano Otoni",
+          "codigo_municipio": 3120409
+        },
+        {
+          "municipio": "Itaverava",
+          "codigo_municipio": 3133907
+        },
+        {
+          "municipio": "Lamim",
+          "codigo_municipio": 3137908
+        },
+        {
+          "municipio": "Piranga",
+          "codigo_municipio": 3150802
+        },
+        {
+          "municipio": "Queluzito",
+          "codigo_municipio": 3153806
+        },
+        {
+          "municipio": "Rio Espera",
+          "codigo_municipio": 3155207
+        },
+        {
+          "municipio": "Santana dos Montes",
+          "codigo_municipio": 3159100
+        },
+        {
+          "municipio": "Senhora de Oliveira",
+          "codigo_municipio": 3166006
+        }
+      ]
+    },
+    {
+      "microrregiao": "BELO HORIZONTE/NOVA LIMA/SANTA LUZIA",
+      "codigo_micro": 31016,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Belo Horizonte",
+      "municipios": [
+        {
+          "municipio": "Belo Horizonte",
+          "codigo_municipio": 3106200
+        },
+        {
+          "municipio": "Belo Vale",
+          "codigo_municipio": 3106408
+        },
+        {
+          "municipio": "Caeté",
+          "codigo_municipio": 3110004
+        },
+        {
+          "municipio": "Jaboticatubas",
+          "codigo_municipio": 3134608
+        },
+        {
+          "municipio": "Moeda",
+          "codigo_municipio": 3142304
+        },
+        {
+          "municipio": "Nova Lima",
+          "codigo_municipio": 3144805
+        },
+        {
+          "municipio": "Nova União",
+          "codigo_municipio": 3136603
+        },
+        {
+          "municipio": "Raposos",
+          "codigo_municipio": 3153905
+        },
+        {
+          "municipio": "Ribeirão das Neves",
+          "codigo_municipio": 3154606
+        },
+        {
+          "municipio": "Rio Acima",
+          "codigo_municipio": 3154804
+        },
+        {
+          "municipio": "Sabará",
+          "codigo_municipio": 3156700
+        },
+        {
+          "municipio": "Santa Luzia",
+          "codigo_municipio": 3157807
+        },
+        {
+          "municipio": "Taquaraçu de Minas",
+          "codigo_municipio": 3168309
+        }
+      ]
+    },
+    {
+      "microrregiao": "BETIM",
+      "codigo_micro": 31017,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Belo Horizonte",
+      "municipios": [
+        {
+          "municipio": "Betim",
+          "codigo_municipio": 3106705
+        },
+        {
+          "municipio": "Bonfim",
+          "codigo_municipio": 3108107
+        },
+        {
+          "municipio": "Brumadinho",
+          "codigo_municipio": 3109006
+        },
+        {
+          "municipio": "Crucilândia",
+          "codigo_municipio": 3120607
+        },
+        {
+          "municipio": "Esmeraldas",
+          "codigo_municipio": 3124104
+        },
+        {
+          "municipio": "Florestal",
+          "codigo_municipio": 3126000
+        },
+        {
+          "municipio": "Igarapé",
+          "codigo_municipio": 3130101
+        },
+        {
+          "municipio": "Juatuba",
+          "codigo_municipio": 3136652
+        },
+        {
+          "municipio": "Mário Campos",
+          "codigo_municipio": 3140159
+        },
+        {
+          "municipio": "Mateus Leme",
+          "codigo_municipio": 3140704
+        },
+        {
+          "municipio": "Piedade dos Gerais",
+          "codigo_municipio": 3150406
+        },
+        {
+          "municipio": "Rio Manso",
+          "codigo_municipio": 3155306
+        },
+        {
+          "municipio": "São Joaquim de Bicas",
+          "codigo_municipio": 3162922
+        }
+      ]
+    },
+    {
+      "microrregiao": "CONTAGEM",
+      "codigo_micro": 31018,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Belo Horizonte",
+      "municipios": [
+        {
+          "municipio": "Contagem",
+          "codigo_municipio": 3118601
+        },
+        {
+          "municipio": "Ibirité",
+          "codigo_municipio": 3129806
+        },
+        {
+          "municipio": "Sarzedo",
+          "codigo_municipio": 3165537
+        }
+      ]
+    },
+    {
+      "microrregiao": "OURO PRETO",
+      "codigo_micro": 31022,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Belo Horizonte",
+      "municipios": [
+        {
+          "municipio": "Itabirito",
+          "codigo_municipio": 3131901
+        },
+        {
+          "municipio": "Mariana",
+          "codigo_municipio": 3140001
+        },
+        {
+          "municipio": "Ouro Preto",
+          "codigo_municipio": 3146107
+        }
+      ]
+    },
+    {
+      "microrregiao": "VESPASIANO/LAGOA SANTA",
+      "codigo_micro": 31025,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Belo Horizonte",
+      "municipios": [
+        {
+          "municipio": "Confins",
+          "codigo_municipio": 3117876
+        },
+        {
+          "municipio": "Lagoa Santa",
+          "codigo_municipio": 3137601
+        },
+        {
+          "municipio": "Matozinhos",
+          "codigo_municipio": 3141108
+        },
+        {
+          "municipio": "Pedro Leopoldo",
+          "codigo_municipio": 3149309
+        },
+        {
+          "municipio": "Santana do Riacho",
+          "codigo_municipio": 3159001
+        },
+        {
+          "municipio": "São José da Lapa",
+          "codigo_municipio": 3162955
+        },
+        {
+          "municipio": "Vespasiano",
+          "codigo_municipio": 3171204
+        }
+      ]
+    },
+    {
+      "microrregiao": "CARATINGA",
+      "codigo_micro": 31034,
+      "macrorregiao": "VALE DO AÇO",
+      "codigo_macro": 3114,
+      "urs": "Coronel Fabriciano",
+      "municipios": [
+        {
+          "municipio": "Bom Jesus do Galho",
+          "codigo_municipio": 3107802
+        },
+        {
+          "municipio": "Caratinga",
+          "codigo_municipio": 3113404
+        },
+        {
+          "municipio": "Entre Folhas",
+          "codigo_municipio": 3123858
+        },
+        {
+          "municipio": "Imbé de Minas",
+          "codigo_municipio": 3130556
+        },
+        {
+          "municipio": "Inhapim",
+          "codigo_municipio": 3130903
+        },
+        {
+          "municipio": "Piedade de Caratinga",
+          "codigo_municipio": 3150158
+        },
+        {
+          "municipio": "Santa Bárbara do Leste",
+          "codigo_municipio": 3157252
+        },
+        {
+          "municipio": "Santa Rita de Minas",
+          "codigo_municipio": 3159357
+        },
+        {
+          "municipio": "São Domingos das Dores",
+          "codigo_municipio": 3160959
+        },
+        {
+          "municipio": "São Sebastião do Anta",
+          "codigo_municipio": 3164472
+        },
+        {
+          "municipio": "Ubaporanga",
+          "codigo_municipio": 3170057
+        },
+        {
+          "municipio": "Vargem Alegre",
+          "codigo_municipio": 3170578
+        },
+        {
+          "municipio": "Vermelho Novo",
+          "codigo_municipio": 3171154
+        }
+      ]
+    },
+    {
+      "microrregiao": "CORONEL FABRICIANO/TIMÓTEO",
+      "codigo_micro": 31035,
+      "macrorregiao": "VALE DO AÇO",
+      "codigo_macro": 3114,
+      "urs": "Coronel Fabriciano",
+      "municipios": [
+        {
+          "municipio": "Antônio Dias",
+          "codigo_municipio": 3103009
+        },
+        {
+          "municipio": "Coronel Fabriciano",
+          "codigo_municipio": 3119401
+        },
+        {
+          "municipio": "Córrego Novo",
+          "codigo_municipio": 3120003
+        },
+        {
+          "municipio": "Dionísio",
+          "codigo_municipio": 3121803
+        },
+        {
+          "municipio": "Jaguaraçu",
+          "codigo_municipio": 3135001
+        },
+        {
+          "municipio": "Marliéria",
+          "codigo_municipio": 3140308
+        },
+        {
+          "municipio": "Pingo-d'Água",
+          "codigo_municipio": 3150539
+        },
+        {
+          "municipio": "Timóteo",
+          "codigo_municipio": 3168705
+        }
+      ]
+    },
+    {
+      "microrregiao": "IPATINGA",
+      "codigo_micro": 31037,
+      "macrorregiao": "VALE DO AÇO",
+      "codigo_macro": 3114,
+      "urs": "Coronel Fabriciano",
+      "municipios": [
+        {
+          "municipio": "Açucena",
+          "codigo_municipio": 3100500
+        },
+        {
+          "municipio": "Belo Oriente",
+          "codigo_municipio": 3106309
+        },
+        {
+          "municipio": "Braúnas",
+          "codigo_municipio": 3108800
+        },
+        {
+          "municipio": "Bugre",
+          "codigo_municipio": 3109253
+        },
+        {
+          "municipio": "Dom Cavati",
+          "codigo_municipio": 3122504
+        },
+        {
+          "municipio": "Iapu",
+          "codigo_municipio": 3129301
+        },
+        {
+          "municipio": "Ipaba",
+          "codigo_municipio": 3131158
+        },
+        {
+          "municipio": "Ipatinga",
+          "codigo_municipio": 3131307
+        },
+        {
+          "municipio": "Joanésia",
+          "codigo_municipio": 3136108
+        },
+        {
+          "municipio": "Mesquita",
+          "codigo_municipio": 3141702
+        },
+        {
+          "municipio": "Naque",
+          "codigo_municipio": 3144359
+        },
+        {
+          "municipio": "Periquito",
+          "codigo_municipio": 3149952
+        },
+        {
+          "municipio": "Santana do Paraíso",
+          "codigo_municipio": 3158953
+        },
+        {
+          "municipio": "São João do Oriente",
+          "codigo_municipio": 3162609
+        }
+      ]
+    },
+    {
+      "microrregiao": "ARAÇUAÍ",
+      "codigo_micro": 31064,
+      "macrorregiao": "JEQUITINHONHA",
+      "codigo_macro": 3104,
+      "urs": "Diamantina",
+      "municipios": [
+        {
+          "municipio": "Araçuaí",
+          "codigo_municipio": 3103405
+        },
+        {
+          "municipio": "Berilo",
+          "codigo_municipio": 3106507
+        },
+        {
+          "municipio": "Coronel Murta",
+          "codigo_municipio": 3119500
+        },
+        {
+          "municipio": "Francisco Badaró",
+          "codigo_municipio": 3126505
+        },
+        {
+          "municipio": "Jenipapo de Minas",
+          "codigo_municipio": 3135456
+        },
+        {
+          "municipio": "Virgem da Lapa",
+          "codigo_municipio": 3171600
+        }
+      ]
+    },
+    {
+      "microrregiao": "DIAMANTINA/ITAMARANDIBA",
+      "codigo_micro": 31026,
+      "macrorregiao": "JEQUITINHONHA",
+      "codigo_macro": 3104,
+      "urs": "Diamantina",
+      "municipios": [
+        {
+          "municipio": "Carbonita",
+          "codigo_municipio": 3113503
+        },
+        {
+          "municipio": "Coluna",
+          "codigo_municipio": 3116803
+        },
+        {
+          "municipio": "Congonhas do Norte",
+          "codigo_municipio": 3118106
+        },
+        {
+          "municipio": "Couto de Magalhães de Minas",
+          "codigo_municipio": 3120102
+        },
+        {
+          "municipio": "Datas",
+          "codigo_municipio": 3121001
+        },
+        {
+          "municipio": "Diamantina",
+          "codigo_municipio": 3121605
+        },
+        {
+          "municipio": "Felício dos Santos",
+          "codigo_municipio": 3125408
+        },
+        {
+          "municipio": "Gouveia",
+          "codigo_municipio": 3127602
+        },
+        {
+          "municipio": "Itamarandiba",
+          "codigo_municipio": 3132503
+        },
+        {
+          "municipio": "Presidente Kubitschek",
+          "codigo_municipio": 3153301
+        },
+        {
+          "municipio": "São Gonçalo do Rio Preto",
+          "codigo_municipio": 3125507
+        },
+        {
+          "municipio": "Senador Modestino Gonçalves",
+          "codigo_municipio": 3165909
+        }
+      ]
+    },
+    {
+      "microrregiao": "SERRO",
+      "codigo_micro": 31095,
+      "macrorregiao": "JEQUITINHONHA",
+      "codigo_macro": 3104,
+      "urs": "Diamantina",
+      "municipios": [
+        {
+          "municipio": "Alvorada de Minas",
+          "codigo_municipio": 3102407
+        },
+        {
+          "municipio": "Conceição do Mato Dentro",
+          "codigo_municipio": 3117504
+        },
+        {
+          "municipio": "Santo Antônio do Itambé",
+          "codigo_municipio": 3160207
+        },
+        {
+          "municipio": "Serra Azul de Minas",
+          "codigo_municipio": 3166501
+        },
+        {
+          "municipio": "Serro",
+          "codigo_municipio": 3167103
+        }
+      ]
+    },
+    {
+      "microrregiao": "TURMALINA/MINAS NOVAS/CAPELINHA",
+      "codigo_micro": 31027,
+      "macrorregiao": "JEQUITINHONHA",
+      "codigo_macro": 3104,
+      "urs": "Diamantina",
+      "municipios": [
+        {
+          "municipio": "Aricanduva",
+          "codigo_municipio": 3104452
+        },
+        {
+          "municipio": "Capelinha",
+          "codigo_municipio": 3112307
+        },
+        {
+          "municipio": "Chapada do Norte",
+          "codigo_municipio": 3116100
+        },
+        {
+          "municipio": "José Gonçalves de Minas",
+          "codigo_municipio": 3136520
+        },
+        {
+          "municipio": "Leme do Prado",
+          "codigo_municipio": 3138351
+        },
+        {
+          "municipio": "Minas Novas",
+          "codigo_municipio": 3141801
+        },
+        {
+          "municipio": "Turmalina",
+          "codigo_municipio": 3169703
+        },
+        {
+          "municipio": "Veredinha",
+          "codigo_municipio": 3171071
+        }
+      ]
+    },
+    {
+      "microrregiao": "BOM DESPACHO",
+      "codigo_micro": 31028,
+      "macrorregiao": "OESTE",
+      "codigo_macro": 3105,
+      "urs": "Divinópolis",
+      "municipios": [
+        {
+          "municipio": "Bom Despacho",
+          "codigo_municipio": 3107406
+        },
+        {
+          "municipio": "Dores do Indaiá",
+          "codigo_municipio": 3123205
+        },
+        {
+          "municipio": "Estrela do Indaiá",
+          "codigo_municipio": 3124708
+        },
+        {
+          "municipio": "Luz",
+          "codigo_municipio": 3138807
+        },
+        {
+          "municipio": "Martinho Campos",
+          "codigo_municipio": 3140506
+        },
+        {
+          "municipio": "Moema",
+          "codigo_municipio": 3142403
+        },
+        {
+          "municipio": "Serra da Saudade",
+          "codigo_municipio": 3166600
+        }
+      ]
+    },
+    {
+      "microrregiao": "CAMPO BELO",
+      "codigo_micro": 31089,
+      "macrorregiao": "OESTE",
+      "codigo_macro": 3105,
+      "urs": "Divinópolis",
+      "municipios": [
+        {
+          "municipio": "Aguanil",
+          "codigo_municipio": 3100807
+        },
+        {
+          "municipio": "Camacho",
+          "codigo_municipio": 3110400
+        },
+        {
+          "municipio": "Campo Belo",
+          "codigo_municipio": 3111200
+        },
+        {
+          "municipio": "Cana Verde",
+          "codigo_municipio": 3111903
+        },
+        {
+          "municipio": "Candeias",
+          "codigo_municipio": 3112000
+        },
+        {
+          "municipio": "Cristais",
+          "codigo_municipio": 3120201
+        },
+        {
+          "municipio": "Santana do Jacaré",
+          "codigo_municipio": 3158805
+        }
+      ]
+    },
+    {
+      "microrregiao": "DIVINÓPOLIS",
+      "codigo_micro": 31086,
+      "macrorregiao": "OESTE",
+      "codigo_macro": 3105,
+      "urs": "Divinópolis",
+      "municipios": [
+        {
+          "municipio": "Araújos",
+          "codigo_municipio": 3103900
+        },
+        {
+          "municipio": "Carmo do Cajuru",
+          "codigo_municipio": 3114204
+        },
+        {
+          "municipio": "Cláudio",
+          "codigo_municipio": 3116605
+        },
+        {
+          "municipio": "Divinópolis",
+          "codigo_municipio": 3122306
+        },
+        {
+          "municipio": "Itapecerica",
+          "codigo_municipio": 3133501
+        },
+        {
+          "municipio": "Perdigão",
+          "codigo_municipio": 3149705
+        },
+        {
+          "municipio": "São Gonçalo do Pará",
+          "codigo_municipio": 3161809
+        },
+        {
+          "municipio": "São Sebastião do Oeste",
+          "codigo_municipio": 3164605
+        }
+      ]
+    },
+    {
+      "microrregiao": "FORMIGA",
+      "codigo_micro": 31030,
+      "macrorregiao": "OESTE",
+      "codigo_macro": 3105,
+      "urs": "Divinópolis",
+      "municipios": [
+        {
+          "municipio": "Bambuí",
+          "codigo_municipio": 3105103
+        },
+        {
+          "municipio": "Córrego Danta",
+          "codigo_municipio": 3119807
+        },
+        {
+          "municipio": "Córrego Fundo",
+          "codigo_municipio": 3119955
+        },
+        {
+          "municipio": "Formiga",
+          "codigo_municipio": 3126109
+        },
+        {
+          "municipio": "Iguatama",
+          "codigo_municipio": 3130309
+        },
+        {
+          "municipio": "Medeiros",
+          "codigo_municipio": 3141306
+        },
+        {
+          "municipio": "Pains",
+          "codigo_municipio": 3146503
+        },
+        {
+          "municipio": "Tapiraí",
+          "codigo_municipio": 3168200
+        }
+      ]
+    },
+    {
+      "microrregiao": "ITAÚNA",
+      "codigo_micro": 31031,
+      "macrorregiao": "OESTE",
+      "codigo_macro": 3105,
+      "urs": "Divinópolis",
+      "municipios": [
+        {
+          "municipio": "Itaguara",
+          "codigo_municipio": 3132206
+        },
+        {
+          "municipio": "Itatiaiuçu",
+          "codigo_municipio": 3133709
+        },
+        {
+          "municipio": "Itaúna",
+          "codigo_municipio": 3133808
+        },
+        {
+          "municipio": "Piracema",
+          "codigo_municipio": 3150604
+        }
+      ]
+    },
+    {
+      "microrregiao": "LAGOA DA PRATA/SANTO ANTÔNIO DO MONTE",
+      "codigo_micro": 31087,
+      "macrorregiao": "OESTE",
+      "codigo_macro": 3105,
+      "urs": "Divinópolis",
+      "municipios": [
+        {
+          "municipio": "Arcos",
+          "codigo_municipio": 3104205
+        },
+        {
+          "municipio": "Japaraíba",
+          "codigo_municipio": 3135308
+        },
+        {
+          "municipio": "Lagoa da Prata",
+          "codigo_municipio": 3137205
+        },
+        {
+          "municipio": "Pedra do Indaiá",
+          "codigo_municipio": 3148905
+        },
+        {
+          "municipio": "Santo Antônio do Monte",
+          "codigo_municipio": 3160405
+        }
+      ]
+    },
+    {
+      "microrregiao": "OLIVEIRA/SANTO ANTÔNIO DO AMPARO",
+      "codigo_micro": 31088,
+      "macrorregiao": "OESTE",
+      "codigo_macro": 3105,
+      "urs": "Divinópolis",
+      "municipios": [
+        {
+          "municipio": "Carmo da Mata",
+          "codigo_municipio": 3114006
+        },
+        {
+          "municipio": "Carmópolis de Minas",
+          "codigo_municipio": 3114501
+        },
+        {
+          "municipio": "Oliveira",
+          "codigo_municipio": 3145604
+        },
+        {
+          "municipio": "Passa Tempo",
+          "codigo_municipio": 3147709
+        },
+        {
+          "municipio": "Santo Antônio do Amparo",
+          "codigo_municipio": 3159902
+        },
+        {
+          "municipio": "São Francisco de Paula",
+          "codigo_municipio": 3161205
+        }
+      ]
+    },
+    {
+      "microrregiao": "PARÁ DE MINAS/NOVA SERRANA",
+      "codigo_micro": 31032,
+      "macrorregiao": "OESTE",
+      "codigo_macro": 3105,
+      "urs": "Divinópolis",
+      "municipios": [
+        {
+          "municipio": "Conceição do Pará",
+          "codigo_municipio": 3117603
+        },
+        {
+          "municipio": "Igaratinga",
+          "codigo_municipio": 3130200
+        },
+        {
+          "municipio": "Leandro Ferreira",
+          "codigo_municipio": 3138302
+        },
+        {
+          "municipio": "Nova Serrana",
+          "codigo_municipio": 3145208
+        },
+        {
+          "municipio": "Onça de Pitangui",
+          "codigo_municipio": 3145802
+        },
+        {
+          "municipio": "Pará de Minas",
+          "codigo_municipio": 3147105
+        },
+        {
+          "municipio": "Pitangui",
+          "codigo_municipio": 3151404
+        },
+        {
+          "municipio": "São José da Varginha",
+          "codigo_municipio": 3163102
+        }
+      ]
+    },
+    {
+      "microrregiao": "GOVERNADOR VALADARES",
+      "codigo_micro": 31036,
+      "macrorregiao": "LESTE",
+      "codigo_macro": 3106,
+      "urs": "Governador Valadares",
+      "municipios": [
+        {
+          "municipio": "Alpercata",
+          "codigo_municipio": 3101805
+        },
+        {
+          "municipio": "Alvarenga",
+          "codigo_municipio": 3102209
+        },
+        {
+          "municipio": "Capitão Andrade",
+          "codigo_municipio": 3112653
+        },
+        {
+          "municipio": "Coroaci",
+          "codigo_municipio": 3119203
+        },
+        {
+          "municipio": "Divinolândia de Minas",
+          "codigo_municipio": 3122207
+        },
+        {
+          "municipio": "Engenheiro Caldas",
+          "codigo_municipio": 3123700
+        },
+        {
+          "municipio": "Fernandes Tourinho",
+          "codigo_municipio": 3125804
+        },
+        {
+          "municipio": "Frei Inocêncio",
+          "codigo_municipio": 3126901
+        },
+        {
+          "municipio": "Galiléia",
+          "codigo_municipio": 3127305
+        },
+        {
+          "municipio": "Gonzaga",
+          "codigo_municipio": 3127503
+        },
+        {
+          "municipio": "Governador Valadares",
+          "codigo_municipio": 3127701
+        },
+        {
+          "municipio": "Itanhomi",
+          "codigo_municipio": 3133204
+        },
+        {
+          "municipio": "Jampruca",
+          "codigo_municipio": 3135076
+        },
+        {
+          "municipio": "Marilac",
+          "codigo_municipio": 3140100
+        },
+        {
+          "municipio": "Mathias Lobato",
+          "codigo_municipio": 3171501
+        },
+        {
+          "municipio": "Nacip Raydan",
+          "codigo_municipio": 3144201
+        },
+        {
+          "municipio": "Santa Efigênia de Minas",
+          "codigo_municipio": 3157500
+        },
+        {
+          "municipio": "São Geraldo da Piedade",
+          "codigo_municipio": 3161601
+        },
+        {
+          "municipio": "São Geraldo do Baixio",
+          "codigo_municipio": 3161650
+        },
+        {
+          "municipio": "São José da Safira",
+          "codigo_municipio": 3163003
+        },
+        {
+          "municipio": "Sardoá",
+          "codigo_municipio": 3165503
+        },
+        {
+          "municipio": "Sobrália",
+          "codigo_municipio": 3167707
+        },
+        {
+          "municipio": "Tarumirim",
+          "codigo_municipio": 3168408
+        },
+        {
+          "municipio": "Tumiritinga",
+          "codigo_municipio": 3169505
+        },
+        {
+          "municipio": "Virgolândia",
+          "codigo_municipio": 3171907
+        }
+      ]
+    },
+    {
+      "microrregiao": "MANTENA",
+      "codigo_micro": 31038,
+      "macrorregiao": "LESTE",
+      "codigo_macro": 3106,
+      "urs": "Governador Valadares",
+      "municipios": [
+        {
+          "municipio": "Central de Minas",
+          "codigo_municipio": 3115706
+        },
+        {
+          "municipio": "Divino das Laranjeiras",
+          "codigo_municipio": 3122108
+        },
+        {
+          "municipio": "Itabirinha",
+          "codigo_municipio": 3131802
+        },
+        {
+          "municipio": "Mantena",
+          "codigo_municipio": 3139607
+        },
+        {
+          "municipio": "Mendes Pimentel",
+          "codigo_municipio": 3141504
+        },
+        {
+          "municipio": "Nova Belém",
+          "codigo_municipio": 3144672
+        },
+        {
+          "municipio": "São Félix de Minas",
+          "codigo_municipio": 3161056
+        },
+        {
+          "municipio": "São João do Manteninha",
+          "codigo_municipio": 3162575
+        }
+      ]
+    },
+    {
+      "microrregiao": "PEÇANHA/SÃO JOÃO EVANGELISTA/SANTA MARIA DO SUAÇUÍ",
+      "codigo_micro": 31102,
+      "macrorregiao": "LESTE",
+      "codigo_macro": 3106,
+      "urs": "Governador Valadares",
+      "municipios": [
+        {
+          "municipio": "Água Boa",
+          "codigo_municipio": 3100609
+        },
+        {
+          "municipio": "Cantagalo",
+          "codigo_municipio": 3112059
+        },
+        {
+          "municipio": "Frei Lagonegro",
+          "codigo_municipio": 3126950
+        },
+        {
+          "municipio": "José Raydan",
+          "codigo_municipio": 3136553
+        },
+        {
+          "municipio": "Paulistas",
+          "codigo_municipio": 3148400
+        },
+        {
+          "municipio": "Peçanha",
+          "codigo_municipio": 3148608
+        },
+        {
+          "municipio": "Santa Maria do Suaçuí",
+          "codigo_municipio": 3158201
+        },
+        {
+          "municipio": "São João Evangelista",
+          "codigo_municipio": 3162807
+        },
+        {
+          "municipio": "São José do Jacuri",
+          "codigo_municipio": 3163508
+        },
+        {
+          "municipio": "São Pedro do Suaçuí",
+          "codigo_municipio": 3164100
+        },
+        {
+          "municipio": "São Sebastião do Maranhão",
+          "codigo_municipio": 3164506
+        }
+      ]
+    },
+    {
+      "microrregiao": "RESPLENDOR",
+      "codigo_micro": 31040,
+      "macrorregiao": "LESTE",
+      "codigo_macro": 3106,
+      "urs": "Governador Valadares",
+      "municipios": [
+        {
+          "municipio": "Aimorés",
+          "codigo_municipio": 3101102
+        },
+        {
+          "municipio": "Conselheiro Pena",
+          "codigo_municipio": 3118403
+        },
+        {
+          "municipio": "Cuparaque",
+          "codigo_municipio": 3120839
+        },
+        {
+          "municipio": "Goiabeira",
+          "codigo_municipio": 3127370
+        },
+        {
+          "municipio": "Itueta",
+          "codigo_municipio": 3134103
+        },
+        {
+          "municipio": "Resplendor",
+          "codigo_municipio": 3154309
+        },
+        {
+          "municipio": "Santa Rita do Itueto",
+          "codigo_municipio": 3159506
+        }
+      ]
+    },
+    {
+      "microrregiao": "GUANHÃES",
+      "codigo_micro": 31020,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Itabira",
+      "municipios": [
+        {
+          "municipio": "Carmésia",
+          "codigo_municipio": 3113800
+        },
+        {
+          "municipio": "Dom Joaquim",
+          "codigo_municipio": 3122603
+        },
+        {
+          "municipio": "Dores de Guanhães",
+          "codigo_municipio": 3123106
+        },
+        {
+          "municipio": "Guanhães",
+          "codigo_municipio": 3128006
+        },
+        {
+          "municipio": "Materlândia",
+          "codigo_municipio": 3140605
+        },
+        {
+          "municipio": "Rio Vermelho",
+          "codigo_municipio": 3156007
+        },
+        {
+          "municipio": "Sabinópolis",
+          "codigo_municipio": 3156809
+        },
+        {
+          "municipio": "Senhora do Porto",
+          "codigo_municipio": 3166105
+        },
+        {
+          "municipio": "Virginópolis",
+          "codigo_municipio": 3171808
+        }
+      ]
+    },
+    {
+      "microrregiao": "ITABIRA",
+      "codigo_micro": 31021,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Itabira",
+      "municipios": [
+        {
+          "municipio": "Barão de Cocais",
+          "codigo_municipio": 3105400
+        },
+        {
+          "municipio": "Bom Jesus do Amparo",
+          "codigo_municipio": 3107703
+        },
+        {
+          "municipio": "Catas Altas",
+          "codigo_municipio": 3115359
+        },
+        {
+          "municipio": "Ferros",
+          "codigo_municipio": 3125903
+        },
+        {
+          "municipio": "Itabira",
+          "codigo_municipio": 3131703
+        },
+        {
+          "municipio": "Itambé do Mato Dentro",
+          "codigo_municipio": 3132800
+        },
+        {
+          "municipio": "Morro do Pilar",
+          "codigo_municipio": 3143708
+        },
+        {
+          "municipio": "Passabém",
+          "codigo_municipio": 3147501
+        },
+        {
+          "municipio": "Santa Bárbara",
+          "codigo_municipio": 3157203
+        },
+        {
+          "municipio": "Santa Maria de Itabira",
+          "codigo_municipio": 3158003
+        },
+        {
+          "municipio": "Santo Antônio do Rio Abaixo",
+          "codigo_municipio": 3160504
+        },
+        {
+          "municipio": "São Gonçalo do Rio Abaixo",
+          "codigo_municipio": 3161908
+        },
+        {
+          "municipio": "São Sebastião do Rio Preto",
+          "codigo_municipio": 3164803
+        }
+      ]
+    },
+    {
+      "microrregiao": "JOÃO MONLEVADE",
+      "codigo_micro": 31023,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Itabira",
+      "municipios": [
+        {
+          "municipio": "Bela Vista de Minas",
+          "codigo_municipio": 3106002
+        },
+        {
+          "municipio": "João Monlevade",
+          "codigo_municipio": 3136207
+        },
+        {
+          "municipio": "Nova Era",
+          "codigo_municipio": 3144706
+        },
+        {
+          "municipio": "Rio Piracicaba",
+          "codigo_municipio": 3155702
+        },
+        {
+          "municipio": "São Domingos do Prata",
+          "codigo_municipio": 3161007
+        }
+      ]
+    },
+    {
+      "microrregiao": "ITUIUTABA",
+      "codigo_micro": 31073,
+      "macrorregiao": "TRIÂNGULO DO NORTE",
+      "codigo_macro": 3113,
+      "urs": "Ituiutaba",
+      "municipios": [
+        {
+          "municipio": "Cachoeira Dourada",
+          "codigo_municipio": 3109808
+        },
+        {
+          "municipio": "Campina Verde",
+          "codigo_municipio": 3111101
+        },
+        {
+          "municipio": "Canápolis",
+          "codigo_municipio": 3111804
+        },
+        {
+          "municipio": "Capinópolis",
+          "codigo_municipio": 3112604
+        },
+        {
+          "municipio": "Centralina",
+          "codigo_municipio": 3115805
+        },
+        {
+          "municipio": "Gurinhatã",
+          "codigo_municipio": 3129103
+        },
+        {
+          "municipio": "Ipiaçu",
+          "codigo_municipio": 3131406
+        },
+        {
+          "municipio": "Ituiutaba",
+          "codigo_municipio": 3134202
+        },
+        {
+          "municipio": "Santa Vitória",
+          "codigo_municipio": 3159803
+        }
+      ]
+    },
+    {
+      "microrregiao": "BRASÍLIA DE MINAS",
+      "codigo_micro": 31101,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Januária",
+      "municipios": [
+        {
+          "municipio": "Brasília de Minas",
+          "codigo_municipio": 3108602
+        },
+        {
+          "municipio": "Campo Azul",
+          "codigo_municipio": 3111150
+        },
+        {
+          "municipio": "Ibiracatu",
+          "codigo_municipio": 3129657
+        },
+        {
+          "municipio": "Japonvar",
+          "codigo_municipio": 3135357
+        },
+        {
+          "municipio": "Lontra",
+          "codigo_municipio": 3138658
+        },
+        {
+          "municipio": "Luislândia",
+          "codigo_municipio": 3138682
+        },
+        {
+          "municipio": "Patis",
+          "codigo_municipio": 3147956
+        },
+        {
+          "municipio": "São João da Ponte",
+          "codigo_municipio": 3162401
+        },
+        {
+          "municipio": "Ubaí",
+          "codigo_municipio": 3170008
+        },
+        {
+          "municipio": "Varzelândia",
+          "codigo_municipio": 3170909
+        }
+      ]
+    },
+    {
+      "microrregiao": "JANUÁRIA",
+      "codigo_micro": 31053,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Januária",
+      "municipios": [
+        {
+          "municipio": "Bonito de Minas",
+          "codigo_municipio": 3108255
+        },
+        {
+          "municipio": "Cônego Marinho",
+          "codigo_municipio": 3117836
+        },
+        {
+          "municipio": "Itacarambi",
+          "codigo_municipio": 3132107
+        },
+        {
+          "municipio": "Januária",
+          "codigo_municipio": 3135209
+        },
+        {
+          "municipio": "Pedras de Maria da Cruz",
+          "codigo_municipio": 3149150
+        }
+      ]
+    },
+    {
+      "microrregiao": "MANGA",
+      "codigo_micro": 31076,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Januária",
+      "municipios": [
+        {
+          "municipio": "Juvenília",
+          "codigo_municipio": 3136959
+        },
+        {
+          "municipio": "Manga",
+          "codigo_municipio": 3139300
+        },
+        {
+          "municipio": "Miravânia",
+          "codigo_municipio": 3142254
+        },
+        {
+          "municipio": "Montalvânia",
+          "codigo_municipio": 3142700
+        },
+        {
+          "municipio": "São João das Missões",
+          "codigo_municipio": 3162450
+        }
+      ]
+    },
+    {
+      "microrregiao": "SÃO FRANCISCO",
+      "codigo_micro": 31100,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Januária",
+      "municipios": [
+        {
+          "municipio": "Icaraí de Minas",
+          "codigo_municipio": 3130051
+        },
+        {
+          "municipio": "Pintópolis",
+          "codigo_municipio": 3150570
+        },
+        {
+          "municipio": "São Francisco",
+          "codigo_municipio": 3161106
+        },
+        {
+          "municipio": "São Romão",
+          "codigo_municipio": 3164209
+        },
+        {
+          "municipio": "Urucuia",
+          "codigo_municipio": 3170529
+        }
+      ]
+    },
+    {
+      "microrregiao": "JUIZ DE FORA",
+      "codigo_micro": 31097,
+      "macrorregiao": "SUDESTE",
+      "codigo_macro": 3107,
+      "urs": "Juiz de Fora",
+      "municipios": [
+        {
+          "municipio": "Belmiro Braga",
+          "codigo_municipio": 3106101
+        },
+        {
+          "municipio": "Chácara",
+          "codigo_municipio": 3115904
+        },
+        {
+          "municipio": "Chiador",
+          "codigo_municipio": 3116209
+        },
+        {
+          "municipio": "Coronel Pacheco",
+          "codigo_municipio": 3119609
+        },
+        {
+          "municipio": "Ewbank da Câmara",
+          "codigo_municipio": 3125002
+        },
+        {
+          "municipio": "Goianá",
+          "codigo_municipio": 3127388
+        },
+        {
+          "municipio": "Juiz de Fora",
+          "codigo_municipio": 3136702
+        },
+        {
+          "municipio": "Matias Barbosa",
+          "codigo_municipio": 3140803
+        },
+        {
+          "municipio": "Piau",
+          "codigo_municipio": 3150109
+        },
+        {
+          "municipio": "Rio Novo",
+          "codigo_municipio": 3155405
+        },
+        {
+          "municipio": "Santana do Deserto",
+          "codigo_municipio": 3158607
+        },
+        {
+          "municipio": "Simão Pereira",
+          "codigo_municipio": 3167509
+        }
+      ]
+    },
+    {
+      "microrregiao": "LIMA DUARTE",
+      "codigo_micro": 31090,
+      "macrorregiao": "SUDESTE",
+      "codigo_macro": 3107,
+      "urs": "Juiz de Fora",
+      "municipios": [
+        {
+          "municipio": "Andrelândia",
+          "codigo_municipio": 3102803
+        },
+        {
+          "municipio": "Arantina",
+          "codigo_municipio": 3103603
+        },
+        {
+          "municipio": "Bias Fortes",
+          "codigo_municipio": 3106804
+        },
+        {
+          "municipio": "Bocaina de Minas",
+          "codigo_municipio": 3107208
+        },
+        {
+          "municipio": "Bom Jardim de Minas",
+          "codigo_municipio": 3107505
+        },
+        {
+          "municipio": "Liberdade",
+          "codigo_municipio": 3138500
+        },
+        {
+          "municipio": "Lima Duarte",
+          "codigo_municipio": 3138609
+        },
+        {
+          "municipio": "Olaria",
+          "codigo_municipio": 3145406
+        },
+        {
+          "municipio": "Passa Vinte",
+          "codigo_municipio": 3147808
+        },
+        {
+          "municipio": "Pedro Teixeira",
+          "codigo_municipio": 3149408
+        },
+        {
+          "municipio": "Rio Preto",
+          "codigo_municipio": 3155900
+        },
+        {
+          "municipio": "Santa Bárbara do Monte Verde",
+          "codigo_municipio": 3157278
+        },
+        {
+          "municipio": "Santa Rita de Jacutinga",
+          "codigo_municipio": 3159308
+        }
+      ]
+    },
+    {
+      "microrregiao": "SANTOS DUMONT",
+      "codigo_micro": 31046,
+      "macrorregiao": "SUDESTE",
+      "codigo_macro": 3107,
+      "urs": "Juiz de Fora",
+      "municipios": [
+        {
+          "municipio": "Aracitaba",
+          "codigo_municipio": 3103306
+        },
+        {
+          "municipio": "Oliveira Fortes",
+          "codigo_municipio": 3145703
+        },
+        {
+          "municipio": "Santos Dumont",
+          "codigo_municipio": 3160702
+        }
+      ]
+    },
+    {
+      "microrregiao": "SÃO JOÃO NEPOMUCENO/BICAS",
+      "codigo_micro": 31047,
+      "macrorregiao": "SUDESTE",
+      "codigo_macro": 3107,
+      "urs": "Juiz de Fora",
+      "municipios": [
+        {
+          "municipio": "Bicas",
+          "codigo_municipio": 3106903
+        },
+        {
+          "municipio": "Descoberto",
+          "codigo_municipio": 3121308
+        },
+        {
+          "municipio": "Guarará",
+          "codigo_municipio": 3128501
+        },
+        {
+          "municipio": "Mar de Espanha",
+          "codigo_municipio": 3139805
+        },
+        {
+          "municipio": "Maripá de Minas",
+          "codigo_municipio": 3140209
+        },
+        {
+          "municipio": "Pequeri",
+          "codigo_municipio": 3149507
+        },
+        {
+          "municipio": "Rochedo de Minas",
+          "codigo_municipio": 3156205
+        },
+        {
+          "municipio": "São João Nepomuceno",
+          "codigo_municipio": 3162906
+        },
+        {
+          "municipio": "Senador Cortes",
+          "codigo_municipio": 3165602
+        }
+      ]
+    },
+    {
+      "microrregiao": "ALÉM PARAÍBA",
+      "codigo_micro": 31041,
+      "macrorregiao": "SUDESTE",
+      "codigo_macro": 3107,
+      "urs": "Leopoldina",
+      "municipios": [
+        {
+          "municipio": "Além Paraíba",
+          "codigo_municipio": 3101508
+        },
+        {
+          "municipio": "Estrela Dalva",
+          "codigo_municipio": 3124609
+        },
+        {
+          "municipio": "Pirapetinga",
+          "codigo_municipio": 3151107
+        },
+        {
+          "municipio": "Santo Antônio do Aventureiro",
+          "codigo_municipio": 3160009
+        },
+        {
+          "municipio": "Volta Grande",
+          "codigo_municipio": 3172103
+        }
+      ]
+    },
+    {
+      "microrregiao": "LEOPOLDINA/CATAGUASES",
+      "codigo_micro": 31044,
+      "macrorregiao": "SUDESTE",
+      "codigo_macro": 3107,
+      "urs": "Leopoldina",
+      "municipios": [
+        {
+          "municipio": "Argirita",
+          "codigo_municipio": 3104403
+        },
+        {
+          "municipio": "Astolfo Dutra",
+          "codigo_municipio": 3104601
+        },
+        {
+          "municipio": "Cataguases",
+          "codigo_municipio": 3115300
+        },
+        {
+          "municipio": "Dona Euzébia",
+          "codigo_municipio": 3122900
+        },
+        {
+          "municipio": "Itamarati de Minas",
+          "codigo_municipio": 3132602
+        },
+        {
+          "municipio": "Laranjal",
+          "codigo_municipio": 3138005
+        },
+        {
+          "municipio": "Leopoldina",
+          "codigo_municipio": 3138401
+        },
+        {
+          "municipio": "Palma",
+          "codigo_municipio": 3146701
+        },
+        {
+          "municipio": "Recreio",
+          "codigo_municipio": 3154101
+        },
+        {
+          "municipio": "Santana de Cataguases",
+          "codigo_municipio": 3158409
+        }
+      ]
+    },
+    {
+      "microrregiao": "CARANGOLA",
+      "codigo_micro": 31042,
+      "macrorregiao": "SUDESTE",
+      "codigo_macro": 3107,
+      "urs": "Manhuaçu",
+      "municipios": [
+        {
+          "municipio": "Caiana",
+          "codigo_municipio": 3110103
+        },
+        {
+          "municipio": "Caparaó",
+          "codigo_municipio": 3112109
+        },
+        {
+          "municipio": "Carangola",
+          "codigo_municipio": 3113305
+        },
+        {
+          "municipio": "Divino",
+          "codigo_municipio": 3122009
+        },
+        {
+          "municipio": "Espera Feliz",
+          "codigo_municipio": 3124203
+        },
+        {
+          "municipio": "Faria Lemos",
+          "codigo_municipio": 3125309
+        },
+        {
+          "municipio": "Fervedouro",
+          "codigo_municipio": 3125952
+        },
+        {
+          "municipio": "Orizânia",
+          "codigo_municipio": 3145877
+        },
+        {
+          "municipio": "Pedra Bonita",
+          "codigo_municipio": 3148756
+        },
+        {
+          "municipio": "Pedra Dourada",
+          "codigo_municipio": 3149002
+        },
+        {
+          "municipio": "Tombos",
+          "codigo_municipio": 3169208
+        }
+      ]
+    },
+    {
+      "microrregiao": "MANHUAÇU",
+      "codigo_micro": 31059,
+      "macrorregiao": "LESTE DO SUL",
+      "codigo_macro": 3110,
+      "urs": "Manhuaçu",
+      "municipios": [
+        {
+          "municipio": "Abre Campo",
+          "codigo_municipio": 3100302
+        },
+        {
+          "municipio": "Alto Caparaó",
+          "codigo_municipio": 3102050
+        },
+        {
+          "municipio": "Alto Jequitibá",
+          "codigo_municipio": 3153509
+        },
+        {
+          "municipio": "Caputira",
+          "codigo_municipio": 3112901
+        },
+        {
+          "municipio": "Chalé",
+          "codigo_municipio": 3116001
+        },
+        {
+          "municipio": "Conceição de Ipanema",
+          "codigo_municipio": 3117405
+        },
+        {
+          "municipio": "Durandé",
+          "codigo_municipio": 3123528
+        },
+        {
+          "municipio": "Ipanema",
+          "codigo_municipio": 3131208
+        },
+        {
+          "municipio": "Lajinha",
+          "codigo_municipio": 3137700
+        },
+        {
+          "municipio": "Luisburgo",
+          "codigo_municipio": 3138674
+        },
+        {
+          "municipio": "Manhuaçu",
+          "codigo_municipio": 3139409
+        },
+        {
+          "municipio": "Manhumirim",
+          "codigo_municipio": 3139508
+        },
+        {
+          "municipio": "Martins Soares",
+          "codigo_municipio": 3140530
+        },
+        {
+          "municipio": "Matipó",
+          "codigo_municipio": 3140902
+        },
+        {
+          "municipio": "Mutum",
+          "codigo_municipio": 3144003
+        },
+        {
+          "municipio": "Pocrane",
+          "codigo_municipio": 3151909
+        },
+        {
+          "municipio": "Reduto",
+          "codigo_municipio": 3154150
+        },
+        {
+          "municipio": "Santa Margarida",
+          "codigo_municipio": 3157906
+        },
+        {
+          "municipio": "Santana do Manhuaçu",
+          "codigo_municipio": 3158904
+        },
+        {
+          "municipio": "São João do Manhuaçu",
+          "codigo_municipio": 3162559
+        },
+        {
+          "municipio": "São José do Mantimento",
+          "codigo_municipio": 3163607
+        },
+        {
+          "municipio": "Simonésia",
+          "codigo_municipio": 3167608
+        },
+        {
+          "municipio": "Taparuba",
+          "codigo_municipio": 3168051
+        }
+      ]
+    },
+    {
+      "microrregiao": "BOCAIÚVA",
+      "codigo_micro": 31083,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Montes Claros",
+      "municipios": [
+        {
+          "municipio": "Bocaiúva",
+          "codigo_municipio": 3107307
+        },
+        {
+          "municipio": "Engenheiro Navarro",
+          "codigo_municipio": 3123809
+        },
+        {
+          "municipio": "Francisco Dumont",
+          "codigo_municipio": 3126604
+        },
+        {
+          "municipio": "Guaraciama",
+          "codigo_municipio": 3128253
+        },
+        {
+          "municipio": "Joaquim Felício",
+          "codigo_municipio": 3136405
+        },
+        {
+          "municipio": "Olhos-d'Água",
+          "codigo_municipio": 3145455
+        }
+      ]
+    },
+    {
+      "microrregiao": "CORAÇÃO DE JESUS",
+      "codigo_micro": 31050,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Montes Claros",
+      "municipios": [
+        {
+          "municipio": "Coração de Jesus",
+          "codigo_municipio": 3118809
+        },
+        {
+          "municipio": "Jequitaí",
+          "codigo_municipio": 3135605
+        },
+        {
+          "municipio": "Lagoa dos Patos",
+          "codigo_municipio": 3137304
+        },
+        {
+          "municipio": "São João da Lagoa",
+          "codigo_municipio": 3162252
+        },
+        {
+          "municipio": "São João do Pacuí",
+          "codigo_municipio": 3162658
+        }
+      ]
+    },
+    {
+      "microrregiao": "FRANCISCO SÁ",
+      "codigo_micro": 31051,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Montes Claros",
+      "municipios": [
+        {
+          "municipio": "Botumirim",
+          "codigo_municipio": 3108503
+        },
+        {
+          "municipio": "Capitão Enéas",
+          "codigo_municipio": 3112703
+        },
+        {
+          "municipio": "Cristália",
+          "codigo_municipio": 3120300
+        },
+        {
+          "municipio": "Francisco Sá",
+          "codigo_municipio": 3126703
+        },
+        {
+          "municipio": "Grão Mogol",
+          "codigo_municipio": 3127800
+        },
+        {
+          "municipio": "Josenópolis",
+          "codigo_municipio": 3136579
+        }
+      ]
+    },
+    {
+      "microrregiao": "JANAÚBA/MONTE AZUL",
+      "codigo_micro": 31052,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Montes Claros",
+      "municipios": [
+        {
+          "municipio": "Catuti",
+          "codigo_municipio": 3115474
+        },
+        {
+          "municipio": "Espinosa",
+          "codigo_municipio": 3124302
+        },
+        {
+          "municipio": "Gameleiras",
+          "codigo_municipio": 3127339
+        },
+        {
+          "municipio": "Jaíba",
+          "codigo_municipio": 3135050
+        },
+        {
+          "municipio": "Janaúba",
+          "codigo_municipio": 3135100
+        },
+        {
+          "municipio": "Mamonas",
+          "codigo_municipio": 3139250
+        },
+        {
+          "municipio": "Matias Cardoso",
+          "codigo_municipio": 3140852
+        },
+        {
+          "municipio": "Mato Verde",
+          "codigo_municipio": 3141009
+        },
+        {
+          "municipio": "Monte Azul",
+          "codigo_municipio": 3142908
+        },
+        {
+          "municipio": "Nova Porteirinha",
+          "codigo_municipio": 3145059
+        },
+        {
+          "municipio": "Pai Pedro",
+          "codigo_municipio": 3146552
+        },
+        {
+          "municipio": "Porteirinha",
+          "codigo_municipio": 3152204
+        },
+        {
+          "municipio": "Riacho dos Machados",
+          "codigo_municipio": 3154507
+        },
+        {
+          "municipio": "Serranópolis de Minas",
+          "codigo_municipio": 3166956
+        },
+        {
+          "municipio": "Verdelândia",
+          "codigo_municipio": 3171030
+        }
+      ]
+    },
+    {
+      "microrregiao": "MONTES CLAROS",
+      "codigo_micro": 31084,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Montes Claros",
+      "municipios": [
+        {
+          "municipio": "Claro dos Poções",
+          "codigo_municipio": 3116506
+        },
+        {
+          "municipio": "Glaucilândia",
+          "codigo_municipio": 3127354
+        },
+        {
+          "municipio": "Itacambira",
+          "codigo_municipio": 3132008
+        },
+        {
+          "municipio": "Juramento",
+          "codigo_municipio": 3136801
+        },
+        {
+          "municipio": "Mirabela",
+          "codigo_municipio": 3142007
+        },
+        {
+          "municipio": "Montes Claros",
+          "codigo_municipio": 3143302
+        }
+      ]
+    },
+    {
+      "microrregiao": "SALINAS",
+      "codigo_micro": 31098,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Montes Claros",
+      "municipios": [
+        {
+          "municipio": "Fruta de Leite",
+          "codigo_municipio": 3127073
+        },
+        {
+          "municipio": "Novorizonte",
+          "codigo_municipio": 3145372
+        },
+        {
+          "municipio": "Padre Carvalho",
+          "codigo_municipio": 3146255
+        },
+        {
+          "municipio": "Rubelita",
+          "codigo_municipio": 3156502
+        },
+        {
+          "municipio": "Salinas",
+          "codigo_municipio": 3157005
+        },
+        {
+          "municipio": "Santa Cruz de Salinas",
+          "codigo_municipio": 3157377
+        }
+      ]
+    },
+    {
+      "microrregiao": "TAIOBEIRAS",
+      "codigo_micro": 31085,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Montes Claros",
+      "municipios": [
+        {
+          "municipio": "Berizal",
+          "codigo_municipio": 3106655
+        },
+        {
+          "municipio": "Curral de Dentro",
+          "codigo_municipio": 3120870
+        },
+        {
+          "municipio": "Indaiabira",
+          "codigo_municipio": 3130655
+        },
+        {
+          "municipio": "Montezuma",
+          "codigo_municipio": 3143450
+        },
+        {
+          "municipio": "Ninheira",
+          "codigo_municipio": 3144656
+        },
+        {
+          "municipio": "Rio Pardo de Minas",
+          "codigo_municipio": 3155603
+        },
+        {
+          "municipio": "Santo Antônio do Retiro",
+          "codigo_municipio": 3160454
+        },
+        {
+          "municipio": "São João do Paraíso",
+          "codigo_municipio": 3162708
+        },
+        {
+          "municipio": "Taiobeiras",
+          "codigo_municipio": 3168002
+        },
+        {
+          "municipio": "Vargem Grande do Rio Pardo",
+          "codigo_municipio": 3170651
+        }
+      ]
+    },
+    {
+      "microrregiao": "CÁSSIA",
+      "codigo_micro": 31091,
+      "macrorregiao": "SUDOESTE",
+      "codigo_macro": 3116,
+      "urs": "Passos",
+      "municipios": [
+        {
+          "municipio": "Capetinga",
+          "codigo_municipio": 3112406
+        },
+        {
+          "municipio": "Cássia",
+          "codigo_municipio": 3115102
+        },
+        {
+          "municipio": "Claraval",
+          "codigo_municipio": 3116407
+        },
+        {
+          "municipio": "Delfinópolis",
+          "codigo_municipio": 3121209
+        },
+        {
+          "municipio": "Ibiraci",
+          "codigo_municipio": 3129707
+        }
+      ]
+    },
+    {
+      "microrregiao": "PASSOS",
+      "codigo_micro": 31092,
+      "macrorregiao": "SUDOESTE",
+      "codigo_macro": 3116,
+      "urs": "Passos",
+      "municipios": [
+        {
+          "municipio": "Alpinópolis",
+          "codigo_municipio": 3101904
+        },
+        {
+          "municipio": "Bom Jesus da Penha",
+          "codigo_municipio": 3107604
+        },
+        {
+          "municipio": "Carmo do Rio Claro",
+          "codigo_municipio": 3114402
+        },
+        {
+          "municipio": "Fortaleza de Minas",
+          "codigo_municipio": 3126307
+        },
+        {
+          "municipio": "Itaú de Minas",
+          "codigo_municipio": 3133758
+        },
+        {
+          "municipio": "Nova Resende",
+          "codigo_municipio": 3145109
+        },
+        {
+          "municipio": "Passos",
+          "codigo_municipio": 3147907
+        },
+        {
+          "municipio": "São João Batista do Glória",
+          "codigo_municipio": 3162203
+        },
+        {
+          "municipio": "São José da Barra",
+          "codigo_municipio": 3162948
+        }
+      ]
+    },
+    {
+      "microrregiao": "PIUMHI",
+      "codigo_micro": 31093,
+      "macrorregiao": "SUDOESTE",
+      "codigo_macro": 3116,
+      "urs": "Passos",
+      "municipios": [
+        {
+          "municipio": "Capitólio",
+          "codigo_municipio": 3112802
+        },
+        {
+          "municipio": "Doresópolis",
+          "codigo_municipio": 3123403
+        },
+        {
+          "municipio": "Guapé",
+          "codigo_municipio": 3128105
+        },
+        {
+          "municipio": "Pimenta",
+          "codigo_municipio": 3150505
+        },
+        {
+          "municipio": "Piumhi",
+          "codigo_municipio": 3151503
+        },
+        {
+          "municipio": "São Roque de Minas",
+          "codigo_municipio": 3164308
+        },
+        {
+          "municipio": "Vargem Bonita",
+          "codigo_municipio": 3170602
+        }
+      ]
+    },
+    {
+      "microrregiao": "SÃO SEBASTIÃO DO PARAÍSO",
+      "codigo_micro": 31009,
+      "macrorregiao": "SUDOESTE",
+      "codigo_macro": 3116,
+      "urs": "Passos",
+      "municipios": [
+        {
+          "municipio": "Itamogi",
+          "codigo_municipio": 3132909
+        },
+        {
+          "municipio": "Jacuí",
+          "codigo_municipio": 3134806
+        },
+        {
+          "municipio": "Monte Santo de Minas",
+          "codigo_municipio": 3143203
+        },
+        {
+          "municipio": "Pratápolis",
+          "codigo_municipio": 3152907
+        },
+        {
+          "municipio": "São Sebastião do Paraíso",
+          "codigo_municipio": 3164704
+        },
+        {
+          "municipio": "São Tomás de Aquino",
+          "codigo_municipio": 3165107
+        }
+      ]
+    },
+    {
+      "microrregiao": "JOÃO PINHEIRO",
+      "codigo_micro": 31077,
+      "macrorregiao": "NOROESTE",
+      "codigo_macro": 3109,
+      "urs": "Patos de Minas",
+      "municipios": [
+        {
+          "municipio": "Brasilândia de Minas",
+          "codigo_municipio": 3108552
+        },
+        {
+          "municipio": "João Pinheiro",
+          "codigo_municipio": 3136306
+        },
+        {
+          "municipio": "Lagoa Grande",
+          "codigo_municipio": 3137536
+        }
+      ]
+    },
+    {
+      "microrregiao": "PATOS DE MINAS",
+      "codigo_micro": 31057,
+      "macrorregiao": "NOROESTE",
+      "codigo_macro": 3109,
+      "urs": "Patos de Minas",
+      "municipios": [
+        {
+          "municipio": "Cruzeiro da Fortaleza",
+          "codigo_municipio": 3120706
+        },
+        {
+          "municipio": "Guarda-Mor",
+          "codigo_municipio": 3128600
+        },
+        {
+          "municipio": "Guimarânia",
+          "codigo_municipio": 3128907
+        },
+        {
+          "municipio": "Lagamar",
+          "codigo_municipio": 3137106
+        },
+        {
+          "municipio": "Lagoa Formosa",
+          "codigo_municipio": 3137502
+        },
+        {
+          "municipio": "Patos de Minas",
+          "codigo_municipio": 3148004
+        },
+        {
+          "municipio": "Presidente Olegário",
+          "codigo_municipio": 3153400
+        },
+        {
+          "municipio": "São Gonçalo do Abaeté",
+          "codigo_municipio": 3161700
+        },
+        {
+          "municipio": "Serra do Salitre",
+          "codigo_municipio": 3166808
+        },
+        {
+          "municipio": "Varjão de Minas",
+          "codigo_municipio": 3170750
+        },
+        {
+          "municipio": "Vazante",
+          "codigo_municipio": 3171006
+        }
+      ]
+    },
+    {
+      "microrregiao": "SÃO GOTARDO",
+      "codigo_micro": 31082,
+      "macrorregiao": "NOROESTE",
+      "codigo_macro": 3109,
+      "urs": "Patos de Minas",
+      "municipios": [
+        {
+          "municipio": "Arapuá",
+          "codigo_municipio": 3103801
+        },
+        {
+          "municipio": "Carmo do Paranaíba",
+          "codigo_municipio": 3114303
+        },
+        {
+          "municipio": "Matutina",
+          "codigo_municipio": 3141207
+        },
+        {
+          "municipio": "Rio Paranaíba",
+          "codigo_municipio": 3155504
+        },
+        {
+          "municipio": "Santa Rosa da Serra",
+          "codigo_municipio": 3159704
+        },
+        {
+          "municipio": "São Gotardo",
+          "codigo_municipio": 3162104
+        },
+        {
+          "municipio": "Tiros",
+          "codigo_municipio": 3168903
+        }
+      ]
+    },
+    {
+      "microrregiao": "ALMENARA/JACINTO",
+      "codigo_micro": 31094,
+      "macrorregiao": "NORDESTE",
+      "codigo_macro": 3111,
+      "urs": "Pedra Azul",
+      "municipios": [
+        {
+          "municipio": "Almenara",
+          "codigo_municipio": 3101706
+        },
+        {
+          "municipio": "Bandeira",
+          "codigo_municipio": 3105202
+        },
+        {
+          "municipio": "Felisburgo",
+          "codigo_municipio": 3125606
+        },
+        {
+          "municipio": "Jacinto",
+          "codigo_municipio": 3134707
+        },
+        {
+          "municipio": "Jequitinhonha",
+          "codigo_municipio": 3135803
+        },
+        {
+          "municipio": "Joaíma",
+          "codigo_municipio": 3136009
+        },
+        {
+          "municipio": "Jordânia",
+          "codigo_municipio": 3136504
+        },
+        {
+          "municipio": "Mata Verde",
+          "codigo_municipio": 3140555
+        },
+        {
+          "municipio": "Palmópolis",
+          "codigo_municipio": 3146750
+        },
+        {
+          "municipio": "Rio do Prado",
+          "codigo_municipio": 3155108
+        },
+        {
+          "municipio": "Rubim",
+          "codigo_municipio": 3156601
+        },
+        {
+          "municipio": "Salto da Divisa",
+          "codigo_municipio": 3157104
+        },
+        {
+          "municipio": "Santa Maria do Salto",
+          "codigo_municipio": 3158102
+        },
+        {
+          "municipio": "Santo Antônio do Jacinto",
+          "codigo_municipio": 3160306
+        }
+      ]
+    },
+    {
+      "microrregiao": "ITAOBIM",
+      "codigo_micro": 31065,
+      "macrorregiao": "NORDESTE",
+      "codigo_macro": 3111,
+      "urs": "Pedra Azul",
+      "municipios": [
+        {
+          "municipio": "Comercinho",
+          "codigo_municipio": 3117009
+        },
+        {
+          "municipio": "Itaobim",
+          "codigo_municipio": 3133303
+        },
+        {
+          "municipio": "Itinga",
+          "codigo_municipio": 3134004
+        },
+        {
+          "municipio": "Medina",
+          "codigo_municipio": 3141405
+        },
+        {
+          "municipio": "Monte Formoso",
+          "codigo_municipio": 3143153
+        },
+        {
+          "municipio": "Ponto dos Volantes",
+          "codigo_municipio": 3152170
+        }
+      ]
+    },
+    {
+      "microrregiao": "PEDRA AZUL",
+      "codigo_micro": 31068,
+      "macrorregiao": "NORDESTE",
+      "codigo_macro": 3111,
+      "urs": "Pedra Azul",
+      "municipios": [
+        {
+          "municipio": "Águas Vermelhas",
+          "codigo_municipio": 3101003
+        },
+        {
+          "municipio": "Cachoeira de Pajeú",
+          "codigo_municipio": 3102704
+        },
+        {
+          "municipio": "Divisa Alegre",
+          "codigo_municipio": 3122355
+        },
+        {
+          "municipio": "Divisópolis",
+          "codigo_municipio": 3122454
+        },
+        {
+          "municipio": "Pedra Azul",
+          "codigo_municipio": 3148707
+        }
+      ]
+    },
+    {
+      "microrregiao": "PIRAPORA",
+      "codigo_micro": 31055,
+      "macrorregiao": "NORTE",
+      "codigo_macro": 3108,
+      "urs": "Pirapora",
+      "municipios": [
+        {
+          "municipio": "Buritizeiro",
+          "codigo_municipio": 3109402
+        },
+        {
+          "municipio": "Ibiaí",
+          "codigo_municipio": 3129608
+        },
+        {
+          "municipio": "Lassance",
+          "codigo_municipio": 3138104
+        },
+        {
+          "municipio": "Pirapora",
+          "codigo_municipio": 3151206
+        },
+        {
+          "municipio": "Ponto Chique",
+          "codigo_municipio": 3152131
+        },
+        {
+          "municipio": "Santa Fé de Minas",
+          "codigo_municipio": 3157609
+        },
+        {
+          "municipio": "Várzea da Palma",
+          "codigo_municipio": 3170800
+        }
+      ]
+    },
+    {
+      "microrregiao": "PONTE NOVA",
+      "codigo_micro": 31060,
+      "macrorregiao": "LESTE DO SUL",
+      "codigo_macro": 3110,
+      "urs": "Ponte Nova",
+      "municipios": [
+        {
+          "municipio": "Acaiaca",
+          "codigo_municipio": 3100401
+        },
+        {
+          "municipio": "Alvinópolis",
+          "codigo_municipio": 3102308
+        },
+        {
+          "municipio": "Amparo do Serra",
+          "codigo_municipio": 3102506
+        },
+        {
+          "municipio": "Barra Longa",
+          "codigo_municipio": 3105707
+        },
+        {
+          "municipio": "Diogo de Vasconcelos",
+          "codigo_municipio": 3121704
+        },
+        {
+          "municipio": "Dom Silvério",
+          "codigo_municipio": 3122702
+        },
+        {
+          "municipio": "Guaraciaba",
+          "codigo_municipio": 3128204
+        },
+        {
+          "municipio": "Jequeri",
+          "codigo_municipio": 3135506
+        },
+        {
+          "municipio": "Oratórios",
+          "codigo_municipio": 3145851
+        },
+        {
+          "municipio": "Piedade de Ponte Nova",
+          "codigo_municipio": 3150208
+        },
+        {
+          "municipio": "Ponte Nova",
+          "codigo_municipio": 3152105
+        },
+        {
+          "municipio": "Raul Soares",
+          "codigo_municipio": 3154002
+        },
+        {
+          "municipio": "Rio Casca",
+          "codigo_municipio": 3154903
+        },
+        {
+          "municipio": "Rio Doce",
+          "codigo_municipio": 3155009
+        },
+        {
+          "municipio": "Santa Cruz do Escalvado",
+          "codigo_municipio": 3157401
+        },
+        {
+          "municipio": "Santo Antônio do Grama",
+          "codigo_municipio": 3160108
+        },
+        {
+          "municipio": "São José do Goiabal",
+          "codigo_municipio": 3163409
+        },
+        {
+          "municipio": "São Pedro dos Ferros",
+          "codigo_municipio": 3164001
+        },
+        {
+          "municipio": "Sem-Peixe",
+          "codigo_municipio": 3165560
+        },
+        {
+          "municipio": "Sericita",
+          "codigo_municipio": 3166303
+        },
+        {
+          "municipio": "Urucânia",
+          "codigo_municipio": 3170503
+        }
+      ]
+    },
+    {
+      "microrregiao": "VIÇOSA",
+      "codigo_micro": 31061,
+      "macrorregiao": "LESTE DO SUL",
+      "codigo_macro": 3110,
+      "urs": "Ponte Nova",
+      "municipios": [
+        {
+          "municipio": "Araponga",
+          "codigo_municipio": 3103702
+        },
+        {
+          "municipio": "Cajuri",
+          "codigo_municipio": 3110202
+        },
+        {
+          "municipio": "Canaã",
+          "codigo_municipio": 3111705
+        },
+        {
+          "municipio": "Paula Cândido",
+          "codigo_municipio": 3148301
+        },
+        {
+          "municipio": "Pedra do Anta",
+          "codigo_municipio": 3148806
+        },
+        {
+          "municipio": "Porto Firme",
+          "codigo_municipio": 3152303
+        },
+        {
+          "municipio": "São Miguel do Anta",
+          "codigo_municipio": 3163805
+        },
+        {
+          "municipio": "Teixeiras",
+          "codigo_municipio": 3168507
+        },
+        {
+          "municipio": "Viçosa",
+          "codigo_municipio": 3171303
+        }
+      ]
+    },
+    {
+      "microrregiao": "ITAJUBÁ",
+      "codigo_micro": 31003,
+      "macrorregiao": "EXTREMO SUL",
+      "codigo_macro": 3115,
+      "urs": "Pouso Alegre",
+      "municipios": [
+        {
+          "municipio": "Brazópolis",
+          "codigo_municipio": 3108909
+        },
+        {
+          "municipio": "Conceição das Pedras",
+          "codigo_municipio": 3117207
+        },
+        {
+          "municipio": "Consolação",
+          "codigo_municipio": 3118502
+        },
+        {
+          "municipio": "Delfim Moreira",
+          "codigo_municipio": 3121100
+        },
+        {
+          "municipio": "Gonçalves",
+          "codigo_municipio": 3127404
+        },
+        {
+          "municipio": "Itajubá",
+          "codigo_municipio": 3132404
+        },
+        {
+          "municipio": "Maria da Fé",
+          "codigo_municipio": 3139904
+        },
+        {
+          "municipio": "Marmelópolis",
+          "codigo_municipio": 3140407
+        },
+        {
+          "municipio": "Paraisópolis",
+          "codigo_municipio": 3147303
+        },
+        {
+          "municipio": "Pedralva",
+          "codigo_municipio": 3149101
+        },
+        {
+          "municipio": "Piranguçu",
+          "codigo_municipio": 3150901
+        },
+        {
+          "municipio": "Piranguinho",
+          "codigo_municipio": 3151008
+        },
+        {
+          "municipio": "São José do Alegre",
+          "codigo_municipio": 3163201
+        },
+        {
+          "municipio": "Sapucaí-Mirim",
+          "codigo_municipio": 3165404
+        },
+        {
+          "municipio": "Wenceslau Braz",
+          "codigo_municipio": 3172202
+        }
+      ]
+    },
+    {
+      "microrregiao": "POÇOS DE CALDAS",
+      "codigo_micro": 31006,
+      "macrorregiao": "EXTREMO SUL",
+      "codigo_macro": 3115,
+      "urs": "Pouso Alegre",
+      "municipios": [
+        {
+          "municipio": "Albertina",
+          "codigo_municipio": 3101409
+        },
+        {
+          "municipio": "Andradas",
+          "codigo_municipio": 3102605
+        },
+        {
+          "municipio": "Caldas",
+          "codigo_municipio": 3110301
+        },
+        {
+          "municipio": "Ibitiúra de Minas",
+          "codigo_municipio": 3129905
+        },
+        {
+          "municipio": "Poços de Caldas",
+          "codigo_municipio": 3151800
+        },
+        {
+          "municipio": "Santa Rita de Caldas",
+          "codigo_municipio": 3159209
+        }
+      ]
+    },
+    {
+      "microrregiao": "POUSO ALEGRE",
+      "codigo_micro": 31007,
+      "macrorregiao": "EXTREMO SUL",
+      "codigo_macro": 3115,
+      "urs": "Pouso Alegre",
+      "municipios": [
+        {
+          "municipio": "Bom Repouso",
+          "codigo_municipio": 3107901
+        },
+        {
+          "municipio": "Borda da Mata",
+          "codigo_municipio": 3108305
+        },
+        {
+          "municipio": "Bueno Brandão",
+          "codigo_municipio": 3109105
+        },
+        {
+          "municipio": "Cachoeira de Minas",
+          "codigo_municipio": 3109709
+        },
+        {
+          "municipio": "Camanducaia",
+          "codigo_municipio": 3110509
+        },
+        {
+          "municipio": "Cambuí",
+          "codigo_municipio": 3110608
+        },
+        {
+          "municipio": "Careaçu",
+          "codigo_municipio": 3113602
+        },
+        {
+          "municipio": "Conceição dos Ouros",
+          "codigo_municipio": 3117801
+        },
+        {
+          "municipio": "Congonhal",
+          "codigo_municipio": 3117900
+        },
+        {
+          "municipio": "Córrego do Bom Jesus",
+          "codigo_municipio": 3119906
+        },
+        {
+          "municipio": "Espírito Santo do Dourado",
+          "codigo_municipio": 3124401
+        },
+        {
+          "municipio": "Estiva",
+          "codigo_municipio": 3124500
+        },
+        {
+          "municipio": "Extrema",
+          "codigo_municipio": 3125101
+        },
+        {
+          "municipio": "Heliodora",
+          "codigo_municipio": 3129202
+        },
+        {
+          "municipio": "Inconfidentes",
+          "codigo_municipio": 3130606
+        },
+        {
+          "municipio": "Ipuiúna",
+          "codigo_municipio": 3131505
+        },
+        {
+          "municipio": "Itapeva",
+          "codigo_municipio": 3133600
+        },
+        {
+          "municipio": "Jacutinga",
+          "codigo_municipio": 3134905
+        },
+        {
+          "municipio": "Monte Sião",
+          "codigo_municipio": 3143401
+        },
+        {
+          "municipio": "Munhoz",
+          "codigo_municipio": 3143807
+        },
+        {
+          "municipio": "Natércia",
+          "codigo_municipio": 3144409
+        },
+        {
+          "municipio": "Ouro Fino",
+          "codigo_municipio": 3146008
+        },
+        {
+          "municipio": "Pouso Alegre",
+          "codigo_municipio": 3152501
+        },
+        {
+          "municipio": "Santa Rita do Sapucaí",
+          "codigo_municipio": 3159605
+        },
+        {
+          "municipio": "São João da Mata",
+          "codigo_municipio": 3162302
+        },
+        {
+          "municipio": "São Sebastião da Bela Vista",
+          "codigo_municipio": 3164407
+        },
+        {
+          "municipio": "Senador Amaral",
+          "codigo_municipio": 3165578
+        },
+        {
+          "municipio": "Senador José Bento",
+          "codigo_municipio": 3165800
+        },
+        {
+          "municipio": "Silvianópolis",
+          "codigo_municipio": 3167400
+        },
+        {
+          "municipio": "Tocos do Moji",
+          "codigo_municipio": 3169059
+        },
+        {
+          "municipio": "Toledo",
+          "codigo_municipio": 3169109
+        },
+        {
+          "municipio": "Turvolândia",
+          "codigo_municipio": 3169802
+        }
+      ]
+    },
+    {
+      "microrregiao": "SÃO JOÃO DEL REI",
+      "codigo_micro": 31015,
+      "macrorregiao": "CENTRO SUL",
+      "codigo_macro": 3102,
+      "urs": "São João Del Rei",
+      "municipios": [
+        {
+          "municipio": "Barroso",
+          "codigo_municipio": 3105905
+        },
+        {
+          "municipio": "Bom Sucesso",
+          "codigo_municipio": 3108008
+        },
+        {
+          "municipio": "Conceição da Barra de Minas",
+          "codigo_municipio": 3115201
+        },
+        {
+          "municipio": "Coronel Xavier Chaves",
+          "codigo_municipio": 3119708
+        },
+        {
+          "municipio": "Dores de Campos",
+          "codigo_municipio": 3123007
+        },
+        {
+          "municipio": "Ibituruna",
+          "codigo_municipio": 3130002
+        },
+        {
+          "municipio": "Lagoa Dourada",
+          "codigo_municipio": 3137403
+        },
+        {
+          "municipio": "Madre de Deus de Minas",
+          "codigo_municipio": 3139102
+        },
+        {
+          "municipio": "Nazareno",
+          "codigo_municipio": 3144508
+        },
+        {
+          "municipio": "Piedade do Rio Grande",
+          "codigo_municipio": 3150307
+        },
+        {
+          "municipio": "Prados",
+          "codigo_municipio": 3152709
+        },
+        {
+          "municipio": "Resende Costa",
+          "codigo_municipio": 3154200
+        },
+        {
+          "municipio": "Ritápolis",
+          "codigo_municipio": 3156106
+        },
+        {
+          "municipio": "Santa Cruz de Minas",
+          "codigo_municipio": 3157336
+        },
+        {
+          "municipio": "São João del Rei",
+          "codigo_municipio": 3162500
+        },
+        {
+          "municipio": "São Tiago",
+          "codigo_municipio": 3165008
+        },
+        {
+          "municipio": "São Vicente de Minas",
+          "codigo_municipio": 3165305
+        },
+        {
+          "municipio": "Tiradentes",
+          "codigo_municipio": 3168804
+        }
+      ]
+    },
+    {
+      "microrregiao": "CURVELO",
+      "codigo_micro": 31019,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Sete Lagoas",
+      "municipios": [
+        {
+          "municipio": "Augusto de Lima",
+          "codigo_municipio": 3104809
+        },
+        {
+          "municipio": "Buenópolis",
+          "codigo_municipio": 3109204
+        },
+        {
+          "municipio": "Corinto",
+          "codigo_municipio": 3119104
+        },
+        {
+          "municipio": "Curvelo",
+          "codigo_municipio": 3120904
+        },
+        {
+          "municipio": "Felixlândia",
+          "codigo_municipio": 3125705
+        },
+        {
+          "municipio": "Inimutaba",
+          "codigo_municipio": 3131109
+        },
+        {
+          "municipio": "Monjolos",
+          "codigo_municipio": 3142502
+        },
+        {
+          "municipio": "Morro da Garça",
+          "codigo_municipio": 3143609
+        },
+        {
+          "municipio": "Presidente Juscelino",
+          "codigo_municipio": 3153202
+        },
+        {
+          "municipio": "Santo Hipólito",
+          "codigo_municipio": 3160603
+        },
+        {
+          "municipio": "Três Marias",
+          "codigo_municipio": 3169356
+        }
+      ]
+    },
+    {
+      "microrregiao": "SETE LAGOAS",
+      "codigo_micro": 31024,
+      "macrorregiao": "CENTRO",
+      "codigo_macro": 3103,
+      "urs": "Sete Lagoas",
+      "municipios": [
+        {
+          "municipio": "Abaeté",
+          "codigo_municipio": 3100203
+        },
+        {
+          "municipio": "Araçaí",
+          "codigo_municipio": 3103207
+        },
+        {
+          "municipio": "Baldim",
+          "codigo_municipio": 3105004
+        },
+        {
+          "municipio": "Biquinhas",
+          "codigo_municipio": 3107000
+        },
+        {
+          "municipio": "Cachoeira da Prata",
+          "codigo_municipio": 3109600
+        },
+        {
+          "municipio": "Caetanópolis",
+          "codigo_municipio": 3109907
+        },
+        {
+          "municipio": "Capim Branco",
+          "codigo_municipio": 3112505
+        },
+        {
+          "municipio": "Cedro do Abaeté",
+          "codigo_municipio": 3115607
+        },
+        {
+          "municipio": "Cordisburgo",
+          "codigo_municipio": 3118908
+        },
+        {
+          "municipio": "Fortuna de Minas",
+          "codigo_municipio": 3126406
+        },
+        {
+          "municipio": "Funilândia",
+          "codigo_municipio": 3127206
+        },
+        {
+          "municipio": "Inhaúma",
+          "codigo_municipio": 3131000
+        },
+        {
+          "municipio": "Jequitibá",
+          "codigo_municipio": 3135704
+        },
+        {
+          "municipio": "Maravilhas",
+          "codigo_municipio": 3139706
+        },
+        {
+          "municipio": "Morada Nova de Minas",
+          "codigo_municipio": 3143500
+        },
+        {
+          "municipio": "Paineiras",
+          "codigo_municipio": 3146404
+        },
+        {
+          "municipio": "Papagaios",
+          "codigo_municipio": 3146909
+        },
+        {
+          "municipio": "Paraopeba",
+          "codigo_municipio": 3147402
+        },
+        {
+          "municipio": "Pequi",
+          "codigo_municipio": 3149606
+        },
+        {
+          "municipio": "Pompéu",
+          "codigo_municipio": 3152006
+        },
+        {
+          "municipio": "Prudente de Morais",
+          "codigo_municipio": 3153608
+        },
+        {
+          "municipio": "Quartel Geral",
+          "codigo_municipio": 3153707
+        },
+        {
+          "municipio": "Santana de Pirapama",
+          "codigo_municipio": 3158508
+        },
+        {
+          "municipio": "Sete Lagoas",
+          "codigo_municipio": 3167202
+        }
+      ]
+    },
+    {
+      "microrregiao": "ÁGUAS FORMOSAS",
+      "codigo_micro": 31062,
+      "macrorregiao": "NORDESTE",
+      "codigo_macro": 3111,
+      "urs": "Teófilo Otoni",
+      "municipios": [
+        {
+          "municipio": "Águas Formosas",
+          "codigo_municipio": 3100906
+        },
+        {
+          "municipio": "Bertópolis",
+          "codigo_municipio": 3106606
+        },
+        {
+          "municipio": "Crisólita",
+          "codigo_municipio": 3120151
+        },
+        {
+          "municipio": "Fronteira dos Vales",
+          "codigo_municipio": 3127057
+        },
+        {
+          "municipio": "Machacalis",
+          "codigo_municipio": 3138906
+        },
+        {
+          "municipio": "Pavão",
+          "codigo_municipio": 3148509
+        },
+        {
+          "municipio": "Santa Helena de Minas",
+          "codigo_municipio": 3157658
+        },
+        {
+          "municipio": "Umburatiba",
+          "codigo_municipio": 3170305
+        }
+      ]
+    },
+    {
+      "microrregiao": "ITAMBACURI",
+      "codigo_micro": 31096,
+      "macrorregiao": "NORDESTE",
+      "codigo_macro": 3111,
+      "urs": "Teófilo Otoni",
+      "municipios": [
+        {
+          "municipio": "Campanário",
+          "codigo_municipio": 3110806
+        },
+        {
+          "municipio": "Frei Gaspar",
+          "codigo_municipio": 3126802
+        },
+        {
+          "municipio": "Itambacuri",
+          "codigo_municipio": 3132701
+        },
+        {
+          "municipio": "Nova Módica",
+          "codigo_municipio": 3144904
+        },
+        {
+          "municipio": "Pescador",
+          "codigo_municipio": 3150000
+        },
+        {
+          "municipio": "São José do Divino",
+          "codigo_municipio": 3163300
+        }
+      ]
+    },
+    {
+      "microrregiao": "NANUQUE",
+      "codigo_micro": 31066,
+      "macrorregiao": "NORDESTE",
+      "codigo_macro": 3111,
+      "urs": "Teófilo Otoni",
+      "municipios": [
+        {
+          "municipio": "Carlos Chagas",
+          "codigo_municipio": 3113701
+        },
+        {
+          "municipio": "Nanuque",
+          "codigo_municipio": 3144300
+        },
+        {
+          "municipio": "Serra dos Aimorés",
+          "codigo_municipio": 3166709
+        }
+      ]
+    },
+    {
+      "microrregiao": "PADRE PARAÍSO",
+      "codigo_micro": 31067,
+      "macrorregiao": "NORDESTE",
+      "codigo_macro": 3111,
+      "urs": "Teófilo Otoni",
+      "municipios": [
+        {
+          "municipio": "Caraí",
+          "codigo_municipio": 3113008
+        },
+        {
+          "municipio": "Catuji",
+          "codigo_municipio": 3115458
+        },
+        {
+          "municipio": "Itaipé",
+          "codigo_municipio": 3132305
+        },
+        {
+          "municipio": "Padre Paraíso",
+          "codigo_municipio": 3146305
+        }
+      ]
+    },
+    {
+      "microrregiao": "TEÓFILO OTONI/MALACACHETA",
+      "codigo_micro": 31099,
+      "macrorregiao": "NORDESTE",
+      "codigo_macro": 3111,
+      "urs": "Teófilo Otoni",
+      "municipios": [
+        {
+          "municipio": "Angelândia",
+          "codigo_municipio": 3102852
+        },
+        {
+          "municipio": "Ataléia",
+          "codigo_municipio": 3104700
+        },
+        {
+          "municipio": "Franciscópolis",
+          "codigo_municipio": 3126752
+        },
+        {
+          "municipio": "Ladainha",
+          "codigo_municipio": 3137007
+        },
+        {
+          "municipio": "Malacacheta",
+          "codigo_municipio": 3139201
+        },
+        {
+          "municipio": "Novo Cruzeiro",
+          "codigo_municipio": 3145307
+        },
+        {
+          "municipio": "Novo Oriente de Minas",
+          "codigo_municipio": 3145356
+        },
+        {
+          "municipio": "Ouro Verde de Minas",
+          "codigo_municipio": 3146206
+        },
+        {
+          "municipio": "Poté",
+          "codigo_municipio": 3152402
+        },
+        {
+          "municipio": "Setubinha",
+          "codigo_municipio": 3165552
+        },
+        {
+          "municipio": "Teófilo Otoni",
+          "codigo_municipio": 3168606
+        }
+      ]
+    },
+    {
+      "microrregiao": "MURIAÉ",
+      "codigo_micro": 31045,
+      "macrorregiao": "SUDESTE",
+      "codigo_macro": 3107,
+      "urs": "Ubá",
+      "municipios": [
+        {
+          "municipio": "Antônio Prado de Minas",
+          "codigo_municipio": 3103108
+        },
+        {
+          "municipio": "Barão de Monte Alto",
+          "codigo_municipio": 3105509
+        },
+        {
+          "municipio": "Eugenópolis",
+          "codigo_municipio": 3124906
+        },
+        {
+          "municipio": "Miradouro",
+          "codigo_municipio": 3142106
+        },
+        {
+          "municipio": "Miraí",
+          "codigo_municipio": 3142205
+        },
+        {
+          "municipio": "Muriaé",
+          "codigo_municipio": 3143906
+        },
+        {
+          "municipio": "Patrocínio do Muriaé",
+          "codigo_municipio": 3148202
+        },
+        {
+          "municipio": "Rosário da Limeira",
+          "codigo_municipio": 3156452
+        },
+        {
+          "municipio": "São Francisco do Glória",
+          "codigo_municipio": 3161403
+        },
+        {
+          "municipio": "São Sebastião da Vargem Alegre",
+          "codigo_municipio": 3164431
+        },
+        {
+          "municipio": "Vieiras",
+          "codigo_municipio": 3171402
+        }
+      ]
+    },
+    {
+      "microrregiao": "UBÁ",
+      "codigo_micro": 31048,
+      "macrorregiao": "SUDESTE",
+      "codigo_macro": 3107,
+      "urs": "Ubá",
+      "municipios": [
+        {
+          "municipio": "Brás Pires",
+          "codigo_municipio": 3108701
+        },
+        {
+          "municipio": "Coimbra",
+          "codigo_municipio": 3116704
+        },
+        {
+          "municipio": "Divinésia",
+          "codigo_municipio": 3121902
+        },
+        {
+          "municipio": "Dores do Turvo",
+          "codigo_municipio": 3123304
+        },
+        {
+          "municipio": "Ervália",
+          "codigo_municipio": 3124005
+        },
+        {
+          "municipio": "Guarani",
+          "codigo_municipio": 3128402
+        },
+        {
+          "municipio": "Guidoval",
+          "codigo_municipio": 3128808
+        },
+        {
+          "municipio": "Guiricema",
+          "codigo_municipio": 3129004
+        },
+        {
+          "municipio": "Mercês",
+          "codigo_municipio": 3141603
+        },
+        {
+          "municipio": "Piraúba",
+          "codigo_municipio": 3151305
+        },
+        {
+          "municipio": "Presidente Bernardes",
+          "codigo_municipio": 3153103
+        },
+        {
+          "municipio": "Rio Pomba",
+          "codigo_municipio": 3155801
+        },
+        {
+          "municipio": "Rodeiro",
+          "codigo_municipio": 3156304
+        },
+        {
+          "municipio": "São Geraldo",
+          "codigo_municipio": 3161502
+        },
+        {
+          "municipio": "Senador Firmino",
+          "codigo_municipio": 3165701
+        },
+        {
+          "municipio": "Silveirânia",
+          "codigo_municipio": 3167301
+        },
+        {
+          "municipio": "Tabuleiro",
+          "codigo_municipio": 3167905
+        },
+        {
+          "municipio": "Tocantins",
+          "codigo_municipio": 3169000
+        },
+        {
+          "municipio": "Ubá",
+          "codigo_municipio": 3169901
+        },
+        {
+          "municipio": "Visconde do Rio Branco",
+          "codigo_municipio": 3172004
+        }
+      ]
+    },
+    {
+      "microrregiao": "ARAXÁ",
+      "codigo_micro": 31070,
+      "macrorregiao": "TRIÂNGULO DO SUL",
+      "codigo_macro": 3112,
+      "urs": "Uberaba",
+      "municipios": [
+        {
+          "municipio": "Araxá",
+          "codigo_municipio": 3104007
+        },
+        {
+          "municipio": "Campos Altos",
+          "codigo_municipio": 3111507
+        },
+        {
+          "municipio": "Ibiá",
+          "codigo_municipio": 3129509
+        },
+        {
+          "municipio": "Pedrinópolis",
+          "codigo_municipio": 3149200
+        },
+        {
+          "municipio": "Perdizes",
+          "codigo_municipio": 3149804
+        },
+        {
+          "municipio": "Pratinha",
+          "codigo_municipio": 3153004
+        },
+        {
+          "municipio": "Santa Juliana",
+          "codigo_municipio": 3157708
+        },
+        {
+          "municipio": "Tapira",
+          "codigo_municipio": 3168101
+        }
+      ]
+    },
+    {
+      "microrregiao": "FRUTAL/ITURAMA",
+      "codigo_micro": 31071,
+      "macrorregiao": "TRIÂNGULO DO SUL",
+      "codigo_macro": 3112,
+      "urs": "Uberaba",
+      "municipios": [
+        {
+          "municipio": "Carneirinho",
+          "codigo_municipio": 3114550
+        },
+        {
+          "municipio": "Comendador Gomes",
+          "codigo_municipio": 3116902
+        },
+        {
+          "municipio": "Fronteira",
+          "codigo_municipio": 3127008
+        },
+        {
+          "municipio": "Frutal",
+          "codigo_municipio": 3127107
+        },
+        {
+          "municipio": "Itapagipe",
+          "codigo_municipio": 3133402
+        },
+        {
+          "municipio": "Iturama",
+          "codigo_municipio": 3134400
+        },
+        {
+          "municipio": "Limeira do Oeste",
+          "codigo_municipio": 3138625
+        },
+        {
+          "municipio": "Pirajuba",
+          "codigo_municipio": 3150703
+        },
+        {
+          "municipio": "Planura",
+          "codigo_municipio": 3151602
+        },
+        {
+          "municipio": "São Francisco de Sales",
+          "codigo_municipio": 3161304
+        },
+        {
+          "municipio": "União de Minas",
+          "codigo_municipio": 3170438
+        }
+      ]
+    },
+    {
+      "microrregiao": "UBERABA",
+      "codigo_micro": 31072,
+      "macrorregiao": "TRIÂNGULO DO SUL",
+      "codigo_macro": 3112,
+      "urs": "Uberaba",
+      "municipios": [
+        {
+          "municipio": "Água Comprida",
+          "codigo_municipio": 3100708
+        },
+        {
+          "municipio": "Campo Florido",
+          "codigo_municipio": 3111408
+        },
+        {
+          "municipio": "Conceição das Alagoas",
+          "codigo_municipio": 3117306
+        },
+        {
+          "municipio": "Conquista",
+          "codigo_municipio": 3118205
+        },
+        {
+          "municipio": "Delta",
+          "codigo_municipio": 3121258
+        },
+        {
+          "municipio": "Sacramento",
+          "codigo_municipio": 3156908
+        },
+        {
+          "municipio": "Uberaba",
+          "codigo_municipio": 3170107
+        },
+        {
+          "municipio": "Veríssimo",
+          "codigo_municipio": 3171105
+        }
+      ]
+    },
+    {
+      "microrregiao": "PATROCÍNIO/MONTE CARMELO",
+      "codigo_micro": 31074,
+      "macrorregiao": "TRIÂNGULO DO NORTE",
+      "codigo_macro": 3113,
+      "urs": "Uberlândia",
+      "municipios": [
+        {
+          "municipio": "Abadia dos Dourados",
+          "codigo_municipio": 3100104
+        },
+        {
+          "municipio": "Coromandel",
+          "codigo_municipio": 3119302
+        },
+        {
+          "municipio": "Douradoquara",
+          "codigo_municipio": 3123502
+        },
+        {
+          "municipio": "Estrela do Sul",
+          "codigo_municipio": 3124807
+        },
+        {
+          "municipio": "Grupiara",
+          "codigo_municipio": 3127909
+        },
+        {
+          "municipio": "Iraí de Minas",
+          "codigo_municipio": 3131604
+        },
+        {
+          "municipio": "Monte Carmelo",
+          "codigo_municipio": 3143104
+        },
+        {
+          "municipio": "Patrocínio",
+          "codigo_municipio": 3148103
+        },
+        {
+          "municipio": "Romaria",
+          "codigo_municipio": 3156403
+        }
+      ]
+    },
+    {
+      "microrregiao": "UBERLÂNDIA/ARAGUARI",
+      "codigo_micro": 31075,
+      "macrorregiao": "TRIÂNGULO DO NORTE",
+      "codigo_macro": 3113,
+      "urs": "Uberlândia",
+      "municipios": [
+        {
+          "municipio": "Araguari",
+          "codigo_municipio": 3103504
+        },
+        {
+          "municipio": "Araporã",
+          "codigo_municipio": 3103751
+        },
+        {
+          "municipio": "Cascalho Rico",
+          "codigo_municipio": 3115003
+        },
+        {
+          "municipio": "Indianópolis",
+          "codigo_municipio": 3130705
+        },
+        {
+          "municipio": "Monte Alegre de Minas",
+          "codigo_municipio": 3142809
+        },
+        {
+          "municipio": "Nova Ponte",
+          "codigo_municipio": 3145000
+        },
+        {
+          "municipio": "Prata",
+          "codigo_municipio": 3152808
+        },
+        {
+          "municipio": "Tupaciguara",
+          "codigo_municipio": 3169604
+        },
+        {
+          "municipio": "Uberlândia",
+          "codigo_municipio": 3170206
+        }
+      ]
+    },
+    {
+      "microrregiao": "UNAÍ/PARACATU",
+      "codigo_micro": 31058,
+      "macrorregiao": "NOROESTE",
+      "codigo_macro": 3109,
+      "urs": "Unaí",
+      "municipios": [
+        {
+          "municipio": "Arinos",
+          "codigo_municipio": 3104502
+        },
+        {
+          "municipio": "Bonfinópolis de Minas",
+          "codigo_municipio": 3108206
+        },
+        {
+          "municipio": "Buritis",
+          "codigo_municipio": 3109303
+        },
+        {
+          "municipio": "Cabeceira Grande",
+          "codigo_municipio": 3109451
+        },
+        {
+          "municipio": "Chapada Gaúcha",
+          "codigo_municipio": 3116159
+        },
+        {
+          "municipio": "Dom Bosco",
+          "codigo_municipio": 3122470
+        },
+        {
+          "municipio": "Formoso",
+          "codigo_municipio": 3126208
+        },
+        {
+          "municipio": "Natalândia",
+          "codigo_municipio": 3144375
+        },
+        {
+          "municipio": "Paracatu",
+          "codigo_municipio": 3147006
+        },
+        {
+          "municipio": "Riachinho",
+          "codigo_municipio": 3154457
+        },
+        {
+          "municipio": "Unaí",
+          "codigo_municipio": 3170404
+        },
+        {
+          "municipio": "Uruana de Minas",
+          "codigo_municipio": 3170479
+        }
+      ]
+    },
+    {
+      "microrregiao": "LAVRAS",
+      "codigo_micro": 31004,
+      "macrorregiao": "SUL",
+      "codigo_macro": 3101,
+      "urs": "Varginha",
+      "municipios": [
+        {
+          "municipio": "Carrancas",
+          "codigo_municipio": 3114600
+        },
+        {
+          "municipio": "Ijaci",
+          "codigo_municipio": 3130408
+        },
+        {
+          "municipio": "Ingaí",
+          "codigo_municipio": 3130804
+        },
+        {
+          "municipio": "Itumirim",
+          "codigo_municipio": 3134301
+        },
+        {
+          "municipio": "Itutinga",
+          "codigo_municipio": 3134509
+        },
+        {
+          "municipio": "Lavras",
+          "codigo_municipio": 3138203
+        },
+        {
+          "municipio": "Luminárias",
+          "codigo_municipio": 3138708
+        },
+        {
+          "municipio": "Nepomuceno",
+          "codigo_municipio": 3144607
+        },
+        {
+          "municipio": "Perdões",
+          "codigo_municipio": 3149903
+        },
+        {
+          "municipio": "Ribeirão Vermelho",
+          "codigo_municipio": 3154705
+        }
+      ]
+    },
+    {
+      "microrregiao": "SÃO LOURENÇO",
+      "codigo_micro": 31008,
+      "macrorregiao": "SUL",
+      "codigo_macro": 3101,
+      "urs": "Varginha",
+      "municipios": [
+        {
+          "municipio": "Aiuruoca",
+          "codigo_municipio": 3101201
+        },
+        {
+          "municipio": "Alagoa",
+          "codigo_municipio": 3101300
+        },
+        {
+          "municipio": "Baependi",
+          "codigo_municipio": 3104908
+        },
+        {
+          "municipio": "Carmo de Minas",
+          "codigo_municipio": 3114105
+        },
+        {
+          "municipio": "Carvalhos",
+          "codigo_municipio": 3114808
+        },
+        {
+          "municipio": "Caxambu",
+          "codigo_municipio": 3115508
+        },
+        {
+          "municipio": "Conceição do Rio Verde",
+          "codigo_municipio": 3117702
+        },
+        {
+          "municipio": "Cristina",
+          "codigo_municipio": 3120508
+        },
+        {
+          "municipio": "Cruzília",
+          "codigo_municipio": 3120805
+        },
+        {
+          "municipio": "Dom Viçoso",
+          "codigo_municipio": 3122801
+        },
+        {
+          "municipio": "Itamonte",
+          "codigo_municipio": 3133006
+        },
+        {
+          "municipio": "Itanhandu",
+          "codigo_municipio": 3133105
+        },
+        {
+          "municipio": "Jesuânia",
+          "codigo_municipio": 3135902
+        },
+        {
+          "municipio": "Lambari",
+          "codigo_municipio": 3137809
+        },
+        {
+          "municipio": "Minduri",
+          "codigo_municipio": 3141900
+        },
+        {
+          "municipio": "Olímpio Noronha",
+          "codigo_municipio": 3145505
+        },
+        {
+          "municipio": "Passa Quatro",
+          "codigo_municipio": 3147600
+        },
+        {
+          "municipio": "Pouso Alto",
+          "codigo_municipio": 3152600
+        },
+        {
+          "municipio": "São Lourenço",
+          "codigo_municipio": 3163706
+        },
+        {
+          "municipio": "São Sebastião do Rio Verde",
+          "codigo_municipio": 3164902
+        },
+        {
+          "municipio": "Seritinga",
+          "codigo_municipio": 3166402
+        },
+        {
+          "municipio": "Serranos",
+          "codigo_municipio": 3167004
+        },
+        {
+          "municipio": "Soledade de Minas",
+          "codigo_municipio": 3167806
+        },
+        {
+          "municipio": "Virgínia",
+          "codigo_municipio": 3171709
+        }
+      ]
+    },
+    {
+      "microrregiao": "TRÊS CORAÇÕES",
+      "codigo_micro": 31010,
+      "macrorregiao": "SUL",
+      "codigo_macro": 3101,
+      "urs": "Varginha",
+      "municipios": [
+        {
+          "municipio": "Cambuquira",
+          "codigo_municipio": 3110707
+        },
+        {
+          "municipio": "Carmo da Cachoeira",
+          "codigo_municipio": 3113909
+        },
+        {
+          "municipio": "São Bento Abade",
+          "codigo_municipio": 3160801
+        },
+        {
+          "municipio": "São Tomé das Letras",
+          "codigo_municipio": 3165206
+        },
+        {
+          "municipio": "Três Corações",
+          "codigo_municipio": 3169307
+        }
+      ]
+    },
+    {
+      "microrregiao": "TRÊS PONTAS",
+      "codigo_micro": 31011,
+      "macrorregiao": "SUL",
+      "codigo_macro": 3101,
+      "urs": "Varginha",
+      "municipios": [
+        {
+          "municipio": "Boa Esperança",
+          "codigo_municipio": 3107109
+        },
+        {
+          "municipio": "Coqueiral",
+          "codigo_municipio": 3118700
+        },
+        {
+          "municipio": "Ilicínea",
+          "codigo_municipio": 3130507
+        },
+        {
+          "municipio": "Santana da Vargem",
+          "codigo_municipio": 3158300
+        },
+        {
+          "municipio": "Três Pontas",
+          "codigo_municipio": 3169406
+        }
+      ]
+    },
+    {
+      "microrregiao": "VARGINHA",
+      "codigo_micro": 31012,
+      "macrorregiao": "SUL",
+      "codigo_macro": 3101,
+      "urs": "Varginha",
+      "municipios": [
+        {
+          "municipio": "Campanha",
+          "codigo_municipio": 3110905
+        },
+        {
+          "municipio": "Cordislândia",
+          "codigo_municipio": 3119005
+        },
+        {
+          "municipio": "Elói Mendes",
+          "codigo_municipio": 3123601
+        },
+        {
+          "municipio": "Monsenhor Paulo",
+          "codigo_municipio": 3142601
+        },
+        {
+          "municipio": "São Gonçalo do Sapucaí",
+          "codigo_municipio": 3162005
+        },
+        {
+          "municipio": "Varginha",
+          "codigo_municipio": 3170701
+        }
+      ]
+    }
+  ]
+}
