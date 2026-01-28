@@ -114,31 +114,17 @@ export const MunicipioCard = ({ municipio, onUpdate, canEdit = false, showCoordi
         </div>
       </div>
 
-      {/* Territorial Info (Read-Only) */}
-      <div className="grid grid-cols-2 gap-2 text-sm mb-4 p-3 rounded-lg bg-muted/30">
-        <div>
-          <span className="text-muted-foreground">Macrorregião:</span>{" "}
-          <span className="font-medium">{municipio.macrorregiao}</span>
+      {/* NMSD (Núcleo Microrregional) Info */}
+      <div className="space-y-2 text-sm mb-4 p-3 rounded-lg bg-primary/5 border border-primary/10">
+        <div className="flex items-center gap-2 text-primary font-medium">
+          <span className="text-xs uppercase tracking-wide">Núcleo Microrregional de Saúde Digital</span>
         </div>
-        <div>
-          <span className="text-muted-foreground">Cód. Macro:</span>{" "}
-          <span className="font-medium">{municipio.cod_macro}</span>
+        <div className="font-semibold text-foreground">
+          NMSD {municipio.microregiao}
         </div>
-        <div>
-          <span className="text-muted-foreground">Microrregião:</span>{" "}
-          <span className="font-medium text-xs">{municipio.microregiao}</span>
-        </div>
-        <div>
-          <span className="text-muted-foreground">Cód. Micro:</span>{" "}
-          <span className="font-medium">{municipio.cod_micro}</span>
-        </div>
-        <div>
-          <span className="text-muted-foreground">URS:</span>{" "}
-          <span className="font-medium">{municipio.urs}</span>
-        </div>
-        <div>
-          <span className="text-muted-foreground">GRS:</span>{" "}
-          <span className="font-medium">{municipio.grs || "-"}</span>
+        <div className="grid grid-cols-2 gap-1 text-xs text-muted-foreground">
+          <span>Macrorregião: {municipio.macrorregiao}</span>
+          <span>URS: {municipio.urs}</span>
         </div>
       </div>
 

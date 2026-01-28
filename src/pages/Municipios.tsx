@@ -28,8 +28,8 @@ const Municipios = () => {
     <MainLayout>
       <div className="space-y-6 animate-fade-in">
         <PageHeader
-          title="Municípios"
-          description="Gestão e acompanhamento dos municípios da microrregião de Minas Gerais"
+          title="Municípios por NMSD"
+          description="Gestão dos municípios vinculados aos Núcleos Microrregionais de Saúde Digital (NMSD) de Minas Gerais"
           breadcrumbs={[{ label: "Municípios" }]}
         />
 

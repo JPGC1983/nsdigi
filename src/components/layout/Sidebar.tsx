@@ -62,7 +62,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               </div>
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-sidebar-foreground">NMSD</span>
-                <span className="text-xs text-sidebar-foreground/60">Microrregional</span>
+                <span className="text-xs text-sidebar-foreground/60">Núcleo Microrregional</span>
               </div>
             </div>
             <Button
