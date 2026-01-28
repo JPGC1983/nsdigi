@@ -1573,6 +1573,7 @@ export type Database = {
         Returns: boolean
       }
       get_municipio_full: { Args: { municipio_id: string }; Returns: Json }
+      get_municipios_filter_options: { Args: never; Returns: Json }
       get_profile_public: {
         Args: { profile_id: string }
         Returns: {
