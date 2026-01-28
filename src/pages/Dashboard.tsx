@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
-  Building2,
+  Network,
   Users,
   GraduationCap,
   MessageSquare,
@@ -14,7 +14,7 @@ import HeroBanner from "@/components/dashboard/HeroBanner";
 import MetricCard from "@/components/dashboard/MetricCard";
 import QuickAction from "@/components/dashboard/QuickAction";
 import ActivityFeed from "@/components/dashboard/ActivityFeed";
-import MunicipalitiesTable from "@/components/dashboard/MunicipalitiesTable";
+import NMSDTable from "@/components/dashboard/NMSDTable";
 import OnboardingOverlay from "@/components/onboarding/OnboardingOverlay";
 import { useOnboarding } from "@/hooks/useOnboarding";
 import { useAuth } from "@/hooks/useAuth";
@@ -83,10 +83,10 @@ const Dashboard = () => {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
         >
           <MetricCard
-            title="Municípios Ativos"
+            title="NMSDs Ativos"
             value={0}
-            subtitle="no NMSD"
-            icon={Building2}
+            subtitle="microrregiões"
+            icon={Network}
             delay={0.1}
           />
           <MetricCard
@@ -151,9 +151,9 @@ const Dashboard = () => {
 
         {/* Bottom Section - Two Columns */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Municipalities Table - Takes 2/3 */}
-          <motion.div variants={itemVariants} data-onboarding="municipalities" className="lg:col-span-2">
-            <MunicipalitiesTable />
+          {/* NMSD Table - Takes 2/3 */}
+          <motion.div variants={itemVariants} data-onboarding="nmsd" className="lg:col-span-2">
+            <NMSDTable />
           </motion.div>
 
           {/* Activity Feed - Takes 1/3 */}

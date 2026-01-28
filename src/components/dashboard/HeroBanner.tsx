@@ -47,7 +47,7 @@ const HeroBanner = () => {
               onClick={() => navigate("/municipios")}
               className="bg-card text-primary hover:bg-card/90 border-0 px-5 py-2.5 h-auto text-sm font-medium rounded-md shadow-sm gap-2"
             >
-              Explorar Municípios
+              Explorar Microrregiões
               <ArrowUpRight className="h-4 w-4" />
             </Button>
           </motion.div>
