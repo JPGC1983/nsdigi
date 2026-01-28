@@ -10,6 +10,8 @@ const TopicTypeBadge = React.forwardRef<HTMLSpanElement, TopicTypeBadgeProps>(
   ({ type, size = "sm", className, ...props }, ref) => {
     const config = TOPIC_TYPE_CONFIG[type];
     
+    if (!config) return null;
+    
     return (
       <span
         ref={ref}
