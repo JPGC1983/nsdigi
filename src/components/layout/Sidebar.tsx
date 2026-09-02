@@ -14,8 +14,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import governoMinasLogo from "@/assets/governo-minas-logo.png";
-import nsdigiLogo from "@/assets/nsdigi-logo-new.png";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -109,24 +107,6 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <Settings className="h-5 w-5" />
               <span>Configurações</span>
             </NavLink>
-            
-            {/* NSDIGI Logo */}
-            <div className="px-3 py-2">
-              <img 
-                src={nsdigiLogo} 
-                alt="NSDIGI" 
-                className="w-full h-auto max-w-[140px] mx-auto"
-              />
-            </div>
-
-            {/* Governo de Minas Logo */}
-            <div className="px-3 py-2">
-              <img 
-                src={governoMinasLogo} 
-                alt="Governo de Minas - Aqui o trem prospera" 
-                className="w-full h-auto max-w-[180px] mx-auto opacity-90"
-              />
-            </div>
           </div>
         </div>
       </aside>

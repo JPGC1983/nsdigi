@@ -16,8 +16,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import governoMinasLogo from "@/assets/governo-minas-logo.png";
-import nsdigiLogo from "@/assets/nsdigi-logo-new.png";
 
 interface FloatingSidebarProps {
   isOpen: boolean;
@@ -158,26 +156,6 @@ const FloatingSidebar = ({ isOpen, onClose }: FloatingSidebarProps) => {
               <Settings className="h-5 w-5" />
               <span>Configurações</span>
             </NavLink>
-            
-            {/* Branding */}
-            <div className="mt-4 px-3 py-3 rounded-lg bg-sidebar-accent space-y-3">
-              <div className="flex items-center justify-center">
-                <img
-                  src={nsdigiLogo}
-                  alt="NSDIGI"
-                  className="w-full h-auto max-w-[140px]"
-                  loading="lazy"
-                />
-              </div>
-              <div className="flex items-center justify-center">
-                <img
-                  src={governoMinasLogo}
-                  alt="Governo de Minas - Aqui o trem prospera"
-                  className="w-full h-auto max-w-[180px] opacity-90"
-                  loading="lazy"
-                />
-              </div>
-            </div>
           </div>
         </div>
       </motion.aside>
