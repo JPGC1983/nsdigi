@@ -1632,6 +1632,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_mentor_of_mentee: {
+        Args: { _mentee_id: string; _user_id: string }
+        Returns: boolean
+      }
       list_municipios_safe: {
         Args: {
           macrorregiao_filter?: string
