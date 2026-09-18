@@ -94,42 +94,72 @@ export type Database = {
           created_at: string
           created_by: string | null
           deliberations: string | null
+          escopo: Database["public"]["Enums"]["content_scope"]
+          expira_em: string | null
           id: string
           meeting_date: string
+          microregiao: string | null
+          municipio_id: string | null
           notes: string | null
           participants: string | null
           participation_type: string
           territory_impacts: string | null
           themes: string
           updated_at: string
+          urs: string | null
         }
         Insert: {
           created_at?: string
           created_by?: string | null
           deliberations?: string | null
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          expira_em?: string | null
           id?: string
           meeting_date: string
+          microregiao?: string | null
+          municipio_id?: string | null
           notes?: string | null
           participants?: string | null
           participation_type?: string
           territory_impacts?: string | null
           themes: string
           updated_at?: string
+          urs?: string | null
         }
         Update: {
           created_at?: string
           created_by?: string | null
           deliberations?: string | null
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          expira_em?: string | null
           id?: string
           meeting_date?: string
+          microregiao?: string | null
+          municipio_id?: string | null
           notes?: string | null
           participants?: string | null
           participation_type?: string
           territory_impacts?: string | null
           themes?: string
           updated_at?: string
+          urs?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "cib_meetings_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cib_meetings_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       course_enrollments: {
         Row: {
@@ -174,12 +204,17 @@ export type Database = {
           description: string | null
           duration: string | null
           enrolled: number
+          escopo: Database["public"]["Enums"]["content_scope"]
+          expira_em: string | null
           format: string
           id: string
           level: string
+          microregiao: string | null
+          municipio_id: string | null
           title: string
           updated_at: string
           url: string | null
+          urs: string | null
         }
         Insert: {
           category: string
@@ -188,12 +223,17 @@ export type Database = {
           description?: string | null
           duration?: string | null
           enrolled?: number
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          expira_em?: string | null
           format?: string
           id?: string
           level?: string
+          microregiao?: string | null
+          municipio_id?: string | null
           title: string
           updated_at?: string
           url?: string | null
+          urs?: string | null
         }
         Update: {
           category?: string
@@ -202,14 +242,34 @@ export type Database = {
           description?: string | null
           duration?: string | null
           enrolled?: number
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          expira_em?: string | null
           format?: string
           id?: string
           level?: string
+          microregiao?: string | null
+          municipio_id?: string | null
           title?: string
           updated_at?: string
           url?: string | null
+          urs?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "courses_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "courses_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       forum_experts: {
         Row: {
@@ -631,39 +691,69 @@ export type Database = {
           category: string
           created_at: string
           description: string | null
+          escopo: Database["public"]["Enums"]["content_scope"]
+          expira_em: string | null
           file_path: string
           file_size: number | null
           file_type: string
           id: string
+          microregiao: string | null
+          municipio_id: string | null
           name: string
           updated_at: string
           uploaded_by: string | null
+          urs: string | null
         }
         Insert: {
           category?: string
           created_at?: string
           description?: string | null
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          expira_em?: string | null
           file_path: string
           file_size?: number | null
           file_type: string
           id?: string
+          microregiao?: string | null
+          municipio_id?: string | null
           name: string
           updated_at?: string
           uploaded_by?: string | null
+          urs?: string | null
         }
         Update: {
           category?: string
           created_at?: string
           description?: string | null
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          expira_em?: string | null
           file_path?: string
           file_size?: number | null
           file_type?: string
           id?: string
+          microregiao?: string | null
+          municipio_id?: string | null
           name?: string
           updated_at?: string
           uploaded_by?: string | null
+          urs?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "governance_documents_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "governance_documents_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       mentees: {
         Row: {
@@ -1366,10 +1456,15 @@ export type Database = {
           created_by: string | null
           description: string | null
           enrolled: number
+          escopo: Database["public"]["Enums"]["content_scope"]
+          expira_em: string | null
           id: string
+          microregiao: string | null
+          municipio_id: string | null
           title: string
           total_hours: number
           updated_at: string
+          urs: string | null
         }
         Insert: {
           courses_count?: number
@@ -1377,10 +1472,15 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           enrolled?: number
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          expira_em?: string | null
           id?: string
+          microregiao?: string | null
+          municipio_id?: string | null
           title: string
           total_hours?: number
           updated_at?: string
+          urs?: string | null
         }
         Update: {
           courses_count?: number
@@ -1388,12 +1488,32 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           enrolled?: number
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          expira_em?: string | null
           id?: string
+          microregiao?: string | null
+          municipio_id?: string | null
           title?: string
           total_hours?: number
           updated_at?: string
+          urs?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "trails_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trails_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
@@ -1702,9 +1822,28 @@ export type Database = {
         }
         Returns: string
       }
+      user_can_manage_content: {
+        Args: {
+          _escopo: Database["public"]["Enums"]["content_scope"]
+          _microregiao: string
+          _municipio_id: string
+          _urs: string
+        }
+        Returns: boolean
+      }
+      user_reaches_content: {
+        Args: {
+          _escopo: Database["public"]["Enums"]["content_scope"]
+          _microregiao: string
+          _municipio_id: string
+          _urs: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "coordenador" | "membro"
+      content_scope: "global" | "regional" | "microrregional" | "municipal"
       forum_topic_status:
         | "open"
         | "resolved"
@@ -1866,6 +2005,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "coordenador", "membro"],
+      content_scope: ["global", "regional", "microrregional", "municipal"],
       forum_topic_status: [
         "open",
         "resolved",
