@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
+import { useContentScope } from "./useContentScope";
 import { toast } from "sonner";
 
 export interface Course {
@@ -48,6 +49,7 @@ export interface TrailFormData {
 
 export const useEducacao = () => {
   const { user } = useAuth();
+  const { getScopeFields } = useContentScope();
   const [courses, setCourses] = useState<Course[]>([]);
   const [trails, setTrails] = useState<Trail[]>([]);
   const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
@@ -164,6 +166,7 @@ export const useEducacao = () => {
         format: formData.format,
         url: formData.url || null,
         created_by: user.id,
+        ...getScopeFields(),
       });
 
       if (error) {
@@ -202,6 +205,7 @@ export const useEducacao = () => {
         description: formData.description || null,
         total_hours: formData.totalHours,
         created_by: user.id,
+        ...getScopeFields(),
       });
 
       if (error) {
