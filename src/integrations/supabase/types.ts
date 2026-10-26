@@ -1842,7 +1842,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "coordenador" | "membro"
+      app_role: "admin" | "coordenador" | "membro" | "moderador" | "ponto_focal"
       content_scope: "global" | "regional" | "microrregional" | "municipal"
       forum_topic_status:
         | "open"
@@ -2004,7 +2004,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "coordenador", "membro"],
+      app_role: ["admin", "coordenador", "membro", "moderador", "ponto_focal"],
       content_scope: ["global", "regional", "microrregional", "municipal"],
       forum_topic_status: [
         "open",
