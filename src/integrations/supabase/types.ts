@@ -161,6 +161,138 @@ export type Database = {
           },
         ]
       }
+      colegiado_meetings: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          data_reuniao: string
+          descricao: string | null
+          escopo: Database["public"]["Enums"]["content_scope"]
+          formato: string
+          horario: string | null
+          id: string
+          local: string | null
+          microregiao: string | null
+          municipio_id: string | null
+          titulo: string
+          updated_at: string
+          urs: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          data_reuniao: string
+          descricao?: string | null
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          formato?: string
+          horario?: string | null
+          id?: string
+          local?: string | null
+          microregiao?: string | null
+          municipio_id?: string | null
+          titulo: string
+          updated_at?: string
+          urs?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          data_reuniao?: string
+          descricao?: string | null
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          formato?: string
+          horario?: string | null
+          id?: string
+          local?: string | null
+          microregiao?: string | null
+          municipio_id?: string | null
+          titulo?: string
+          updated_at?: string
+          urs?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "colegiado_meetings_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "colegiado_meetings_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      colegiado_members: {
+        Row: {
+          categoria: string
+          created_at: string
+          created_by: string | null
+          email: string | null
+          escopo: Database["public"]["Enums"]["content_scope"]
+          funcao: string
+          id: string
+          microregiao: string | null
+          municipio: string | null
+          municipio_id: string | null
+          nome: string
+          telefone: string | null
+          updated_at: string
+          urs: string | null
+        }
+        Insert: {
+          categoria?: string
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          funcao: string
+          id?: string
+          microregiao?: string | null
+          municipio?: string | null
+          municipio_id?: string | null
+          nome: string
+          telefone?: string | null
+          updated_at?: string
+          urs?: string | null
+        }
+        Update: {
+          categoria?: string
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          funcao?: string
+          id?: string
+          microregiao?: string | null
+          municipio?: string | null
+          municipio_id?: string | null
+          nome?: string
+          telefone?: string | null
+          updated_at?: string
+          urs?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "colegiado_members_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "colegiado_members_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       course_enrollments: {
         Row: {
           completed_at: string | null
@@ -748,6 +880,87 @@ export type Database = {
           },
           {
             foreignKeyName: "governance_documents_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      materials: {
+        Row: {
+          author: string | null
+          category: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          downloads: number
+          escopo: Database["public"]["Enums"]["content_scope"]
+          file_name: string | null
+          file_path: string | null
+          file_size: number | null
+          file_type: string | null
+          id: string
+          material_type: string
+          microregiao: string | null
+          municipio_id: string | null
+          title: string
+          updated_at: string
+          url: string | null
+          urs: string | null
+        }
+        Insert: {
+          author?: string | null
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          downloads?: number
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          id?: string
+          material_type?: string
+          microregiao?: string | null
+          municipio_id?: string | null
+          title: string
+          updated_at?: string
+          url?: string | null
+          urs?: string | null
+        }
+        Update: {
+          author?: string | null
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          downloads?: number
+          escopo?: Database["public"]["Enums"]["content_scope"]
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          id?: string
+          material_type?: string
+          microregiao?: string | null
+          municipio_id?: string | null
+          title?: string
+          updated_at?: string
+          url?: string | null
+          urs?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "materials_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "materials_municipio_id_fkey"
             columns: ["municipio_id"]
             isOneToOne: false
             referencedRelation: "municipios_public"
@@ -1838,6 +2051,14 @@ export type Database = {
         Args: { _mentee_id: string; _user_id: string }
         Returns: boolean
       }
+      list_colegiado_contacts: {
+        Args: never
+        Returns: {
+          email: string
+          id: string
+          telefone: string
+        }[]
+      }
       list_municipios_cadastro: {
         Args: never
         Returns: {
@@ -1934,6 +2155,10 @@ export type Database = {
           _urs?: string
         }
         Returns: string
+      }
+      register_material_download: {
+        Args: { _material_id: string }
+        Returns: undefined
       }
       review_registration: {
         Args: {

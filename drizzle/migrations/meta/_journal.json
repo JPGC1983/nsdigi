@@ -15,6 +15,13 @@
       "when": 1793023405887,
       "tag": "0001_cadastro_aprovacao_permissoes",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793024829601,
+      "tag": "0002_materiais_e_colegiado",
+      "breakpoints": true
     }
   ]
 }
