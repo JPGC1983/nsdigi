@@ -24,7 +24,7 @@ import { toast } from "sonner";
 interface AddReuniaoModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd?: (data: ReuniaoData) => void;
+  onAdd?: (data: ReuniaoData) => Promise<boolean> | boolean | void;
 }
 
 export interface ReuniaoData {
@@ -46,7 +46,9 @@ const AddReuniaoModal = ({ open, onOpenChange, onAdd }: AddReuniaoModalProps) =>
     description: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.title || !formData.date || !formData.time) {
@@ -54,8 +56,10 @@ const AddReuniaoModal = ({ open, onOpenChange, onAdd }: AddReuniaoModalProps) =>
       return;
     }
 
-    onAdd?.(formData);
-    toast.success(`Reunião "${formData.title}" agendada com sucesso!`);
+    setIsSaving(true);
+    const ok = await onAdd?.(formData);
+    setIsSaving(false);
+    if (ok === false) return;
     setFormData({
       title: "",
       date: "",
