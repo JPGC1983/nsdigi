@@ -17,6 +17,7 @@ import Configuracoes from "./pages/Configuracoes";
 import Mentorias from "./pages/Mentorias";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import DocumentoInstitucional from "./pages/DocumentoInstitucional";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,8 @@ const App = () => (
             <Route path="/indicadores" element={<Indicadores />} />
             <Route path="/governanca" element={<Governanca />} />
             <Route path="/configuracoes" element={<Configuracoes />} />
+            <Route path="/termo-de-uso" element={<DocumentoInstitucional titulo="Termo de Uso" />} />
+            <Route path="/politica-de-privacidade" element={<DocumentoInstitucional titulo="Política de Privacidade" />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
