@@ -18,6 +18,8 @@ import Mentorias from "./pages/Mentorias";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import DocumentoInstitucional from "./pages/DocumentoInstitucional";
+import Aprovacoes from "./pages/Aprovacoes";
+import { ThemeProvider } from "next-themes";
 
 const queryClient = new QueryClient();
 
