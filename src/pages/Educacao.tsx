@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GraduationCap, Clock, Users, BookOpen, Play, ChevronRight, Filter, Loader2 } from "lucide-react";
+import { GraduationCap, Clock, Users, BookOpen, Play, ChevronRight, Filter, Loader2, Plus } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/shared/PageHeader";
 import EmptyState from "@/components/shared/EmptyState";
