@@ -31,7 +31,7 @@ const RegistrationStatusScreen = () => {
       return;
     }
     setSaving(true);
-    const update: Record<string, string> = {};
+    const update: { municipio_id?: string; aceite_termos_em?: string } = {};
     if (missingMunicipio && municipioId) update.municipio_id = municipioId;
     if (missingAceite) update.aceite_termos_em = new Date().toISOString();
     const { error } = await supabase.from("profiles").update(update).eq("id", user.id);
