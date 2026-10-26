@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 
 interface FloatingSidebarProps {
   isOpen: boolean;
+  isDesktop: boolean;
   onClose: () => void;
 }
 
@@ -40,10 +41,12 @@ const sidebarVariants = {
   closed: {
     x: -280,
     opacity: 0,
+    transitionEnd: { visibility: "hidden" as const },
   },
   open: {
     x: 0,
     opacity: 1,
+    visibility: "visible" as const,
   },
 };
 
@@ -52,18 +55,38 @@ const overlayVariants = {
   open: { opacity: 1 },
 };
 
-const FloatingSidebar = ({ isOpen, onClose }: FloatingSidebarProps) => {
+/** Quantidade de cadastros aguardando aprovação (só para quem aprova). */
+const usePendingRegistrations = (enabled: boolean) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!enabled) return;
+    let active = true;
+    supabase.rpc("list_registrations", { _status: "pendente" }).then(({ data }) => {
+      if (active) setCount(data?.length ?? 0);
+    });
+    return () => {
+      active = false;
+    };
+  }, [enabled]);
+  return count;
+};
+
+const FloatingSidebar = ({ isOpen, isDesktop, onClose }: FloatingSidebarProps) => {
   const location = useLocation();
   const { roles } = useAuth();
-  const items = canReviewRegistrations(roles)
+  const canReview = canReviewRegistrations(roles);
+  const pendingCount = usePendingRegistrations(canReview);
+  const items = canReview
     ? [...navItems, { icon: ClipboardCheck, label: "Aprovações", path: "/aprovacoes" }]
     : navItems;
+  // No computador os links não fecham o menu; no celular fecham ao navegar.
+  const handleNavigate = isDesktop ? undefined : onClose;
 
   return (
     <>
       {/* Overlay for mobile */}
       <AnimatePresence>
-        {isOpen && (
+        {isOpen && !isDesktop && (
           <motion.div
             variants={overlayVariants}
             initial="closed"
@@ -72,6 +95,7 @@ const FloatingSidebar = ({ isOpen, onClose }: FloatingSidebarProps) => {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 bg-foreground/20 backdrop-blur-sm lg:hidden"
             onClick={onClose}
+            aria-hidden="true"
           />
         )}
       </AnimatePresence>
@@ -79,18 +103,21 @@ const FloatingSidebar = ({ isOpen, onClose }: FloatingSidebarProps) => {
       {/* Sidebar */}
       <motion.aside
         variants={sidebarVariants}
-        initial="closed"
+        initial={false}
         animate={isOpen ? "open" : "closed"}
+        transition={{ duration: 0.2 }}
+        aria-hidden={!isOpen}
         className={cn(
-          "fixed top-0 left-0 z-50 h-screen w-[260px] lg:w-64",
+          "fixed top-0 left-0 z-50 h-screen w-[260px] lg:w-64 flex-shrink-0",
           "glass-sidebar border-r border-white/10",
-          "lg:translate-x-0 lg:static"
+          "lg:sticky lg:z-30",
+          isDesktop && !isOpen && "hidden"
         )}
       >
         <div className="flex h-full flex-col">
           {/* Logo Section */}
           <div className="flex h-16 items-center justify-between px-5 border-b border-white/10">
-            <div className="flex items-center gap-3">
+            <NavLink to="/" onClick={handleNavigate} className="flex items-center gap-3" aria-label="Ir para o Dashboard">
               <motion.div
                 whileHover={{ scale: 1.05, rotate: 5 }}
                 className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg"
@@ -101,12 +128,13 @@ const FloatingSidebar = ({ isOpen, onClose }: FloatingSidebarProps) => {
                 <span className="text-sm font-bold text-white tracking-tight">NMSD</span>
                 <span className="text-[10px] text-white/60 uppercase tracking-wider">Microrregional</span>
               </div>
-            </div>
+            </NavLink>
             <Button
               variant="ghost"
               size="icon"
               className="lg:hidden text-white/80 hover:text-white hover:bg-white/10"
               onClick={onClose}
+              aria-label="Fechar menu"
             >
               <X className="h-5 w-5" />
             </Button>
