@@ -158,7 +158,7 @@ const AddReuniaoModal = ({ open, onOpenChange, onAdd }: AddReuniaoModalProps) =>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit">Agendar Reunião</Button>
+            <Button type="submit" disabled={isSaving}>{isSaving ? "Salvando..." : "Agendar Reunião"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

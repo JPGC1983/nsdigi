@@ -36,7 +36,7 @@ import { Badge } from "@/components/ui/badge";
 interface AddMaterialModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd?: (data: MaterialData) => void;
+  onAdd?: (data: MaterialData) => Promise<boolean> | boolean | void;
 }
 
 export interface MaterialData {
@@ -47,6 +47,7 @@ export interface MaterialData {
   author: string;
   url: string;
   fileName?: string;
+  file?: File | null;
 }
 
 const types = [
@@ -57,14 +58,18 @@ const types = [
   { value: "legislacao", label: "Legislação", icon: Scale, color: "text-emerald-500" },
 ];
 
-const categories = [
-  { value: "e-SUS", label: "e-SUS" },
-  { value: "RNDS", label: "RNDS" },
-  { value: "Telessaúde", label: "Telessaúde" },
-  { value: "Gestão", label: "Gestão" },
-  { value: "Legislação", label: "Legislação" },
-  { value: "Interoperabilidade", label: "Interoperabilidade" },
+export const MATERIAL_CATEGORIES = [
+  "e-SUS",
+  "RNDS",
+  "Telessaúde",
+  "Gestão",
+  "Legislação",
+  "Interoperabilidade",
+  "Saúde Digital",
+  "Outros",
 ];
+
+const categories = MATERIAL_CATEGORIES.map((c) => ({ value: c, label: c }));
 
 const acceptedFormats = ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.mp4,.mp3,.zip";
 
@@ -381,9 +386,9 @@ const AddMaterialModal = ({ open, onOpenChange, onAdd }: AddMaterialModalProps) 
             >
               Cancelar
             </Button>
-            <Button type="submit" className="gap-2">
+            <Button type="submit" className="gap-2" disabled={isSaving}>
               <File className="h-4 w-4" />
-              Adicionar Material
+              {isSaving ? "Enviando..." : "Adicionar Material"}
             </Button>
           </DialogFooter>
         </form>

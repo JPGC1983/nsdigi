@@ -176,7 +176,7 @@ const AddMembroModal = ({ open, onOpenChange, onAdd }: AddMembroModalProps) => {
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit">Adicionar Membro</Button>
+            <Button type="submit" disabled={isSaving}>{isSaving ? "Salvando..." : "Adicionar Membro"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>
