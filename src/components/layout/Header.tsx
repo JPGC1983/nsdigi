@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, Bell, Search, Settings, LogOut, BookOpen, Award } from "lucide-react";
+import { Menu, Bell, Search, Settings, LogOut, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,9 +18,10 @@ import GlobalSearchCommand from "@/components/search/GlobalSearchCommand";
 
 interface HeaderProps {
   onMenuClick: () => void;
+  menuOpen?: boolean;
 }
 
-const Header = ({ onMenuClick }: HeaderProps) => {
+const Header = ({ onMenuClick, menuOpen }: HeaderProps) => {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -68,15 +69,15 @@ const Header = ({ onMenuClick }: HeaderProps) => {
             size="icon"
             className="hover:bg-muted"
             onClick={onMenuClick}
+            aria-label={menuOpen ? "Recolher menu" : "Abrir menu"}
+            aria-expanded={menuOpen}
           >
             <Menu className="h-5 w-5" />
           </Button>
 
           <div className="flex items-center gap-3 lg:hidden">
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xs">SD</span>
-              </div>
+            <Link to="/" className="flex items-center gap-2 group" aria-label="Ir para o Dashboard">
+              <span className="text-sm font-bold text-foreground tracking-tight">NMSD</span>
             </Link>
           </div>
 
@@ -103,6 +104,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
               className="relative hover:bg-muted"
               onClick={togglePanel}
               data-onboarding="notifications"
+              aria-label={unreadCount > 0 ? `Notificações (${unreadCount} não lidas)` : "Notificações"}
             >
               <Bell className="h-5 w-5" />
               {unreadCount > 0 && (
@@ -116,7 +118,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full hover:ring-2 hover:ring-primary/20 transition-all">
+                <Button variant="ghost" size="icon" className="rounded-full hover:ring-2 hover:ring-primary/20 transition-all" aria-label="Menu da conta">
                   <Avatar className="h-8 w-8">
                     <AvatarImage src={profile?.avatar_url || undefined} />
                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary text-sm font-medium">
@@ -134,18 +136,16 @@ const Header = ({ onMenuClick }: HeaderProps) => {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link to="/educacao" className="flex items-center gap-2 cursor-pointer">
+                  <Link to="/educacao?aba=meus-cursos" className="flex items-center gap-2 cursor-pointer">
                     <BookOpen className="h-4 w-4" />
                     Meus Cursos
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                  <Award className="h-4 w-4" />
-                  Certificados
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                  <Settings className="h-4 w-4" />
-                  Configurações
+                <DropdownMenuItem asChild>
+                  <Link to="/configuracoes" className="flex items-center gap-2 cursor-pointer">
+                    <Settings className="h-4 w-4" />
+                    Configurações
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem 
