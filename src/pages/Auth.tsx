@@ -447,8 +447,16 @@ const Auth = () => {
         </Card>
         
         <p className="text-center text-sm text-muted-foreground mt-6">
-          Núcleo Microrregional de Telessaúde de Limoeiro do Norte
+          Núcleo Microrregional de Saúde Digital – Minas Gerais
         </p>
+        <nav aria-label="Links institucionais" className="flex items-center justify-center gap-4 mt-2 text-xs text-muted-foreground">
+          <Link to="/termo-de-uso" className="hover:text-foreground hover:underline underline-offset-4">
+            Termo de Uso
+          </Link>
+          <Link to="/politica-de-privacidade" className="hover:text-foreground hover:underline underline-offset-4">
+            Política de Privacidade
+          </Link>
+        </nav>
       </div>
     </div>
   );
