@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/shared/PageHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,6 +38,18 @@ const Configuracoes = () => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(profile?.avatar_url || null);
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+
+  // O perfil chega depois do primeiro render; sincroniza os campos quando ele carregar.
+  useEffect(() => {
+    if (!profile) return;
+    setFullName(profile.full_name || "");
+    setPhone(profile.phone || "");
+    setJobTitle(profile.job_title || "");
+    setAvatarUrl(profile.avatar_url || null);
+  }, [profile]);
+
+  const metadataName = (user?.user_metadata?.full_name as string | undefined) || "";
+  const displayName = fullName || profile?.full_name || metadataName || user?.email || "Usuário";
 
   // Notification preferences (local state for now)
   const [emailNotifications, setEmailNotifications] = useState(true);
