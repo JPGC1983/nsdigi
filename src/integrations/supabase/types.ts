@@ -1383,36 +1383,78 @@ export type Database = {
       }
       profiles: {
         Row: {
+          aceite_termos_em: string | null
           avatar_url: string | null
+          cbo: string | null
+          cnes: string | null
           created_at: string
+          email: string | null
           full_name: string | null
           id: string
           job_title: string | null
+          motivo_recusa: string | null
           municipality: string | null
+          municipio_id: string | null
           phone: string | null
+          revisado_em: string | null
+          revisado_por: string | null
+          status: string
           updated_at: string
         }
         Insert: {
+          aceite_termos_em?: string | null
           avatar_url?: string | null
+          cbo?: string | null
+          cnes?: string | null
           created_at?: string
+          email?: string | null
           full_name?: string | null
           id: string
           job_title?: string | null
+          motivo_recusa?: string | null
           municipality?: string | null
+          municipio_id?: string | null
           phone?: string | null
+          revisado_em?: string | null
+          revisado_por?: string | null
+          status?: string
           updated_at?: string
         }
         Update: {
+          aceite_termos_em?: string | null
           avatar_url?: string | null
+          cbo?: string | null
+          cnes?: string | null
           created_at?: string
+          email?: string | null
           full_name?: string | null
           id?: string
           job_title?: string | null
+          motivo_recusa?: string | null
           municipality?: string | null
+          municipio_id?: string | null
           phone?: string | null
+          revisado_em?: string | null
+          revisado_por?: string | null
+          status?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       trail_enrollments: {
         Row: {
@@ -1519,22 +1561,57 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          municipio_id: string | null
+          nmsd_id: string | null
           role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
+          municipio_id?: string | null
+          nmsd_id?: string | null
           role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
+          municipio_id?: string | null
+          nmsd_id?: string | null
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_roles_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipios_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_roles_nmsd_id_fkey"
+            columns: ["nmsd_id"]
+            isOneToOne: false
+            referencedRelation: "nmsd_members_count"
+            referencedColumns: ["nucleo_id"]
+          },
+          {
+            foreignKeyName: "user_roles_nmsd_id_fkey"
+            columns: ["nmsd_id"]
+            isOneToOne: false
+            referencedRelation: "nucleos_microrregionais"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_territory_profiles: {
         Row: {
@@ -1722,6 +1799,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      coordinates_nmsd: {
+        Args: { _nmsd_id: string; _user_id: string }
+        Returns: boolean
+      }
       get_municipio_full: { Args: { municipio_id: string }; Returns: Json }
       get_municipios_filter_options: { Args: never; Returns: Json }
       get_profile_public: {
@@ -1752,9 +1833,19 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_active_user: { Args: { _user_id: string }; Returns: boolean }
       is_mentor_of_mentee: {
         Args: { _mentee_id: string; _user_id: string }
         Returns: boolean
+      }
+      list_municipios_cadastro: {
+        Args: never
+        Returns: {
+          id: string
+          microregiao: string
+          municipio: string
+          urs: string
+        }[]
       }
       list_municipios_safe: {
         Args: {
@@ -1808,6 +1899,28 @@ export type Database = {
           municipality: string
         }[]
       }
+      list_registrations: {
+        Args: { _status?: string }
+        Returns: {
+          aceite_termos_em: string
+          cbo: string
+          cnes: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          job_title: string
+          microregiao: string
+          motivo_recusa: string
+          municipio: string
+          municipio_id: string
+          nucleo_id: string
+          phone: string
+          roles: string[]
+          status: string
+          urs: string
+        }[]
+      }
       log_audit: {
         Args: {
           _entity_id: string
@@ -1821,6 +1934,20 @@ export type Database = {
           _urs?: string
         }
         Returns: string
+      }
+      review_registration: {
+        Args: {
+          _cbo?: string
+          _cnes?: string
+          _decision: string
+          _job_title?: string
+          _motivo?: string
+          _municipio_id?: string
+          _nmsd_id?: string
+          _role?: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: undefined
       }
       user_can_manage_content: {
         Args: {
