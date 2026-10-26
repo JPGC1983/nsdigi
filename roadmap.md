@@ -1,7 +1,7 @@
 # Roadmap NMSD (roteiro de 14 prompts)
 
 - [x] Prompt 1 — Correções imediatas
-- [ ] Prompt 2 — Cadastro, perfis e permissões (ampliando os perfis existentes)
+- [x] Prompt 2 — Cadastro, perfis e permissões (ampliando os perfis existentes)
 - [ ] Prompt 3 — Municípios e maturidade digital
 - [ ] Prompt 4 — Educação
 - [ ] Prompt 5 — Fóruns

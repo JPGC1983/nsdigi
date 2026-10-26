@@ -1,0 +1,8 @@
+# AGENTS.md
+
+- Roles live only in `public.user_roles` (enum `app_role`): `membro` = Profissional, `moderador`, `ponto_focal`, `coordenador` = Coordenador do NMSD (scoped by `nmsd_id`), `admin` = Admin URS/SES. Why: extends the existing enum instead of renaming, so all existing `has_role(...,'admin'|'coordenador')` policies keep working.
+- Display labels and UI permission checks for roles live in `src/lib/permissions.ts` (tested in `permissions.test.ts`); the database enforces the same rules. Why: one place for UI gating, never trusted as security.
+- Registration approval goes only through the SECURITY DEFINER RPCs `list_registrations` / `review_registration`; `profiles.status` (`pendente`/`ativo`/`inativo`) is guarded by the `guard_profile_sensitive_fields` trigger, bypassed only via the transaction-local setting `app.registration_review`. Why: users can update their own profile row, so status must be unforgeable.
+- `review_registration` also upserts `user_territory_profiles` (never downgrading); territorial RLS (`user_reaches_content`, `user_can_manage_content`, `check_territory_access`) reads that table. Why: keeps one territorial source for content policies while roles carry `nmsd_id`/`municipio_id`.
+- Non-active users are denied by `is_active_user(auth.uid())` in content-scope functions and participation INSERT policies; the UI shows `RegistrationStatusScreen` from `MainLayout`. New participation policies must include the same check.
+- Pages render inside `MainLayout` (sidebar `FloatingSidebar`, `AppFooter`); the old `Sidebar.tsx` is unused. Why: earlier edits went to the wrong sidebar.

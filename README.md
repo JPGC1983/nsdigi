@@ -1,73 +1,58 @@
-# Welcome to your Lovable project
+# NMSD – Núcleo Microrregional de Saúde Digital
 
-## Project info
+Plataforma de governança dos serviços de saúde digital municipais de Minas Gerais: educação permanente, apoio técnico e articulação entre municípios.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+- Publicado em: https://nsdigi.lovable.app
+- Stack: React + Vite + Tailwind + shadcn/ui, com backend Lovable Cloud (banco, autenticação e funções).
 
-## How can I edit this code?
+## Perfis de acesso
 
-There are several ways of editing your application.
+Os papéis ficam na tabela `user_roles` (nunca no perfil). Valores técnicos e nomes exibidos:
 
-**Use Lovable**
+| Valor no banco | Perfil na plataforma | Escopo |
+| --- | --- | --- |
+| `membro` | Profissional | município (`municipio_id`) |
+| `moderador` | Moderador | município / domínio |
+| `ponto_focal` | Ponto focal | município (`municipio_id`) |
+| `coordenador` | Coordenador do NMSD | núcleo (`nmsd_id`) |
+| `admin` | Admin URS/SES | todos os núcleos |
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Fluxo de cadastro e aprovação
 
-Changes made via Lovable will be committed automatically to this repo.
+1. A pessoa se cadastra em **/auth → Cadastrar** (nome, e-mail, senha, telefone, cargo, CBO, CNES opcional, município e aceite do Termo de Uso e da Política de Privacidade). O perfil nasce com status `pendente` e sem papel.
+2. Enquanto estiver `pendente` (ou `inativo`), a pessoa vê apenas a tela de situação do cadastro, e o banco nega acesso a conteúdo restrito e participação (fóruns, matrículas, mentorias).
+3. O **Coordenador do NMSD** abre **Aprovações** e aprova (como Profissional, Moderador ou Ponto focal), ajusta os dados ou recusa os cadastros dos municípios do seu núcleo.
+4. O **Admin URS/SES** vê todos os núcleos e é o único que define coordenadores e administradores.
 
-**Use your preferred IDE**
+Toda aprovação, recusa e consulta da fila fica registrada em `audit_log`. As regras são aplicadas no banco pelas funções `list_registrations` e `review_registration`; a tela só esconde o que não é permitido.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Seed: primeiro coordenador de cada NMSD
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+O primeiro coordenador de cada núcleo é definido pelo Admin URS/SES. Há duas formas:
 
-Follow these steps:
+**Pela plataforma (recomendado):** entre como Admin URS/SES → **Aprovações** → encontre a pessoa (aba Pendentes ou Ativos) → **Aprovar / Ajustar perfil** → perfil **Coordenador do NMSD** → escolha o NMSD → salvar.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+**Por script (carga inicial em lote):** com a pessoa já cadastrada na plataforma, rode no SQL do backend, uma linha por coordenador. A função valida as regras e registra a auditoria; ela precisa ser chamada por uma sessão de Admin URS/SES. Para uma carga feita pela equipe técnica, use o bloco abaixo, que simula a sessão do admin:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```sql
+-- 1) dados do admin que está fazendo a carga e do coordenador
+DO $$
+DECLARE
+  v_admin uuid := (SELECT id FROM public.profiles WHERE email = 'admin@saude.mg.gov.br');
+  v_coord uuid := (SELECT id FROM public.profiles WHERE email = 'coordenador@municipio.mg.gov.br');
+  v_nmsd  uuid := (SELECT id FROM public.nucleos_microrregionais WHERE microregiao = 'NOME DA MICRORREGIÃO');
+BEGIN
+  PERFORM set_config('request.jwt.claims', json_build_object('sub', v_admin, 'role', 'authenticated')::text, true);
+  PERFORM public.review_registration(v_coord, 'aprovar', 'coordenador', NULL, v_nmsd);
+END $$;
 ```
 
-**Edit a file directly in GitHub**
+Repita o bloco para cada núcleo, trocando os e-mails e o nome da microrregião.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Desenvolvimento
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```sh
+npm install
+npm run dev     # servidor local
+npm test        # testes (inclui as regras de permissão em src/lib/permissions.test.ts)
+```
