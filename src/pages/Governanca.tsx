@@ -209,7 +209,7 @@ const Governanca = () => {
       setCibMeetings([newMeeting as CibMeeting, ...cibMeetings]);
       toast({
         title: "Reunião registrada",
-        description: "A reunião da CIB foi registrada com sucesso.",
+        description: "A reunião da CIR/CIB foi registrada com sucesso.",
       });
     }
   };
@@ -371,7 +371,7 @@ const Governanca = () => {
           </div>
         </div>
 
-        {/* Espaço CIB Section */}
+        {/* Espaço CIR/CIB Section */}
         <div className="rounded-xl border border-border bg-card p-6 shadow-card">
           <div className="flex items-start justify-between gap-4 mb-6">
             <div className="flex items-start gap-4">
@@ -380,11 +380,11 @@ const Governanca = () => {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-foreground mb-2">
-                  Espaço CIB
+                  Espaço CIR/CIB
                 </h2>
                 <p className="text-muted-foreground text-sm">
-                  Registro da participação nas reuniões da Comissão Intergestores Bipartite (CIB) 
-                  e seus impactos na gestão e organização da rede de saúde do território.
+                  Registro da participação do núcleo nas reuniões da Comissão Intergestores Regional (CIR) e da Comissão Intergestores Bipartite (CIB) 
+                  e dos impactos nos serviços de saúde digital do território.
                 </p>
               </div>
             </div>
@@ -410,7 +410,7 @@ const Governanca = () => {
                 Nenhuma reunião registrada
               </p>
               <p className="text-sm text-muted-foreground/60 text-center max-w-md mb-4">
-                Registre as reuniões da CIB para documentar as deliberações, pactuações e seus impactos no território.
+                Registre a primeira reunião da CIR ou da CIB para documentar os temas, as deliberações e os impactos nos serviços de saúde digital do território.
               </p>
               {canEditCib && (
                 <Button 
@@ -442,7 +442,7 @@ const Governanca = () => {
                             </div>
                             <div className="text-left">
                               <p className="font-medium text-foreground">
-                                Reunião CIB - {new Date(meeting.meeting_date + 'T12:00:00').toLocaleDateString("pt-BR", {
+                                Reunião CIR/CIB - {new Date(meeting.meeting_date + 'T12:00:00').toLocaleDateString("pt-BR", {
                                   day: "2-digit",
                                   month: "long",
                                   year: "numeric",
@@ -484,7 +484,7 @@ const Governanca = () => {
                                 <div>
                                   <div className="flex items-center gap-2 text-sm font-medium text-foreground mb-1">
                                     <FileText className="h-4 w-4 text-primary" />
-                                    Deliberações e Pactuações
+                                    Deliberações
                                   </div>
                                   <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                                     {meeting.deliberations}

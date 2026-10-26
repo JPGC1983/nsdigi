@@ -278,7 +278,9 @@ const Mentorias = () => {
               <EmptyState
                 icon={Users}
                 title="Nenhum mentor encontrado"
-                description="Tente ajustar os filtros ou volte mais tarde"
+                description="Ainda não há mentores com esses critérios. Ajuste os filtros ou cadastre-se como mentor para apoiar outros profissionais."
+                actionLabel="Tornar-se mentor"
+                onAction={() => setShowBecomeMentor(true)}
               />
             )}
           </TabsContent>
@@ -312,8 +314,8 @@ const Mentorias = () => {
               <EmptyState
                 icon={BookOpen}
                 title="Nenhuma mentoria ativa"
-                description="Busque um mentor no diretório para começar"
-                actionLabel="Explorar Mentores"
+                description="Escolha um mentor no diretório e envie sua primeira solicitação de mentoria."
+                actionLabel="Buscar mentor"
                 onAction={() => setActiveTab("directory")}
               />
             )}
@@ -465,7 +467,7 @@ const Mentorias = () => {
                     <EmptyState
                       icon={Users}
                       title="Nenhum mentorado ativo"
-                      description="Aguarde solicitações de mentoria"
+                      description="Quando um profissional solicitar sua mentoria, o pedido aparecerá aqui para você aceitar ou recusar."
                     />
                   )}
                 </CardContent>

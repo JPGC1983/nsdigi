@@ -15,6 +15,7 @@ import MetricCard from "@/components/dashboard/MetricCard";
 import QuickAction from "@/components/dashboard/QuickAction";
 import ActivityFeed from "@/components/dashboard/ActivityFeed";
 import NMSDTable from "@/components/dashboard/NMSDTable";
+import UpcomingMeetings from "@/components/dashboard/UpcomingMeetings";
 import OnboardingOverlay from "@/components/onboarding/OnboardingOverlay";
 import { useOnboarding } from "@/hooks/useOnboarding";
 import { useAuth } from "@/hooks/useAuth";
@@ -158,8 +159,9 @@ const Dashboard = () => {
             <NMSDTable />
           </motion.div>
 
-          {/* Activity Feed - Takes 1/3 */}
-          <motion.div variants={itemVariants}>
+          {/* Próximas reuniões + Atividades - 1/3 */}
+          <motion.div variants={itemVariants} className="flex flex-col gap-6">
+            <UpcomingMeetings />
             <ActivityFeed />
           </motion.div>
         </div>

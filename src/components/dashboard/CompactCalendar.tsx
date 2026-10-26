@@ -50,7 +50,7 @@ const CompactCalendar = () => {
         if (data) {
           const mappedEvents: Event[] = data.map((meeting) => ({
             date: parseISO(meeting.meeting_date),
-            title: meeting.themes || "Reunião CIB",
+            title: meeting.themes || "Reunião CIR/CIB",
             type: "meeting" as const,
           }));
           setEvents(mappedEvents);
@@ -86,7 +86,7 @@ const CompactCalendar = () => {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <CalendarIcon className="h-4 w-4 text-primary" />
-          <h3 className="font-semibold text-foreground text-sm">Calendário CIB</h3>
+          <h3 className="font-semibold text-foreground text-sm">Calendário CIR/CIB</h3>
         </div>
         <div className="flex items-center gap-1">
           <button
@@ -159,7 +159,7 @@ const CompactCalendar = () => {
         </div>
       ) : events.length > 0 ? (
         <div className="mt-4 pt-3 border-t border-border">
-          <p className="text-xs font-medium text-muted-foreground mb-2">Próximas reuniões CIB</p>
+          <p className="text-xs font-medium text-muted-foreground mb-2">Próximas reuniões CIR/CIB</p>
           <div className="space-y-2">
             {events
               .filter((event) => event.date >= new Date())

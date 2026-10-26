@@ -76,7 +76,7 @@ const AddCibMeetingModal = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5 text-primary" />
-            Registrar Reunião da CIB
+            Registrar Reunião da CIR/CIB
           </DialogTitle>
         </DialogHeader>
 
@@ -131,14 +131,14 @@ const AddCibMeetingModal = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="deliberations">Deliberações e Pactuações</Label>
+            <Label htmlFor="deliberations">Deliberações</Label>
             <Textarea
               id="deliberations"
               value={formData.deliberations}
               onChange={(e) =>
                 setFormData({ ...formData, deliberations: e.target.value })
               }
-              placeholder="Quais foram as principais decisões e pactuações aprovadas..."
+              placeholder="Quais foram as principais decisões da reunião..."
               className="min-h-[80px]"
             />
           </div>

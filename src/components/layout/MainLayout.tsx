@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "./Header";
 import FloatingSidebar from "./FloatingSidebar";
+import AppFooter from "./AppFooter";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -32,6 +33,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           >
             {children}
           </motion.main>
+          <AppFooter />
         </div>
       </div>
     </div>

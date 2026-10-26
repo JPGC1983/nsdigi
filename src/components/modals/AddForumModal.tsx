@@ -20,12 +20,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AddForumModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onAdd?: (data: ForumData) => void;
 }
+
+const categoryStyle: Record<string, { icon: string; color: string }> = {
+  aps: { icon: "🏥", color: "#1e6b4a" },
+  regulacao: { icon: "🔀", color: "#0369a1" },
+  gestao: { icon: "📊", color: "#7c3aed" },
+  ti: { icon: "🛡️", color: "#b45309" },
+  inovacao: { icon: "💡", color: "#0891b2" },
+};
+
+const slugify = (text: string) =>
+  text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
 export interface ForumData {
   name: string;
@@ -48,11 +65,29 @@ const AddForumModal = ({ open, onOpenChange, onAdd }: AddForumModalProps) => {
     category: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.name || !formData.category) {
+
+    if (!formData.name.trim() || !formData.category) {
       toast.error("Preencha os campos obrigatórios");
+      return;
+    }
+
+    const style = categoryStyle[formData.category] ?? categoryStyle.aps;
+    setIsSaving(true);
+    const { error } = await supabase.from("forums").insert({
+      name: formData.name.trim(),
+      slug: `${slugify(formData.name)}-${Date.now().toString(36)}`,
+      description: formData.description.trim() || formData.name.trim(),
+      icon: style.icon,
+      color: style.color,
+    });
+    setIsSaving(false);
+
+    if (error) {
+      toast.error("Não foi possível criar o fórum. Verifique se você tem permissão de administrador.");
       return;
     }
 
@@ -122,7 +157,9 @@ const AddForumModal = ({ open, onOpenChange, onAdd }: AddForumModalProps) => {
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit">Criar Fórum</Button>
+            <Button type="submit" disabled={isSaving}>
+              {isSaving ? "Criando..." : "Criar Fórum"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

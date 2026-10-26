@@ -193,7 +193,7 @@ const TopicDetail = () => {
                   </span>
                   <span className="flex items-center gap-1">
                     <Eye className="h-4 w-4" />
-                    {topic.views_count} visualizações
+                    {topic.views_count} {topic.views_count === 1 ? "visualização" : "visualizações"}
                   </span>
                 </div>
               </div>

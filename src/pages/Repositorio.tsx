@@ -42,11 +42,11 @@ interface Material {
 }
 
 const typeConfig = {
-  video: { icon: Video, label: "Vídeo", className: "bg-destructive/10 text-destructive" },
-  manual: { icon: FileText, label: "Manual", className: "bg-primary/10 text-primary" },
-  faq: { icon: HelpCircle, label: "FAQ", className: "bg-warning/10 text-warning" },
-  template: { icon: FileCheck, label: "Template", className: "bg-success/10 text-success" },
-  legislacao: { icon: BookOpen, label: "Legislação", className: "bg-info/10 text-info" },
+  video: { icon: Video, label: "Vídeo", plural: "Vídeos", className: "bg-destructive/10 text-destructive" },
+  manual: { icon: FileText, label: "Manual", plural: "Manuais", className: "bg-primary/10 text-primary" },
+  faq: { icon: HelpCircle, label: "FAQ", plural: "FAQs", className: "bg-warning/10 text-warning" },
+  template: { icon: FileCheck, label: "Template", plural: "Templates", className: "bg-success/10 text-success" },
+  legislacao: { icon: BookOpen, label: "Legislação", plural: "Legislação", className: "bg-info/10 text-info" },
 };
 
 const categories = ["Todos", "e-SUS", "RNDS", "Telessaúde", "Gestão", "Legislação"];
@@ -106,7 +106,7 @@ const Repositorio = () => {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-foreground">{count}</p>
-                <p className="text-sm text-muted-foreground">{config.label}s</p>
+                <p className="text-sm text-muted-foreground">{count === 1 ? config.label : config.plural}</p>
               </div>
             );
           })}
@@ -157,9 +157,13 @@ const Repositorio = () => {
             {filteredMaterials.length === 0 ? (
               <EmptyState
                 icon={FolderOpen}
-                title="Biblioteca de materiais vazia"
-                description="Adicione tutoriais, manuais, FAQs e templates para apoiar os profissionais na utilização dos sistemas de saúde digital."
-                actionLabel="Adicionar Primeiro Material"
+                title={materials.length === 0 ? "Biblioteca de materiais vazia" : "Nenhum material encontrado"}
+                description={
+                  materials.length === 0
+                    ? "Envie tutoriais, manuais, FAQs e templates para apoiar os profissionais no uso dos sistemas de saúde digital."
+                    : "Nenhum material corresponde à busca ou aos filtros. Ajuste os critérios ou envie um novo material."
+                }
+                actionLabel={materials.length === 0 ? "Enviar primeiro material" : "Enviar material"}
                 onAction={() => setIsModalOpen(true)}
               />
             ) : (
@@ -196,7 +200,7 @@ const Repositorio = () => {
                             </span>
                             <span className="flex items-center gap-1">
                               <Download className="h-3 w-3" />
-                              {material.downloads} downloads
+                              {material.downloads} {material.downloads === 1 ? "download" : "downloads"}
                             </span>
                           </div>
                           <div className="flex gap-2">

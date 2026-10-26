@@ -7,10 +7,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useForums } from "@/hooks/useForums";
 import ForumCard from "@/components/forums/ForumCard";
+import AddForumModal from "@/components/modals/AddForumModal";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 
 const Foruns = () => {
   const [activeTab, setActiveTab] = useState("foruns");
-  const { forums, loading, error } = useForums();
+  const { forums, loading, error, refetch } = useForums();
+  const { isAdmin } = useAuth();
+  const [isAddForumOpen, setIsAddForumOpen] = useState(false);
 
   const totalTopics = forums.reduce((acc, f) => acc + f.topics_count, 0);
   const totalMembers = forums.reduce((acc, f) => acc + f.members_count, 0);
@@ -22,6 +27,7 @@ const Foruns = () => {
           title="Fóruns de Discussão"
           description="Comunidade de prática para troca de experiências e suporte mútuo"
           breadcrumbs={[{ label: "Fóruns de Discussão" }]}
+          action={isAdmin ? { label: "Criar fórum", icon: Plus, onClick: () => setIsAddForumOpen(true) } : undefined}
         />
 
         {/* Stats */}
@@ -59,11 +65,23 @@ const Foruns = () => {
                   <Skeleton key={i} className="h-32 w-full rounded-xl" />
                 ))}
               </div>
+            ) : error ? (
+              <div role="alert" className="rounded-xl border border-border bg-card p-8 text-center">
+                <p className="font-medium text-foreground mb-1">Não foi possível carregar os fóruns</p>
+                <p className="text-sm text-muted-foreground mb-4">Verifique sua conexão e tente novamente.</p>
+                <Button variant="outline" onClick={() => refetch()}>Tentar novamente</Button>
+              </div>
             ) : forums.length === 0 ? (
               <EmptyState
                 icon={MessagesSquare}
-                title="Nenhum fórum disponível"
-                description="Os fóruns temáticos serão exibidos aqui quando disponíveis."
+                title="Nenhum fórum criado"
+                description={
+                  isAdmin
+                    ? "Crie o primeiro fórum temático para os profissionais trocarem experiências e tirarem dúvidas."
+                    : "Os fóruns temáticos ainda não foram criados pela coordenação. Volte em breve."
+                }
+                actionLabel={isAdmin ? "Criar primeiro fórum" : undefined}
+                onAction={isAdmin ? () => setIsAddForumOpen(true) : undefined}
               />
             ) : (
               <div className="space-y-4">
@@ -78,7 +96,9 @@ const Foruns = () => {
             <EmptyState
               icon={MessagesSquare}
               title="Nenhuma discussão recente"
-              description="As discussões mais recentes de todos os fóruns aparecerão aqui."
+              description="Escolha um fórum temático e abra a primeira discussão. As mais recentes de todos os fóruns aparecerão aqui."
+              actionLabel="Ver fóruns temáticos"
+              onAction={() => setActiveTab("foruns")}
             />
           </TabsContent>
 
@@ -86,11 +106,19 @@ const Foruns = () => {
             <EmptyState
               icon={MessagesSquare}
               title="Hall da Fama"
-              description="Os especialistas mais ativos e com melhores contribuições serão reconhecidos aqui."
+              description="Os profissionais com as melhores contribuições nos fóruns serão reconhecidos aqui. Participe respondendo às discussões."
+              actionLabel="Participar dos fóruns"
+              onAction={() => setActiveTab("foruns")}
             />
           </TabsContent>
         </Tabs>
       </div>
+
+      <AddForumModal
+        open={isAddForumOpen}
+        onOpenChange={setIsAddForumOpen}
+        onAdd={() => refetch()}
+      />
     </MainLayout>
   );
 };

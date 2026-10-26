@@ -129,9 +129,13 @@ const Educacao = () => {
             {filteredCourses.length === 0 ? (
               <EmptyState
                 icon={GraduationCap}
-                title="Nenhum curso disponível"
-                description="Após adicionar cursos, você acompanhará a progressão dos profissionais nas trilhas formativas e certificações emitidas."
-                actionLabel={user ? "Adicionar Curso" : undefined}
+                title={courses.length === 0 ? "Nenhum curso cadastrado" : "Nenhum curso nesta categoria"}
+                description={
+                  courses.length === 0
+                    ? "Cadastre o primeiro curso para acompanhar a formação dos profissionais, as trilhas e os certificados emitidos."
+                    : "Escolha outra categoria ou cadastre um novo curso."
+                }
+                actionLabel={user ? (courses.length === 0 ? "Cadastrar primeiro curso" : "Cadastrar curso") : undefined}
                 onAction={user ? () => setIsModalOpen(true) : undefined}
               />
             ) : (
@@ -167,7 +171,7 @@ const Educacao = () => {
                       </span>
                       <span className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
-                        {course.enrolled} inscritos
+                        {course.enrolled} {course.enrolled === 1 ? "inscrito" : "inscritos"}
                       </span>
                     </div>
 
@@ -200,8 +204,8 @@ const Educacao = () => {
               <EmptyState
                 icon={BookOpen}
                 title="Nenhuma trilha formativa disponível"
-                description="Crie trilhas para organizar cursos em jornadas de aprendizado estruturadas para os profissionais."
-                actionLabel={user ? "Criar Trilha" : undefined}
+                description="Crie a primeira trilha para organizar os cursos em percursos de aprendizagem por perfil profissional."
+                actionLabel={user ? "Criar primeira trilha" : undefined}
                 onAction={user ? () => setIsTrilhaModalOpen(true) : undefined}
               />
             ) : (
@@ -223,7 +227,7 @@ const Educacao = () => {
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <span className="flex items-center gap-1">
                             <GraduationCap className="h-4 w-4" />
-                            {trail.courses_count} cursos
+                            {trail.courses_count} {trail.courses_count === 1 ? "curso" : "cursos"}
                           </span>
                           <span className="flex items-center gap-1">
                             <Clock className="h-4 w-4" />
@@ -231,7 +235,7 @@ const Educacao = () => {
                           </span>
                           <span className="flex items-center gap-1">
                             <Users className="h-4 w-4" />
-                            {trail.enrolled} inscritos
+                            {trail.enrolled} {trail.enrolled === 1 ? "inscrito" : "inscritos"}
                           </span>
                         </div>
                         {trail.progress !== undefined && (
@@ -257,8 +261,8 @@ const Educacao = () => {
               <EmptyState
                 icon={GraduationCap}
                 title="Nenhum curso iniciado"
-                description="Quando você se inscrever em cursos, eles aparecerão aqui para acompanhar seu progresso e certificados."
-                actionLabel="Explorar Cursos"
+                description="Inscreva-se em um curso para acompanhar aqui seu progresso e seus certificados."
+                actionLabel="Ver cursos disponíveis"
                 onAction={() => setActiveTab("cursos")}
               />
             ) : (
