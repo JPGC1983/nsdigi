@@ -13,6 +13,7 @@ import {
   Clock,
   User,
   Plus,
+  ExternalLink,
 } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/shared/PageHeader";
@@ -20,6 +21,7 @@ import EmptyState from "@/components/shared/EmptyState";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
@@ -28,20 +30,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import AddMaterialModal, { MaterialData } from "@/components/modals/AddMaterialModal";
+import AddMaterialModal, { MATERIAL_CATEGORIES } from "@/components/modals/AddMaterialModal";
 import { useAuth } from "@/hooks/useAuth";
 import { canPublishMaterials } from "@/lib/permissions";
-
-interface Material {
-  id: string;
-  title: string;
-  description: string;
-  type: "video" | "manual" | "faq" | "template" | "legislacao";
-  category: string;
-  downloads: number;
-  updatedAt: string;
-  author: string;
-}
+import { useMaterials } from "@/hooks/useMaterials";
 
 const typeConfig = {
   video: { icon: Video, label: "Vídeo", plural: "Vídeos", className: "bg-destructive/10 text-destructive" },
@@ -51,35 +43,23 @@ const typeConfig = {
   legislacao: { icon: BookOpen, label: "Legislação", plural: "Legislação", className: "bg-info/10 text-info" },
 };
 
-const categories = ["Todos", "e-SUS", "RNDS", "Telessaúde", "Gestão", "Legislação"];
+const categories = ["Todos", ...MATERIAL_CATEGORIES];
 
 const Repositorio = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("Todos");
   const [typeFilter, setTypeFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [materials, setMaterials] = useState<Material[]>([]);
   const { user, roles } = useAuth();
+  const { materials, isLoading, addMaterial, openMaterial } = useMaterials();
   const canPublish = !!user && canPublishMaterials(roles);
 
-  const handleAddMaterial = (data: MaterialData) => {
-    const newMaterial: Material = {
-      id: crypto.randomUUID(),
-      title: data.title,
-      description: data.description,
-      type: data.type,
-      category: data.category,
-      downloads: 0,
-      updatedAt: new Date().toISOString(),
-      author: data.author,
-    };
-    setMaterials([...materials, newMaterial]);
-  };
-
+  const term = searchTerm.trim().toLowerCase();
   const filteredMaterials = materials.filter((m) => {
-    const matchesSearch = m.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      !term || m.title.toLowerCase().includes(term) || (m.description ?? "").toLowerCase().includes(term);
     const matchesCategory = categoryFilter === "Todos" || m.category === categoryFilter;
-    const matchesType = typeFilter === "all" || m.type === typeFilter;
+    const matchesType = typeFilter === "all" || m.material_type === typeFilter;
     return matchesSearch && matchesCategory && matchesType;
   });
 
