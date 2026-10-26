@@ -554,10 +554,12 @@ const Governanca = () => {
                 <Users className="h-5 w-5 text-primary" />
                 Composição do Colegiado
               </h3>
-              <Button size="sm" className="gap-2" onClick={() => setIsMembroModalOpen(true)}>
-                <UserPlus className="h-4 w-4" />
-                Adicionar Membro
-              </Button>
+              {canEditCib && (
+                <Button size="sm" className="gap-2" onClick={() => setIsMembroModalOpen(true)}>
+                  <UserPlus className="h-4 w-4" />
+                  Adicionar Membro
+                </Button>
+              )}
             </div>
             
             {/* Mandatory Members */}
@@ -594,18 +596,22 @@ const Governanca = () => {
                             </p>
                           )}
                         </div>
-                        <div className="hidden sm:flex flex-col items-end text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Mail className="h-3 w-3" />
-                            {member.email}
-                          </span>
-                          {member.phone && (
-                            <span className="flex items-center gap-1">
-                              <Phone className="h-3 w-3" />
-                              {member.phone}
-                            </span>
-                          )}
-                        </div>
+                        {(member.email || member.phone) && (
+                          <div className="hidden sm:flex flex-col items-end text-xs text-muted-foreground">
+                            {member.email && (
+                              <span className="flex items-center gap-1">
+                                <Mail className="h-3 w-3" />
+                                {member.email}
+                              </span>
+                            )}
+                            {member.phone && (
+                              <span className="flex items-center gap-1">
+                                <Phone className="h-3 w-3" />
+                                {member.phone}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
                     ))}
                 </div>
@@ -656,17 +662,21 @@ const Governanca = () => {
                   <Calendar className="h-5 w-5 text-primary" />
                   Próximas Reuniões
                 </h3>
-                <Button size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => setIsReuniaoModalOpen(true)}>
-                  <CalendarPlus className="h-4 w-4" />
-                </Button>
+                {canEditCib && (
+                  <Button size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => setIsReuniaoModalOpen(true)} aria-label="Agendar reunião">
+                    <CalendarPlus className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
               {upcomingMeetings.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-6 border border-dashed border-border rounded-lg bg-muted/20">
                   <Calendar className="h-8 w-8 text-muted-foreground/40 mb-2" />
                   <p className="text-sm text-muted-foreground">Nenhuma reunião agendada</p>
-                  <Button size="sm" variant="link" className="mt-2 h-auto p-0" onClick={() => setIsReuniaoModalOpen(true)}>
-                    Agendar primeira reunião
-                  </Button>
+                  {canEditCib && (
+                    <Button size="sm" variant="link" className="mt-2 h-auto p-0" onClick={() => setIsReuniaoModalOpen(true)}>
+                      Agendar primeira reunião
+                    </Button>
+                  )}
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -674,28 +684,21 @@ const Governanca = () => {
                     <div key={meeting.id} className="p-3 rounded-lg border border-border">
                       <p className="font-medium text-foreground text-sm">{meeting.title}</p>
                       <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
-                        {new Date(meeting.date).toLocaleDateString("pt-BR")} às {meeting.time}
+                        {new Date(`${meeting.date}T00:00:00`).toLocaleDateString("pt-BR")}
+                        {meeting.time && ` às ${meeting.time}`}
                       </div>
                       <div className="flex items-center justify-between mt-2">
                         <Badge variant="outline" className="text-xs">
                           {meeting.type}
                         </Badge>
-                        <Badge 
-                          className={meeting.status === "agendada" 
-                            ? "bg-success/10 text-success border-success/20" 
-                            : "bg-warning/10 text-warning border-warning/20"
-                          }
-                        >
-                          {meeting.status === "agendada" ? "Confirmada" : "Pendente"}
+                        <Badge className="bg-success/10 text-success border-success/20">
+                          Agendada
                         </Badge>
                       </div>
                     </div>
                   ))}
                 </div>
               )}
-              <Button variant="outline" className="w-full mt-4">
-                Ver Calendário Completo
-              </Button>
             </div>
 
             {/* Documents */}
