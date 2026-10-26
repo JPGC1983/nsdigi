@@ -92,57 +92,49 @@ const roleLabels: Record<string, string> = {
 };
 
 const Governanca = () => {
-  const { user, profile } = useAuth();
+  const { user, roles } = useAuth();
   const { toast } = useToast();
+  const { getScopeFields } = useContentScope();
+  const {
+    members: colegiadoMembers,
+    meetings: colegiadoMeetings,
+    addMember,
+    addMeeting,
+  } = useColegiado();
   
   const [isMembroModalOpen, setIsMembroModalOpen] = useState(false);
   const [isReuniaoModalOpen, setIsReuniaoModalOpen] = useState(false);
   const [isDocumentoModalOpen, setIsDocumentoModalOpen] = useState(false);
-  const [collegiateMembers, setCollegiateMembers] = useState<Member[]>([]);
-  const [upcomingMeetings, setUpcomingMeetings] = useState<Meeting[]>([]);
+  const collegiateMembers: Member[] = colegiadoMembers.map((m) => ({
+    id: m.id,
+    name: m.nome,
+    role: roleLabels[m.funcao] || m.funcao,
+    municipality: m.municipio ?? undefined,
+    email: m.email ?? "",
+    phone: m.telefone ?? undefined,
+    category: m.categoria,
+  }));
+  const formatLabels: Record<string, string> = { presencial: "Presencial", virtual: "Virtual", hibrida: "Híbrida" };
+  const upcomingMeetings: Meeting[] = colegiadoMeetings.map((m) => ({
+    id: m.id,
+    title: m.titulo,
+    date: m.data_reuniao,
+    time: m.horario ?? "",
+    type: formatLabels[m.formato] ?? m.formato,
+    status: "agendada",
+  }));
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isLoadingDocuments, setIsLoadingDocuments] = useState(true);
-  const [canEditDocuments, setCanEditDocuments] = useState(false);
   
   // CIB State
   const [cibMeetings, setCibMeetings] = useState<CibMeeting[]>([]);
   const [isLoadingCib, setIsLoadingCib] = useState(true);
-  const [canEditCib, setCanEditCib] = useState(false);
   const [isCibMeetingModalOpen, setIsCibMeetingModalOpen] = useState(false);
   const [expandedMeetings, setExpandedMeetings] = useState<Set<string>>(new Set());
 
-  // Check if user can edit CIB and documents (admin or coordenador)
-  useEffect(() => {
-    const checkUserRole = async () => {
-      if (!user) {
-        console.log('No user found, disabling edit permissions');
-        setCanEditCib(false);
-        setCanEditDocuments(false);
-        return;
-      }
-      
-      console.log('Checking roles for user:', user.id);
-      const { data: roles, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id);
-      
-      console.log('User roles response:', { roles, error });
-      
-      if (roles && roles.length > 0) {
-        const hasEditRole = roles.some(r => r.role === 'admin' || r.role === 'coordenador');
-        console.log('Has edit role:', hasEditRole);
-        setCanEditCib(hasEditRole);
-        setCanEditDocuments(hasEditRole);
-      } else {
-        console.log('No roles found for user');
-        setCanEditCib(false);
-        setCanEditDocuments(false);
-      }
-    };
-    
-    checkUserRole();
-  }, [user]);
+  // Quem pode registrar reuniões, membros e documentos (a regra real fica no banco)
+  const canEditCib = !!user && (roles.includes("admin") || roles.includes("coordenador"));
+  const canEditDocuments = canEditCib;
 
   // Fetch governance documents
   useEffect(() => {
