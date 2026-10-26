@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -9,7 +10,6 @@ import {
   BarChart3,
   Users,
   Settings,
-  ChevronLeft,
   Activity,
   UserCheck,
   ClipboardCheck,
@@ -19,6 +19,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { canReviewRegistrations } from "@/lib/permissions";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
 interface FloatingSidebarProps {
   isOpen: boolean;
@@ -143,39 +144,40 @@ const FloatingSidebar = ({ isOpen, isDesktop, onClose }: FloatingSidebarProps) =
           {/* Navigation */}
           <nav aria-label="Menu principal" className="flex-1 overflow-y-auto py-6 px-3">
             <div className="space-y-1">
-              {items.map((item, index) => {
-                const isActive = location.pathname === item.path || 
+              {items.map((item) => {
+                const isActive = location.pathname === item.path ||
+                  (item.path === "/" && location.pathname === "/dashboard") ||
                   (item.path !== "/" && location.pathname.startsWith(item.path));
+                const showBadge = item.path === "/aprovacoes" && pendingCount > 0;
                 return (
-                  <motion.div
+                  <NavLink
                     key={item.path}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
+                    to={item.path}
+                    onClick={handleNavigate}
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                      isActive
+                        ? "bg-sidebar-primary/20 text-sidebar-primary shadow-lg shadow-sidebar-primary/10"
+                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                    )}
                   >
-                    <NavLink
-                      to={item.path}
-                      onClick={onClose}
-                      className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
-                        isActive
-                          ? "bg-sidebar-primary/20 text-sidebar-primary shadow-lg shadow-sidebar-primary/10"
-                          : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-                      )}
-                    >
-                      <item.icon className={cn(
-                        "h-5 w-5 flex-shrink-0 transition-colors",
-                        isActive && "text-sidebar-primary"
-                      )} />
-                      <span className="tracking-tight">{item.label}</span>
-                      {isActive && (
-                        <motion.div
-                          layoutId="activeIndicator"
-                          className="ml-auto h-1.5 w-1.5 rounded-full bg-sidebar-primary"
-                        />
-                      )}
-                    </NavLink>
-                  </motion.div>
+                    <item.icon className={cn(
+                      "h-5 w-5 flex-shrink-0 transition-colors",
+                      isActive && "text-sidebar-primary"
+                    )} />
+                    <span className="tracking-tight">{item.label}</span>
+                    {showBadge ? (
+                      <span
+                        className="ml-auto min-w-5 h-5 px-1.5 rounded-full bg-sidebar-primary text-sidebar-primary-foreground text-[11px] font-semibold flex items-center justify-center"
+                        aria-label={`${pendingCount} cadastros aguardando aprovação`}
+                      >
+                        {pendingCount > 99 ? "99+" : pendingCount}
+                      </span>
+                    ) : isActive ? (
+                      <span className="ml-auto h-1.5 w-1.5 rounded-full bg-sidebar-primary" />
+                    ) : null}
+                  </NavLink>
                 );
               })}
             </div>
@@ -185,8 +187,14 @@ const FloatingSidebar = ({ isOpen, isDesktop, onClose }: FloatingSidebarProps) =
           <div className="border-t border-white/10 p-3">
             <NavLink
               to="/configuracoes"
-              onClick={onClose}
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-white/70 hover:bg-white/5 hover:text-white transition-colors"
+              onClick={handleNavigate}
+              aria-current={location.pathname === "/configuracoes" ? "page" : undefined}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                location.pathname === "/configuracoes"
+                  ? "bg-sidebar-primary/20 text-sidebar-primary"
+                  : "text-white/70 hover:bg-white/5 hover:text-white"
+              )}
             >
               <Settings className="h-5 w-5" />
               <span>Configurações</span>
