@@ -167,7 +167,7 @@ const Educacao = () => {
                       </span>
                       <span className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
-                        {course.enrolled} inscritos
+                        {course.enrolled} {course.enrolled === 1 ? "inscrito" : "inscritos"}
                       </span>
                     </div>
 
@@ -223,7 +223,7 @@ const Educacao = () => {
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <span className="flex items-center gap-1">
                             <GraduationCap className="h-4 w-4" />
-                            {trail.courses_count} cursos
+                            {trail.courses_count} {trail.courses_count === 1 ? "curso" : "cursos"}
                           </span>
                           <span className="flex items-center gap-1">
                             <Clock className="h-4 w-4" />
@@ -231,7 +231,7 @@ const Educacao = () => {
                           </span>
                           <span className="flex items-center gap-1">
                             <Users className="h-4 w-4" />
-                            {trail.enrolled} inscritos
+                            {trail.enrolled} {trail.enrolled === 1 ? "inscrito" : "inscritos"}
                           </span>
                         </div>
                         {trail.progress !== undefined && (

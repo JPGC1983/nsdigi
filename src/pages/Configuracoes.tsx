@@ -264,7 +264,7 @@ const Configuracoes = () => {
                     />
                   </div>
                   <div>
-                    <h3 className="font-semibold">{fullName || profile?.full_name || "Usuário"}</h3>
+                    <h3 className="font-semibold">{displayName}</h3>
                     <p className="text-sm text-muted-foreground">{user?.email}</p>
                     <p className="text-xs text-muted-foreground mt-1">
                       Clique na foto para alterar

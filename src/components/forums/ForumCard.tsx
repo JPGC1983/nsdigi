@@ -39,11 +39,11 @@ const ForumCard = ({ forum }: ForumCardProps) => {
           <div className="flex flex-wrap items-center gap-4 text-sm">
             <span className="flex items-center gap-1 text-muted-foreground">
               <MessageSquare className="h-4 w-4" />
-              {forum.topics_count} tópicos
+              {forum.topics_count} {forum.topics_count === 1 ? "tópico" : "tópicos"}
             </span>
             <span className="flex items-center gap-1 text-muted-foreground">
               <Users className="h-4 w-4" />
-              {forum.members_count} membros
+              {forum.members_count} {forum.members_count === 1 ? "membro" : "membros"}
             </span>
             <span className="flex items-center gap-1 text-muted-foreground">
               <Clock className="h-4 w-4" />

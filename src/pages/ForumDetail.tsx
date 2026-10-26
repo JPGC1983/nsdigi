@@ -118,11 +118,11 @@ const ForumDetail = () => {
                   <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
                     <span className="flex items-center gap-1">
                       <MessageSquare className="h-4 w-4" />
-                      {topics.length} tópicos
+                      {topics.length} {topics.length === 1 ? "tópico" : "tópicos"}
                     </span>
                     <span className="flex items-center gap-1">
                       <Users className="h-4 w-4" />
-                      {forum.members_count} membros
+                      {forum.members_count} {forum.members_count === 1 ? "membro" : "membros"}
                     </span>
                     <span className="flex items-center gap-1">
                       <Clock className="h-4 w-4" />
