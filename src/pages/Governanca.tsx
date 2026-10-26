@@ -22,6 +22,8 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useContentScope } from "@/hooks/useContentScope";
+import { useColegiado } from "@/hooks/useColegiado";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/shared/PageHeader";
 import EmptyState from "@/components/shared/EmptyState";
@@ -184,6 +186,7 @@ const Governanca = () => {
         participants: data.participants || null,
         notes: data.notes || null,
         created_by: user?.id,
+        ...getScopeFields(),
       })
       .select()
       .single();
@@ -236,30 +239,25 @@ const Governanca = () => {
     return classes[type] || "bg-muted text-muted-foreground border-border";
   };
 
-  const handleAddMembro = (data: MembroData) => {
-    const newMember: Member = {
-      id: crypto.randomUUID(),
-      name: data.name,
-      role: roleLabels[data.role] || data.role,
-      municipality: data.municipality,
+  const handleAddMembro = (data: MembroData) =>
+    addMember({
+      nome: data.name,
+      funcao: data.role,
+      municipio: data.municipality,
+      categoria: data.category,
       email: data.email,
-      phone: data.phone,
-      category: data.category,
-    };
-    setCollegiateMembers([...collegiateMembers, newMember]);
-  };
+      telefone: data.phone,
+    });
 
-  const handleAddReuniao = (data: ReuniaoData) => {
-    const newMeeting: Meeting = {
-      id: crypto.randomUUID(),
-      title: data.title,
-      date: data.date,
-      time: data.time,
-      type: data.type === "presencial" ? "Presencial" : data.type === "virtual" ? "Virtual" : "Híbrida",
-      status: "agendada",
-    };
-    setUpcomingMeetings([...upcomingMeetings, newMeeting]);
-  };
+  const handleAddReuniao = (data: ReuniaoData) =>
+    addMeeting({
+      titulo: data.title,
+      data_reuniao: data.date,
+      horario: data.time,
+      formato: data.type,
+      local: data.location,
+      descricao: data.description,
+    });
 
   const handleAddDocumento = async (data: DocumentData) => {
     const fileExt = data.file.name.split('.').pop();
@@ -291,6 +289,7 @@ const Governanca = () => {
         file_size: data.file.size,
         category: data.category,
         uploaded_by: user?.id,
+        ...getScopeFields(),
       })
       .select()
       .single();
@@ -325,14 +324,21 @@ const Governanca = () => {
     return labels[category] || category;
   };
 
+  // Arquivos são privados: abre por link temporário (10 minutos)
   const handleDownloadDocument = async (doc: Document) => {
-    const { data } = supabase.storage
+    const { data, error } = await supabase.storage
       .from('governance-documents')
-      .getPublicUrl(doc.file_path);
+      .createSignedUrl(doc.file_path, 60 * 10);
     
-    if (data?.publicUrl) {
-      window.open(data.publicUrl, '_blank');
+    if (error || !data?.signedUrl) {
+      toast({
+        title: "Não foi possível abrir o documento",
+        description: "Tente novamente em instantes.",
+        variant: "destructive",
+      });
+      return;
     }
+    window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
