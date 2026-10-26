@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Search, ChevronLeft, ChevronRight, Network, ArrowUpRight } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, Network, ArrowUpRight, AlertTriangle, RefreshCw } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigate } from "react-router-dom";
 import { useNucleosMicrorregionais } from "@/hooks/useNucleosMicrorregionais";
 
@@ -11,7 +12,7 @@ const ITEMS_PER_PAGE = 5;
 
 const NMSDTable = () => {
   const navigate = useNavigate();
-  const { nucleos, isLoading } = useNucleosMicrorregionais();
+  const { nucleos, isLoading, error, refetch } = useNucleosMicrorregionais();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -37,8 +38,40 @@ const NMSDTable = () => {
 
   if (isLoading) {
     return (
-      <div className="rounded-xl border border-border bg-white shadow-layered overflow-hidden h-full min-h-[200px] flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">Carregando...</div>
+      <div
+        className="rounded-xl border border-border bg-card shadow-layered overflow-hidden h-full min-h-[200px]"
+        aria-busy="true"
+        aria-label="Carregando núcleos microrregionais"
+      >
+        <div className="p-6 border-b border-border space-y-2">
+          <Skeleton className="h-5 w-64" />
+          <Skeleton className="h-4 w-40" />
+        </div>
+        <div className="p-5 space-y-4">
+          {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+            <div key={i} className="flex items-center gap-3">
+              <Skeleton className="h-8 w-8 rounded-lg" />
+              <Skeleton className="h-4 flex-1" />
+              <Skeleton className="h-5 w-14 rounded-full" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="rounded-xl border border-border bg-card shadow-layered h-full min-h-[200px] flex flex-col items-center justify-center text-center p-6" role="alert">
+        <AlertTriangle className="h-8 w-8 text-destructive mb-3" aria-hidden="true" />
+        <h3 className="text-base font-semibold text-foreground mb-1">Não foi possível carregar os núcleos</h3>
+        <p className="text-sm text-muted-foreground mb-4 max-w-sm">
+          Verifique sua conexão e tente novamente.
+        </p>
+        <Button variant="outline" onClick={() => refetch()} className="gap-2">
+          <RefreshCw className="h-4 w-4" aria-hidden="true" />
+          Tentar novamente
+        </Button>
       </div>
     );
   }
