@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Header from "./Header";
 import FloatingSidebar from "./FloatingSidebar";
 import AppFooter from "./AppFooter";
+import { useAuth } from "@/hooks/useAuth";
+import RegistrationStatusScreen from "@/components/auth/RegistrationStatusScreen";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -16,12 +18,18 @@ const pageVariants = {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { user, profileLoaded, isPending, isInactive } = useAuth();
+
+  // Cadastro ainda não aprovado (ou recusado): mostra apenas a situação do cadastro.
+  if (user && profileLoaded && (isPending || isInactive)) {
+    return <RegistrationStatusScreen />;
+  }
 
   return (
     <div className="min-h-screen bg-muted/40">
       <div className="flex w-full">
         <FloatingSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <div className="flex-1 flex flex-col min-h-screen">
+        <div className="flex-1 flex flex-col min-h-screen min-w-0">
           <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
           <motion.main
             variants={pageVariants}
