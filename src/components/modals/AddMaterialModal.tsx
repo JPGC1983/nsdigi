@@ -36,7 +36,7 @@ import { Badge } from "@/components/ui/badge";
 interface AddMaterialModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd?: (data: MaterialData) => void;
+  onAdd?: (data: MaterialData) => Promise<boolean> | boolean | void;
 }
 
 export interface MaterialData {
@@ -47,6 +47,7 @@ export interface MaterialData {
   author: string;
   url: string;
   fileName?: string;
+  file?: File | null;
 }
 
 const types = [
@@ -57,14 +58,18 @@ const types = [
   { value: "legislacao", label: "Legislação", icon: Scale, color: "text-emerald-500" },
 ];
 
-const categories = [
-  { value: "e-SUS", label: "e-SUS" },
-  { value: "RNDS", label: "RNDS" },
-  { value: "Telessaúde", label: "Telessaúde" },
-  { value: "Gestão", label: "Gestão" },
-  { value: "Legislação", label: "Legislação" },
-  { value: "Interoperabilidade", label: "Interoperabilidade" },
+export const MATERIAL_CATEGORIES = [
+  "e-SUS",
+  "RNDS",
+  "Telessaúde",
+  "Gestão",
+  "Legislação",
+  "Interoperabilidade",
+  "Saúde Digital",
+  "Outros",
 ];
+
+const categories = MATERIAL_CATEGORIES.map((c) => ({ value: c, label: c }));
 
 const acceptedFormats = ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.mp4,.mp3,.zip";
 
@@ -80,8 +85,9 @@ const AddMaterialModal = ({ open, onOpenChange, onAdd }: AddMaterialModalProps) 
     fileName: "",
   });
   const [isDragOver, setIsDragOver] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.title.trim()) {
@@ -94,13 +100,15 @@ const AddMaterialModal = ({ open, onOpenChange, onAdd }: AddMaterialModalProps) 
       return;
     }
 
-    if (!formData.url.trim() && !formData.fileName) {
+    if (!formData.url.trim() && !formData.file) {
       toast.error("Informe uma URL ou anexe um arquivo");
       return;
     }
 
-    onAdd?.(formData);
-    toast.success(`Material "${formData.title}" adicionado com sucesso!`);
+    setIsSaving(true);
+    const ok = await onAdd?.(formData);
+    setIsSaving(false);
+    if (ok === false) return;
     resetForm();
     onOpenChange(false);
   };
@@ -114,7 +122,9 @@ const AddMaterialModal = ({ open, onOpenChange, onAdd }: AddMaterialModalProps) 
       author: "",
       url: "",
       fileName: "",
+      file: null,
     });
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const handleFileSelect = (file: File) => {
@@ -124,13 +134,7 @@ const AddMaterialModal = ({ open, onOpenChange, onAdd }: AddMaterialModalProps) 
       return;
     }
 
-    setFormData({ 
-      ...formData, 
-      fileName: file.name,
-      // In a real app, you would upload to storage and get URL back
-      url: `file://${file.name}` 
-    });
-    toast.success(`Arquivo "${file.name}" selecionado`);
+    setFormData({ ...formData, fileName: file.name, file });
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -160,7 +164,7 @@ const AddMaterialModal = ({ open, onOpenChange, onAdd }: AddMaterialModalProps) 
   };
 
   const removeFile = () => {
-    setFormData({ ...formData, fileName: "", url: "" });
+    setFormData({ ...formData, fileName: "", file: null });
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -381,9 +385,9 @@ const AddMaterialModal = ({ open, onOpenChange, onAdd }: AddMaterialModalProps) 
             >
               Cancelar
             </Button>
-            <Button type="submit" className="gap-2">
+            <Button type="submit" className="gap-2" disabled={isSaving}>
               <File className="h-4 w-4" />
-              Adicionar Material
+              {isSaving ? "Enviando..." : "Adicionar Material"}
             </Button>
           </DialogFooter>
         </form>

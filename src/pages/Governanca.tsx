@@ -22,6 +22,8 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useContentScope } from "@/hooks/useContentScope";
+import { useColegiado } from "@/hooks/useColegiado";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/shared/PageHeader";
 import EmptyState from "@/components/shared/EmptyState";
@@ -92,57 +94,49 @@ const roleLabels: Record<string, string> = {
 };
 
 const Governanca = () => {
-  const { user, profile } = useAuth();
+  const { user, roles } = useAuth();
   const { toast } = useToast();
+  const { getScopeFields } = useContentScope();
+  const {
+    members: colegiadoMembers,
+    meetings: colegiadoMeetings,
+    addMember,
+    addMeeting,
+  } = useColegiado();
   
   const [isMembroModalOpen, setIsMembroModalOpen] = useState(false);
   const [isReuniaoModalOpen, setIsReuniaoModalOpen] = useState(false);
   const [isDocumentoModalOpen, setIsDocumentoModalOpen] = useState(false);
-  const [collegiateMembers, setCollegiateMembers] = useState<Member[]>([]);
-  const [upcomingMeetings, setUpcomingMeetings] = useState<Meeting[]>([]);
+  const collegiateMembers: Member[] = colegiadoMembers.map((m) => ({
+    id: m.id,
+    name: m.nome,
+    role: roleLabels[m.funcao] || m.funcao,
+    municipality: m.municipio ?? undefined,
+    email: m.email ?? "",
+    phone: m.telefone ?? undefined,
+    category: m.categoria,
+  }));
+  const formatLabels: Record<string, string> = { presencial: "Presencial", virtual: "Virtual", hibrida: "Híbrida" };
+  const upcomingMeetings: Meeting[] = colegiadoMeetings.map((m) => ({
+    id: m.id,
+    title: m.titulo,
+    date: m.data_reuniao,
+    time: m.horario ?? "",
+    type: formatLabels[m.formato] ?? m.formato,
+    status: "agendada",
+  }));
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isLoadingDocuments, setIsLoadingDocuments] = useState(true);
-  const [canEditDocuments, setCanEditDocuments] = useState(false);
   
   // CIB State
   const [cibMeetings, setCibMeetings] = useState<CibMeeting[]>([]);
   const [isLoadingCib, setIsLoadingCib] = useState(true);
-  const [canEditCib, setCanEditCib] = useState(false);
   const [isCibMeetingModalOpen, setIsCibMeetingModalOpen] = useState(false);
   const [expandedMeetings, setExpandedMeetings] = useState<Set<string>>(new Set());
 
-  // Check if user can edit CIB and documents (admin or coordenador)
-  useEffect(() => {
-    const checkUserRole = async () => {
-      if (!user) {
-        console.log('No user found, disabling edit permissions');
-        setCanEditCib(false);
-        setCanEditDocuments(false);
-        return;
-      }
-      
-      console.log('Checking roles for user:', user.id);
-      const { data: roles, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id);
-      
-      console.log('User roles response:', { roles, error });
-      
-      if (roles && roles.length > 0) {
-        const hasEditRole = roles.some(r => r.role === 'admin' || r.role === 'coordenador');
-        console.log('Has edit role:', hasEditRole);
-        setCanEditCib(hasEditRole);
-        setCanEditDocuments(hasEditRole);
-      } else {
-        console.log('No roles found for user');
-        setCanEditCib(false);
-        setCanEditDocuments(false);
-      }
-    };
-    
-    checkUserRole();
-  }, [user]);
+  // Quem pode registrar reuniões, membros e documentos (a regra real fica no banco)
+  const canEditCib = !!user && (roles.includes("admin") || roles.includes("coordenador"));
+  const canEditDocuments = canEditCib;
 
   // Fetch governance documents
   useEffect(() => {
@@ -192,6 +186,7 @@ const Governanca = () => {
         participants: data.participants || null,
         notes: data.notes || null,
         created_by: user?.id,
+        ...getScopeFields(),
       })
       .select()
       .single();
@@ -244,30 +239,25 @@ const Governanca = () => {
     return classes[type] || "bg-muted text-muted-foreground border-border";
   };
 
-  const handleAddMembro = (data: MembroData) => {
-    const newMember: Member = {
-      id: crypto.randomUUID(),
-      name: data.name,
-      role: roleLabels[data.role] || data.role,
-      municipality: data.municipality,
+  const handleAddMembro = (data: MembroData) =>
+    addMember({
+      nome: data.name,
+      funcao: data.role,
+      municipio: data.municipality,
+      categoria: data.category,
       email: data.email,
-      phone: data.phone,
-      category: data.category,
-    };
-    setCollegiateMembers([...collegiateMembers, newMember]);
-  };
+      telefone: data.phone,
+    });
 
-  const handleAddReuniao = (data: ReuniaoData) => {
-    const newMeeting: Meeting = {
-      id: crypto.randomUUID(),
-      title: data.title,
-      date: data.date,
-      time: data.time,
-      type: data.type === "presencial" ? "Presencial" : data.type === "virtual" ? "Virtual" : "Híbrida",
-      status: "agendada",
-    };
-    setUpcomingMeetings([...upcomingMeetings, newMeeting]);
-  };
+  const handleAddReuniao = (data: ReuniaoData) =>
+    addMeeting({
+      titulo: data.title,
+      data_reuniao: data.date,
+      horario: data.time,
+      formato: data.type,
+      local: data.location,
+      descricao: data.description,
+    });
 
   const handleAddDocumento = async (data: DocumentData) => {
     const fileExt = data.file.name.split('.').pop();
@@ -299,6 +289,7 @@ const Governanca = () => {
         file_size: data.file.size,
         category: data.category,
         uploaded_by: user?.id,
+        ...getScopeFields(),
       })
       .select()
       .single();
@@ -333,14 +324,21 @@ const Governanca = () => {
     return labels[category] || category;
   };
 
+  // Arquivos são privados: abre por link temporário (10 minutos)
   const handleDownloadDocument = async (doc: Document) => {
-    const { data } = supabase.storage
+    const { data, error } = await supabase.storage
       .from('governance-documents')
-      .getPublicUrl(doc.file_path);
+      .createSignedUrl(doc.file_path, 60 * 10);
     
-    if (data?.publicUrl) {
-      window.open(data.publicUrl, '_blank');
+    if (error || !data?.signedUrl) {
+      toast({
+        title: "Não foi possível abrir o documento",
+        description: "Tente novamente em instantes.",
+        variant: "destructive",
+      });
+      return;
     }
+    window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -556,10 +554,12 @@ const Governanca = () => {
                 <Users className="h-5 w-5 text-primary" />
                 Composição do Colegiado
               </h3>
-              <Button size="sm" className="gap-2" onClick={() => setIsMembroModalOpen(true)}>
-                <UserPlus className="h-4 w-4" />
-                Adicionar Membro
-              </Button>
+              {canEditCib && (
+                <Button size="sm" className="gap-2" onClick={() => setIsMembroModalOpen(true)}>
+                  <UserPlus className="h-4 w-4" />
+                  Adicionar Membro
+                </Button>
+              )}
             </div>
             
             {/* Mandatory Members */}
@@ -596,18 +596,22 @@ const Governanca = () => {
                             </p>
                           )}
                         </div>
-                        <div className="hidden sm:flex flex-col items-end text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Mail className="h-3 w-3" />
-                            {member.email}
-                          </span>
-                          {member.phone && (
-                            <span className="flex items-center gap-1">
-                              <Phone className="h-3 w-3" />
-                              {member.phone}
-                            </span>
-                          )}
-                        </div>
+                        {(member.email || member.phone) && (
+                          <div className="hidden sm:flex flex-col items-end text-xs text-muted-foreground">
+                            {member.email && (
+                              <span className="flex items-center gap-1">
+                                <Mail className="h-3 w-3" />
+                                {member.email}
+                              </span>
+                            )}
+                            {member.phone && (
+                              <span className="flex items-center gap-1">
+                                <Phone className="h-3 w-3" />
+                                {member.phone}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
                     ))}
                 </div>
@@ -658,17 +662,21 @@ const Governanca = () => {
                   <Calendar className="h-5 w-5 text-primary" />
                   Próximas Reuniões
                 </h3>
-                <Button size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => setIsReuniaoModalOpen(true)}>
-                  <CalendarPlus className="h-4 w-4" />
-                </Button>
+                {canEditCib && (
+                  <Button size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => setIsReuniaoModalOpen(true)} aria-label="Agendar reunião">
+                    <CalendarPlus className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
               {upcomingMeetings.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-6 border border-dashed border-border rounded-lg bg-muted/20">
                   <Calendar className="h-8 w-8 text-muted-foreground/40 mb-2" />
                   <p className="text-sm text-muted-foreground">Nenhuma reunião agendada</p>
-                  <Button size="sm" variant="link" className="mt-2 h-auto p-0" onClick={() => setIsReuniaoModalOpen(true)}>
-                    Agendar primeira reunião
-                  </Button>
+                  {canEditCib && (
+                    <Button size="sm" variant="link" className="mt-2 h-auto p-0" onClick={() => setIsReuniaoModalOpen(true)}>
+                      Agendar primeira reunião
+                    </Button>
+                  )}
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -676,28 +684,21 @@ const Governanca = () => {
                     <div key={meeting.id} className="p-3 rounded-lg border border-border">
                       <p className="font-medium text-foreground text-sm">{meeting.title}</p>
                       <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
-                        {new Date(meeting.date).toLocaleDateString("pt-BR")} às {meeting.time}
+                        {new Date(`${meeting.date}T00:00:00`).toLocaleDateString("pt-BR")}
+                        {meeting.time && ` às ${meeting.time}`}
                       </div>
                       <div className="flex items-center justify-between mt-2">
                         <Badge variant="outline" className="text-xs">
                           {meeting.type}
                         </Badge>
-                        <Badge 
-                          className={meeting.status === "agendada" 
-                            ? "bg-success/10 text-success border-success/20" 
-                            : "bg-warning/10 text-warning border-warning/20"
-                          }
-                        >
-                          {meeting.status === "agendada" ? "Confirmada" : "Pendente"}
+                        <Badge className="bg-success/10 text-success border-success/20">
+                          Agendada
                         </Badge>
                       </div>
                     </div>
                   ))}
                 </div>
               )}
-              <Button variant="outline" className="w-full mt-4">
-                Ver Calendário Completo
-              </Button>
             </div>
 
             {/* Documents */}
