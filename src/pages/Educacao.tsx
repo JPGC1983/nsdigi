@@ -18,6 +18,7 @@ import AddCursoModal from "@/components/modals/AddCursoModal";
 import AddTrilhaModal, { TrilhaData } from "@/components/modals/AddTrilhaModal";
 import { useEducacao, CourseFormData } from "@/hooks/useEducacao";
 import { useAuth } from "@/hooks/useAuth";
+import { canManageEducation } from "@/lib/permissions";
 
 const levelConfig = {
   basico: { label: "Básico", className: "bg-success/10 text-success border-success/20" },
@@ -32,7 +33,8 @@ const formatConfig = {
 };
 
 const Educacao = () => {
-  const { user } = useAuth();
+  const { user, roles } = useAuth();
+  const canManage = !!user && canManageEducation(roles);
   const [activeTab, setActiveTab] = useState("cursos");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,6 +80,7 @@ const Educacao = () => {
           title="Educação Permanente"
           description="Cursos, trilhas formativas e oficinas para qualificação em saúde digital"
           breadcrumbs={[{ label: "Educação Permanente" }]}
+          action={canManage ? { label: "Cadastrar curso", icon: Plus, onClick: () => setIsModalOpen(true) } : undefined}
         />
 
         {/* Stats */}
@@ -135,8 +138,8 @@ const Educacao = () => {
                     ? "Cadastre o primeiro curso para acompanhar a formação dos profissionais, as trilhas e os certificados emitidos."
                     : "Escolha outra categoria ou cadastre um novo curso."
                 }
-                actionLabel={user ? (courses.length === 0 ? "Cadastrar primeiro curso" : "Cadastrar curso") : undefined}
-                onAction={user ? () => setIsModalOpen(true) : undefined}
+                actionLabel={canManage ? (courses.length === 0 ? "Cadastrar primeiro curso" : "Cadastrar curso") : undefined}
+                onAction={canManage ? () => setIsModalOpen(true) : undefined}
               />
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -205,8 +208,8 @@ const Educacao = () => {
                 icon={BookOpen}
                 title="Nenhuma trilha formativa disponível"
                 description="Crie a primeira trilha para organizar os cursos em percursos de aprendizagem por perfil profissional."
-                actionLabel={user ? "Criar primeira trilha" : undefined}
-                onAction={user ? () => setIsTrilhaModalOpen(true) : undefined}
+                actionLabel={canManage ? "Criar primeira trilha" : undefined}
+                onAction={canManage ? () => setIsTrilhaModalOpen(true) : undefined}
               />
             ) : (
               <div className="space-y-4">

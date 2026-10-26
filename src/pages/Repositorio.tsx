@@ -29,6 +29,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AddMaterialModal, { MaterialData } from "@/components/modals/AddMaterialModal";
+import { useAuth } from "@/hooks/useAuth";
+import { canPublishMaterials } from "@/lib/permissions";
 
 interface Material {
   id: string;
@@ -57,6 +59,8 @@ const Repositorio = () => {
   const [typeFilter, setTypeFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [materials, setMaterials] = useState<Material[]>([]);
+  const { user, roles } = useAuth();
+  const canPublish = !!user && canPublishMaterials(roles);
 
   const handleAddMaterial = (data: MaterialData) => {
     const newMaterial: Material = {
@@ -86,11 +90,11 @@ const Repositorio = () => {
           title="Repositório de Materiais"
           description="Tutoriais, manuais, FAQs e documentos de referência"
           breadcrumbs={[{ label: "Repositório" }]}
-          action={{
+          action={canPublish ? {
             label: "Enviar Material",
             icon: Plus,
             onClick: () => setIsModalOpen(true),
-          }}
+          } : undefined}
         />
 
         {/* Stats */}
@@ -163,8 +167,8 @@ const Repositorio = () => {
                     ? "Envie tutoriais, manuais, FAQs e templates para apoiar os profissionais no uso dos sistemas de saúde digital."
                     : "Nenhum material corresponde à busca ou aos filtros. Ajuste os critérios ou envie um novo material."
                 }
-                actionLabel={materials.length === 0 ? "Enviar primeiro material" : "Enviar material"}
-                onAction={() => setIsModalOpen(true)}
+                actionLabel={canPublish ? (materials.length === 0 ? "Enviar primeiro material" : "Enviar material") : undefined}
+                onAction={canPublish ? () => setIsModalOpen(true) : undefined}
               />
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
