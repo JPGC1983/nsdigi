@@ -26,9 +26,35 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SeedRegionalizacaoButton from "@/components/admin/SeedRegionalizacaoButton";
+import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useTheme } from "next-themes";
+import { useMunicipiosCadastro } from "@/components/shared/MunicipioCombobox";
+import { ROLE_LABELS, STATUS_LABELS, RegistrationStatus } from "@/lib/permissions";
+
+const NOTIF_KEY = "nmsd-preferencias-notificacao";
+type NotifPrefs = { email: boolean; app: boolean; forum: boolean; course: boolean };
+const loadNotifPrefs = (): NotifPrefs => {
+  try {
+    const raw = localStorage.getItem(NOTIF_KEY);
+    if (raw) return { email: true, app: true, forum: true, course: true, ...JSON.parse(raw) };
+  } catch {
+    /* preferências inválidas: usa o padrão */
+  }
+  return { email: true, app: true, forum: true, course: true };
+};
 
 const Configuracoes = () => {
-  const { user, profile, refreshProfile, isAdmin } = useAuth();
+  const { user, profile, refreshProfile, isAdmin, roles } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const { data: municipiosLista = [] } = useMunicipiosCadastro();
+  const meuMunicipio = municipiosLista.find((m) => m.id === profile?.municipio_id);
+  const [cbo, setCbo] = useState(profile?.cbo || "");
+  const [cnes, setCnes] = useState(profile?.cnes || "");
+  const [passwordOpen, setPasswordOpen] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
@@ -46,16 +72,19 @@ const Configuracoes = () => {
     setPhone(profile.phone || "");
     setJobTitle(profile.job_title || "");
     setAvatarUrl(profile.avatar_url || null);
+    setCbo(profile.cbo || "");
+    setCnes(profile.cnes || "");
   }, [profile]);
 
   const metadataName = (user?.user_metadata?.full_name as string | undefined) || "";
   const displayName = fullName || profile?.full_name || metadataName || user?.email || "Usuário";
 
-  // Notification preferences (local state for now)
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [pushNotifications, setPushNotifications] = useState(true);
-  const [forumNotifications, setForumNotifications] = useState(true);
-  const [courseNotifications, setCourseNotifications] = useState(true);
+  // Preferências de notificação (guardadas neste navegador)
+  const initialPrefs = loadNotifPrefs();
+  const [emailNotifications, setEmailNotifications] = useState(initialPrefs.email);
+  const [pushNotifications, setPushNotifications] = useState(initialPrefs.app);
+  const [forumNotifications, setForumNotifications] = useState(initialPrefs.forum);
+  const [courseNotifications, setCourseNotifications] = useState(initialPrefs.course);
 
   const getInitials = (name: string | null | undefined) => {
     if (!name) return "U";
@@ -158,6 +187,8 @@ const Configuracoes = () => {
           full_name: fullName,
           phone: phone.replace(/\D/g, ""),
           job_title: jobTitle,
+          cbo: cbo.trim() || null,
+          cnes: cnes.trim() || null,
           updated_at: new Date().toISOString(),
         })
         .eq("id", user.id);
@@ -179,7 +210,40 @@ const Configuracoes = () => {
     }
   };
 
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword.length < 8) {
+      toast({ title: "Senha muito curta", description: "Use pelo menos 8 caracteres.", variant: "destructive" });
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
+      toast({ title: "Senhas não conferem", description: "Digite a mesma senha nos dois campos.", variant: "destructive" });
+      return;
+    }
+    setIsChangingPassword(true);
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    setIsChangingPassword(false);
+    if (error) {
+      toast({
+        title: "Não foi possível alterar a senha",
+        description: error.message.includes("weak") || error.message.includes("pwned")
+          ? "Essa senha é fraca ou já apareceu em vazamentos. Escolha outra."
+          : error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    setNewPassword("");
+    setConfirmNewPassword("");
+    setPasswordOpen(false);
+    toast({ title: "Senha alterada", description: "Use a nova senha no próximo acesso." });
+  };
+
   const handleSaveNotifications = () => {
+    localStorage.setItem(
+      NOTIF_KEY,
+      JSON.stringify({ email: emailNotifications, app: pushNotifications, forum: forumNotifications, course: courseNotifications })
+    );
     toast({
       title: "Preferências salvas",
       description: "Suas preferências de notificação foram atualizadas.",
@@ -266,7 +330,15 @@ const Configuracoes = () => {
                   <div>
                     <h3 className="font-semibold">{displayName}</h3>
                     <p className="text-sm text-muted-foreground">{user?.email}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      {roles.map((r) => (
+                        <Badge key={r} variant="secondary">{ROLE_LABELS[r] ?? r}</Badge>
+                      ))}
+                      {profile?.status && (
+                        <Badge variant="outline">{STATUS_LABELS[profile.status as RegistrationStatus] ?? profile.status}</Badge>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
                       Clique na foto para alterar
                     </p>
                   </div>
@@ -326,6 +398,30 @@ const Configuracoes = () => {
                       placeholder="Seu cargo"
                     />
                   </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="cbo">CBO</Label>
+                    <Input id="cbo" value={cbo} onChange={(e) => setCbo(e.target.value)} placeholder="Código da ocupação" maxLength={10} />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="cnes">CNES (opcional)</Label>
+                    <Input id="cnes" value={cnes} onChange={(e) => setCnes(e.target.value)} placeholder="Estabelecimento onde atua" maxLength={10} />
+                  </div>
+
+                  <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor="municipio-atual">Município</Label>
+                    <Input
+                      id="municipio-atual"
+                      value={meuMunicipio ? `${meuMunicipio.municipio} – NMSD ${meuMunicipio.microregiao}` : "Não informado"}
+                      disabled
+                      className="bg-muted"
+                      aria-describedby="municipio-ajuda"
+                    />
+                    <p id="municipio-ajuda" className="text-xs text-muted-foreground">
+                      Para mudar de município, procure a coordenação do seu NMSD.
+                    </p>
+                  </div>
                 </div>
 
                 <div className="flex justify-end">
@@ -369,9 +465,9 @@ const Configuracoes = () => {
 
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label>Notificações Push</Label>
+                      <Label>Avisos no aplicativo</Label>
                       <p className="text-sm text-muted-foreground">
-                        Receber notificações no navegador
+                        Mostrar avisos no sino da plataforma
                       </p>
                     </div>
                     <Switch
@@ -435,54 +531,14 @@ const Configuracoes = () => {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center justify-between gap-4 p-4 border rounded-lg">
                     <div className="space-y-0.5">
-                      <Label className="text-base">Alterar Senha</Label>
+                      <p className="text-base font-medium">Alterar senha</p>
                       <p className="text-sm text-muted-foreground">
-                        Atualize sua senha de acesso
+                        Defina uma nova senha de acesso. Use pelo menos 8 caracteres.
                       </p>
                     </div>
-                    <Button variant="outline">Alterar</Button>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="space-y-0.5">
-                      <Label className="text-base">Autenticação em Dois Fatores</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Adicione uma camada extra de segurança
-                      </p>
-                    </div>
-                    <Button 
-                      variant="outline"
-                      onClick={() => {
-                        toast({
-                          title: "Em desenvolvimento",
-                          description: "A autenticação em dois fatores será implementada em breve.",
-                        });
-                      }}
-                    >
-                      Configurar
-                    </Button>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="space-y-0.5">
-                      <Label className="text-base">Sessões Ativas</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Gerencie dispositivos conectados
-                      </p>
-                    </div>
-                    <Button 
-                      variant="outline"
-                      onClick={() => {
-                        toast({
-                          title: "Em desenvolvimento",
-                          description: "O gerenciamento de sessões será implementado em breve.",
-                        });
-                      }}
-                    >
-                      Ver Sessões
-                    </Button>
+                    <Button variant="outline" onClick={() => setPasswordOpen(true)}>Alterar</Button>
                   </div>
                 </div>
               </CardContent>
@@ -503,28 +559,18 @@ const Configuracoes = () => {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center justify-between gap-4 p-4 border rounded-lg">
                     <div className="space-y-0.5">
-                      <Label className="text-base">Tema</Label>
+                      <Label htmlFor="tema-escuro" className="text-base">Tema escuro</Label>
                       <p className="text-sm text-muted-foreground">
-                        Escolha entre tema claro ou escuro
+                        Alterna entre o tema claro e o escuro
                       </p>
                     </div>
-                    <Button variant="outline" disabled>
-                      Em breve
-                    </Button>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="space-y-0.5">
-                      <Label className="text-base">Densidade de Interface</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Ajuste o espaçamento dos elementos
-                      </p>
-                    </div>
-                    <Button variant="outline" disabled>
-                      Em breve
-                    </Button>
+                    <Switch
+                      id="tema-escuro"
+                      checked={theme === "dark"}
+                      onCheckedChange={(v) => setTheme(v ? "dark" : "light")}
+                    />
                   </div>
                 </div>
               </CardContent>
@@ -552,6 +598,32 @@ const Configuracoes = () => {
           )}
         </Tabs>
       </div>
+
+      <Dialog open={passwordOpen} onOpenChange={setPasswordOpen}>
+        <DialogContent className="sm:max-w-[420px]">
+          <DialogHeader>
+            <DialogTitle>Alterar senha</DialogTitle>
+            <DialogDescription>Digite a nova senha duas vezes para confirmar.</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleChangePassword} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="nova-senha">Nova senha</Label>
+              <Input id="nova-senha" type="password" autoComplete="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmar-senha">Confirmar nova senha</Label>
+              <Input id="confirmar-senha" type="password" autoComplete="new-password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setPasswordOpen(false)}>Cancelar</Button>
+              <Button type="submit" disabled={isChangingPassword}>
+                {isChangingPassword && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
+                Salvar nova senha
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </MainLayout>
   );
 };
