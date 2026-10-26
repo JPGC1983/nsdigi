@@ -81,7 +81,7 @@ const NMSDTable = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
-      className="rounded-xl border border-border bg-white shadow-layered overflow-hidden h-full min-h-[200px] flex flex-col"
+      className="rounded-xl border border-border bg-card shadow-layered overflow-hidden h-full min-h-[200px] flex flex-col"
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 border-b border-border">
@@ -102,7 +102,7 @@ const NMSDTable = () => {
             placeholder="Buscar NMSD..."
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
-            className="pl-9 h-9 text-sm bg-muted/50 border-border focus:bg-white transition-colors"
+            className="pl-9 h-9 text-sm bg-muted/50 border-border focus:bg-card transition-colors"
           />
         </div>
       </div>

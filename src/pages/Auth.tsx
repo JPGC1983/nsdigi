@@ -11,6 +11,8 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff, Loader2, Mail, Lock, User, Briefcase, Phone, Shield, ShieldCheck, ShieldAlert } from "lucide-react";
 import { z } from "zod";
+import { Checkbox } from "@/components/ui/checkbox";
+import MunicipioCombobox from "@/components/shared/MunicipioCombobox";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -21,9 +23,13 @@ const signupSchema = z.object({
   fullName: z.string().min(2, "Nome deve ter no mínimo 2 caracteres").max(100, "Nome muito longo"),
   jobTitle: z.string().min(2, "Cargo deve ter no mínimo 2 caracteres"),
   phone: z.string().min(10, "Telefone inválido").max(15, "Telefone inválido"),
+  cbo: z.string().trim().min(4, "Informe o CBO (código da ocupação)").max(10, "CBO inválido"),
+  cnes: z.string().trim().max(10, "CNES inválido").optional(),
+  municipioId: z.string().uuid("Selecione seu município"),
   email: z.string().email("Email inválido"),
   password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
   confirmPassword: z.string(),
+  aceite: z.literal(true, { errorMap: () => ({ message: "É preciso aceitar o Termo de Uso e a Política de Privacidade" }) }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Senhas não conferem",
   path: ["confirmPassword"],
@@ -69,6 +75,10 @@ const Auth = () => {
   const [signupFullName, setSignupFullName] = useState("");
   const [signupJobTitle, setSignupJobTitle] = useState("");
   const [signupPhone, setSignupPhone] = useState("");
+  const [signupCbo, setSignupCbo] = useState("");
+  const [signupCnes, setSignupCnes] = useState("");
+  const [signupMunicipioId, setSignupMunicipioId] = useState<string | null>(null);
+  const [signupAceite, setSignupAceite] = useState(false);
   
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
@@ -145,9 +155,13 @@ const Auth = () => {
       fullName: signupFullName,
       jobTitle: signupJobTitle,
       phone: signupPhone.replace(/\D/g, ""),
+      cbo: signupCbo,
+      cnes: signupCnes || undefined,
+      municipioId: signupMunicipioId ?? "",
       email: signupEmail,
       password: signupPassword,
       confirmPassword: signupConfirmPassword,
+      aceite: signupAceite,
     });
     
     if (!validation.success) {
@@ -170,6 +184,12 @@ const Auth = () => {
         emailRedirectTo: redirectUrl,
         data: {
           full_name: signupFullName,
+          job_title: signupJobTitle,
+          phone: signupPhone.replace(/\D/g, ""),
+          cbo: signupCbo.trim(),
+          cnes: signupCnes.trim(),
+          municipio_id: signupMunicipioId,
+          aceite_termos: signupAceite ? "true" : "false",
         },
       },
     });
@@ -185,17 +205,13 @@ const Auth = () => {
         variant: "destructive",
       });
     } else if (data.user) {
-      // Update profile with additional fields
-      await supabase.from("profiles").update({
-        job_title: signupJobTitle,
-        phone: signupPhone.replace(/\D/g, ""),
-      }).eq("id", data.user.id);
-
       toast({
-        title: "Conta criada!",
-        description: "Cadastro realizado com sucesso. Você já pode acessar o sistema.",
+        title: "Cadastro enviado!",
+        description: data.session
+          ? "Seu cadastro foi enviado para a coordenação do NMSD. Você poderá usar a plataforma assim que for aprovado."
+          : "Confirme seu e-mail pelo link que enviamos. Depois, a coordenação do NMSD vai aprovar seu acesso.",
       });
-      navigate("/dashboard");
+      if (data.session) navigate("/dashboard");
     }
     
     setIsLoading(false);
@@ -357,7 +373,7 @@ const Auth = () => {
                       <Input
                         id="signup-phone"
                         type="tel"
-                        placeholder="(88) 99999-9999"
+                        placeholder="(31) 99999-9999"
                         className="pl-10"
                         value={signupPhone}
                         onChange={handlePhoneChange}
@@ -366,6 +382,51 @@ const Auth = () => {
                       />
                     </div>
                     {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="signup-cbo">CBO</Label>
+                      <Input
+                        id="signup-cbo"
+                        inputMode="numeric"
+                        placeholder="Ex: 223505"
+                        value={signupCbo}
+                        onChange={(e) => setSignupCbo(e.target.value)}
+                        disabled={isLoading}
+                        aria-describedby="signup-cbo-ajuda"
+                        maxLength={10}
+                      />
+                      <p id="signup-cbo-ajuda" className="text-xs text-muted-foreground">Código da sua ocupação</p>
+                      {errors.cbo && <p className="text-sm text-destructive">{errors.cbo}</p>}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="signup-cnes">CNES (opcional)</Label>
+                      <Input
+                        id="signup-cnes"
+                        inputMode="numeric"
+                        placeholder="Ex: 2123456"
+                        value={signupCnes}
+                        onChange={(e) => setSignupCnes(e.target.value)}
+                        disabled={isLoading}
+                        aria-describedby="signup-cnes-ajuda"
+                        maxLength={10}
+                      />
+                      <p id="signup-cnes-ajuda" className="text-xs text-muted-foreground">Estabelecimento onde atua</p>
+                      {errors.cnes && <p className="text-sm text-destructive">{errors.cnes}</p>}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-municipio">Município</Label>
+                    <MunicipioCombobox
+                      id="signup-municipio"
+                      value={signupMunicipioId}
+                      onChange={setSignupMunicipioId}
+                      disabled={isLoading}
+                      invalid={!!errors.municipioId}
+                    />
+                    {errors.municipioId && <p className="text-sm text-destructive">{errors.municipioId}</p>}
                   </div>
 
                   
@@ -429,6 +490,29 @@ const Auth = () => {
                     </div>
                     {errors.confirmPassword && <p className="text-sm text-destructive">{errors.confirmPassword}</p>}
                   </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-2">
+                      <Checkbox
+                        id="signup-aceite"
+                        checked={signupAceite}
+                        onCheckedChange={(v) => setSignupAceite(v === true)}
+                        disabled={isLoading}
+                        aria-invalid={!!errors.aceite || undefined}
+                      />
+                      <Label htmlFor="signup-aceite" className="text-sm font-normal leading-snug">
+                        Li e aceito o{" "}
+                        <Link to="/termo-de-uso" target="_blank" className="text-primary underline underline-offset-2">Termo de Uso</Link>
+                        {" "}e a{" "}
+                        <Link to="/politica-de-privacidade" target="_blank" className="text-primary underline underline-offset-2">Política de Privacidade</Link>.
+                      </Label>
+                    </div>
+                    {errors.aceite && <p className="text-sm text-destructive">{errors.aceite}</p>}
+                  </div>
+
+                  <p className="text-xs text-muted-foreground">
+                    Após o cadastro, a coordenação do NMSD da sua microrregião vai conferir seus dados e liberar o acesso.
+                  </p>
                   
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? (
