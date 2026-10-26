@@ -138,7 +138,13 @@ const Repositorio = () => {
           </TabsList>
 
           <TabsContent value={categoryFilter} className="mt-4">
-            {filteredMaterials.length === 0 ? (
+            {isLoading ? (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <Skeleton key={i} className="h-40 rounded-xl" />
+                ))}
+              </div>
+            ) : filteredMaterials.length === 0 ? (
               <EmptyState
                 icon={FolderOpen}
                 title={materials.length === 0 ? "Biblioteca de materiais vazia" : "Nenhum material encontrado"}
@@ -153,14 +159,16 @@ const Repositorio = () => {
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {filteredMaterials.map((material) => {
-                  const TypeIcon = typeConfig[material.type].icon;
+                  const cfg = typeConfig[material.material_type] ?? typeConfig.manual;
+                  const TypeIcon = cfg.icon;
+                  const isLink = !material.file_path;
                   return (
                     <div
                       key={material.id}
                       className="rounded-xl border border-border bg-card p-5 shadow-card hover:shadow-md transition-all group"
                     >
                       <div className="flex items-start gap-4">
-                        <div className={`h-12 w-12 rounded-lg ${typeConfig[material.type].className} flex items-center justify-center flex-shrink-0`}>
+                        <div className={`h-12 w-12 rounded-lg ${cfg.className} flex items-center justify-center flex-shrink-0`}>
                           <TypeIcon className="h-6 w-6" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -168,11 +176,15 @@ const Repositorio = () => {
                             <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
                               {material.title}
                             </h3>
-                            <Badge variant="outline" className="text-xs flex-shrink-0">
-                              {material.category}
-                            </Badge>
+                            {material.category && (
+                              <Badge variant="outline" className="text-xs flex-shrink-0">
+                                {material.category}
+                              </Badge>
+                            )}
                           </div>
-                          <p className="text-sm text-muted-foreground mb-3">{material.description}</p>
+                          {material.description && (
+                            <p className="text-sm text-muted-foreground mb-3 line-clamp-3">{material.description}</p>
+                          )}
                           <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-4">
                             <span className="flex items-center gap-1">
                               <User className="h-3 w-3" />
@@ -180,22 +192,31 @@ const Repositorio = () => {
                             </span>
                             <span className="flex items-center gap-1">
                               <Clock className="h-3 w-3" />
-                              {new Date(material.updatedAt).toLocaleDateString("pt-BR")}
+                              {new Date(material.updated_at).toLocaleDateString("pt-BR")}
                             </span>
                             <span className="flex items-center gap-1">
                               <Download className="h-3 w-3" />
-                              {material.downloads} {material.downloads === 1 ? "download" : "downloads"}
+                              {material.downloads} {material.downloads === 1 ? "acesso" : "acessos"}
                             </span>
                           </div>
                           <div className="flex gap-2">
-                            <Button variant="outline" size="sm" className="gap-1">
-                              <Eye className="h-4 w-4" />
-                              Visualizar
-                            </Button>
-                            <Button size="sm" className="gap-1">
-                              <Download className="h-4 w-4" />
-                              Download
-                            </Button>
+                            {isLink ? (
+                              <Button size="sm" className="gap-1" onClick={() => openMaterial(material, true)}>
+                                <ExternalLink className="h-4 w-4" />
+                                Abrir link
+                              </Button>
+                            ) : (
+                              <>
+                                <Button variant="outline" size="sm" className="gap-1" onClick={() => openMaterial(material, false)}>
+                                  <Eye className="h-4 w-4" />
+                                  Visualizar
+                                </Button>
+                                <Button size="sm" className="gap-1" onClick={() => openMaterial(material, true)}>
+                                  <Download className="h-4 w-4" />
+                                  Baixar
+                                </Button>
+                              </>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -211,7 +232,7 @@ const Repositorio = () => {
       <AddMaterialModal
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
-        onAdd={handleAddMaterial}
+        onAdd={addMaterial}
       />
     </MainLayout>
   );
