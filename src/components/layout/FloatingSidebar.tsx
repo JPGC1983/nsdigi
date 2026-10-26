@@ -12,8 +12,11 @@ import {
   ChevronLeft,
   Activity,
   UserCheck,
+  ClipboardCheck,
   X,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { canReviewRegistrations } from "@/lib/permissions";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -51,6 +54,10 @@ const overlayVariants = {
 
 const FloatingSidebar = ({ isOpen, onClose }: FloatingSidebarProps) => {
   const location = useLocation();
+  const { roles } = useAuth();
+  const items = canReviewRegistrations(roles)
+    ? [...navItems, { icon: ClipboardCheck, label: "Aprovações", path: "/aprovacoes" }]
+    : navItems;
 
   return (
     <>
@@ -106,9 +113,9 @@ const FloatingSidebar = ({ isOpen, onClose }: FloatingSidebarProps) => {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 overflow-y-auto py-6 px-3">
+          <nav aria-label="Menu principal" className="flex-1 overflow-y-auto py-6 px-3">
             <div className="space-y-1">
-              {navItems.map((item, index) => {
+              {items.map((item, index) => {
                 const isActive = location.pathname === item.path || 
                   (item.path !== "/" && location.pathname.startsWith(item.path));
                 return (

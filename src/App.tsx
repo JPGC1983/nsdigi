@@ -25,6 +25,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} storageKey="nmsd-tema">
     <AuthProvider>
       <TooltipProvider>
         <Toaster />
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/indicadores" element={<Indicadores />} />
             <Route path="/governanca" element={<Governanca />} />
             <Route path="/configuracoes" element={<Configuracoes />} />
+            <Route path="/aprovacoes" element={<Aprovacoes />} />
             <Route path="/termo-de-uso" element={<DocumentoInstitucional titulo="Termo de Uso" />} />
             <Route path="/politica-de-privacidade" element={<DocumentoInstitucional titulo="Política de Privacidade" />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -52,6 +54,7 @@ const App = () => (
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
