@@ -81,7 +81,7 @@ const Repositorio = () => {
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
           {Object.entries(typeConfig).map(([key, config]) => {
             const Icon = config.icon;
-            const count = materials.filter((m) => m.type === key).length;
+            const count = materials.filter((m) => m.material_type === key).length;
             return (
               <div key={key} className="rounded-lg border border-border bg-card p-4">
                 <div className="flex items-center gap-2 mb-2">
