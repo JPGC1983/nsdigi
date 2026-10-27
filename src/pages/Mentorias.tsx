@@ -11,6 +11,7 @@ import {
   BookOpen
 } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
+import PageHeader from "@/components/shared/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -104,29 +105,28 @@ const Mentorias = () => {
   return (
     <MainLayout>
       <div className="space-y-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold">Mentorias</h1>
-            <p className="text-muted-foreground">
-              Conecte-se com especialistas e desenvolva suas habilidades
-            </p>
-          </div>
-          <div className="flex gap-2">
-            {!myMentorProfile && (
-              <Button variant="outline" onClick={() => setShowBecomeMentor(true)}>
-                <GraduationCap className="h-4 w-4 mr-2" />
-                Tornar-se Mentor
-              </Button>
-            )}
-            {!myMenteeProfile && (
-              <Button onClick={() => setShowBecomeMentee(true)}>
-                <UserPlus className="h-4 w-4 mr-2" />
-                Buscar Mentor
-              </Button>
-            )}
-          </div>
-        </div>
+        <PageHeader
+          title="Mentorias"
+          description="Conecte-se com especialistas e desenvolva suas habilidades"
+          breadcrumbs={[{ label: "Mentorias" }]}
+          actions={
+            <>
+              {!myMentorProfile && (
+                <Button variant="outline" onClick={() => setShowBecomeMentor(true)}>
+                  <GraduationCap className="h-4 w-4 mr-2" aria-hidden="true" />
+                  Tornar-se Mentor
+                </Button>
+              )}
+              {!myMenteeProfile && (
+                <Button onClick={() => setShowBecomeMentee(true)}>
+                  <UserPlus className="h-4 w-4 mr-2" aria-hidden="true" />
+                  Buscar Mentor
+                </Button>
+              )}
+            </>
+          }
+        />
+
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
