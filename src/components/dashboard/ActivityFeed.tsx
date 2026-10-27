@@ -1,20 +1,11 @@
-import { MessageSquare, GraduationCap, FileText, Users, Mail } from "lucide-react";
+import { MessageSquare, GraduationCap, FileText, Users, Inbox } from "lucide-react";
 import { motion } from "framer-motion";
+import { formatDistanceToNow, parseISO } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
-
-interface Activity {
-  id: string;
-  type: "forum" | "course" | "document" | "meeting";
-  title: string;
-  description: string;
-  time: string;
-  user?: string;
-  link: string;
-}
-
-// Empty activities - will be populated from backend
-const activities: Activity[] = [];
+import { Skeleton } from "@/components/ui/skeleton";
+import type { DashboardActivity } from "@/hooks/useDashboardSummary";
 
 const iconMap = {
   forum: MessageSquare,
@@ -30,110 +21,93 @@ const colorMap = {
   meeting: "bg-warning/10 text-warning",
 };
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.4,
-    },
-  },
+interface ActivityFeedProps {
+  activities: DashboardActivity[];
+  isLoading?: boolean;
+}
+
+const tempoRelativo = (iso: string) => {
+  try {
+    return formatDistanceToNow(parseISO(iso), { addSuffix: true, locale: ptBR });
+  } catch {
+    return "";
+  }
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-  },
-};
-
-const ActivityFeed = () => {
+const ActivityFeed = ({ activities, isLoading = false }: ActivityFeedProps) => {
   const navigate = useNavigate();
 
-  const handleActivityClick = (link: string) => {
-    navigate(link);
-  };
-
-  const handleViewAll = () => {
-    navigate("/foruns");
-  };
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.4 }}
-      className="rounded-xl border border-border bg-white p-6 shadow-layered h-full min-h-[200px] flex flex-col"
+    <section
+      aria-labelledby="atividades-recentes-titulo"
+      className="rounded-xl border border-border bg-card p-6 shadow-layered h-full min-h-[200px] flex flex-col"
     >
       <div className="flex items-center justify-between mb-5">
-        <h3 className="font-semibold text-foreground text-base">Atividades Recentes</h3>
-        <button
-          onClick={handleViewAll}
-          className="text-xs text-primary font-medium hover:underline transition-all"
-        >
-          Ver todas
-        </button>
+        <h3 id="atividades-recentes-titulo" className="font-semibold text-foreground text-base">
+          Atividades Recentes
+        </h3>
       </div>
-      
-      {activities.length === 0 ? (
+
+      {isLoading ? (
+        <div className="space-y-3" aria-busy="true" aria-label="Carregando atividades">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="flex items-center gap-3">
+              <Skeleton className="h-8 w-8 rounded-lg" />
+              <div className="flex-1 space-y-1.5">
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-3 w-1/2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : activities.length === 0 ? (
         <div className="flex flex-col items-center justify-center flex-1 text-center py-6">
           <div className="h-14 w-14 rounded-full bg-muted flex items-center justify-center mb-3">
-            <Mail className="h-6 w-6 text-muted-foreground/40" />
+            <Inbox className="h-6 w-6 text-muted-foreground/40" aria-hidden="true" />
           </div>
           <p className="text-sm text-muted-foreground mb-1">Nenhuma atividade recente</p>
           <p className="text-xs text-muted-foreground/60">
-            As atividades aparecerão aqui
+            Novos cursos, materiais, discussões e reuniões aparecerão aqui
           </p>
         </div>
       ) : (
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          {activities.map((activity) => {
+        <ul className="space-y-1">
+          {activities.map((activity, index) => {
             const Icon = iconMap[activity.type];
             return (
-              <motion.div
+              <motion.li
                 key={activity.id}
-                variants={itemVariants}
-                whileHover={{ 
-                  x: 4,
-                  transition: { duration: 0.2 }
-                }}
-                onClick={() => handleActivityClick(activity.link)}
-                className="flex items-start gap-3 group cursor-pointer p-2 -mx-2 rounded-lg hover:bg-muted/50 transition-colors"
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.05 }}
               >
-                <motion.div 
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className={cn(
-                    "h-8 w-8 rounded-lg flex items-center justify-center flex-shrink-0",
-                    colorMap[activity.type]
-                  )}
+                <button
+                  type="button"
+                  onClick={() => navigate(activity.link)}
+                  className="w-full text-left flex items-start gap-3 group p-2 rounded-lg hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
                 >
-                  <Icon className="h-4 w-4" />
-                </motion.div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                    {activity.title}
-                  </p>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {activity.description}
-                  </p>
-                  <p className="text-xs text-muted-foreground/60 mt-0.5">
-                    {activity.time}
-                    {activity.user && ` • ${activity.user}`}
-                  </p>
-                </div>
-              </motion.div>
+                  <div
+                    className={cn(
+                      "h-8 w-8 rounded-lg flex items-center justify-center flex-shrink-0",
+                      colorMap[activity.type]
+                    )}
+                  >
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                      {activity.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground truncate">{activity.description}</p>
+                    <p className="text-xs text-muted-foreground/70 mt-0.5">{tempoRelativo(activity.createdAt)}</p>
+                  </div>
+                </button>
+              </motion.li>
             );
           })}
-        </motion.div>
+        </ul>
       )}
-    </motion.div>
+    </section>
   );
 };
 
