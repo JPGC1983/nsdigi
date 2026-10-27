@@ -20,6 +20,7 @@ import OnboardingOverlay from "@/components/onboarding/OnboardingOverlay";
 import { useOnboarding } from "@/hooks/useOnboarding";
 import { useAuth } from "@/hooks/useAuth";
 import { useNucleosMicrorregionais } from "@/hooks/useNucleosMicrorregionais";
+import { useDashboardSummary } from "@/hooks/useDashboardSummary";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -42,7 +43,8 @@ const itemVariants = {
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const { nucleos, stats } = useNucleosMicrorregionais();
+  const { stats } = useNucleosMicrorregionais();
+  const { summary, isLoading: summaryLoading } = useDashboardSummary();
   const {
     isActive,
     hasCompleted,
@@ -94,22 +96,22 @@ const Dashboard = () => {
           />
           <MetricCard
             title="Profissionais"
-            value={0}
-            subtitle="em formação"
+            value={summary.profissionais}
+            subtitle="com cadastro ativo"
             icon={Users}
             delay={0.15}
           />
           <MetricCard
             title="Cursos Disponíveis"
-            value={0}
-            subtitle="trilhas formativas"
+            value={summary.cursos}
+            subtitle={`${summary.trilhas} ${summary.trilhas === 1 ? "trilha formativa" : "trilhas formativas"}`}
             icon={GraduationCap}
             delay={0.2}
           />
           <MetricCard
             title="Discussões Ativas"
-            value={0}
-            subtitle="fóruns temáticos"
+            value={summary.discussoesAtivas}
+            subtitle="tópicos em aberto nos fóruns"
             icon={MessageSquare}
             delay={0.25}
           />
@@ -162,7 +164,7 @@ const Dashboard = () => {
           {/* Próximas reuniões + Atividades - 1/3 */}
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
             <UpcomingMeetings />
-            <ActivityFeed />
+            <ActivityFeed activities={summary.atividades} isLoading={summaryLoading} />
           </motion.div>
         </div>
       </motion.div>
