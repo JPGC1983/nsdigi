@@ -51,17 +51,7 @@ interface SearchFilters {
 
 const RECENT_SEARCHES_KEY = "nmsd_recent_searches";
 const MAX_RECENT_SEARCHES = 5;
-
-// Mock search results - in production, this would query the database
-const mockSearchResults: SearchResult[] = [
-  { id: "1", type: "curso", title: "e-SUS AB - Módulo Básico", description: "Capacitação inicial para o sistema e-SUS Atenção Básica", url: "/educacao" },
-  { id: "2", type: "curso", title: "e-SUS Regulação Avançado", description: "Módulo avançado de regulação", url: "/educacao" },
-  { id: "3", type: "trilha", title: "Trilha de Informatização", description: "Percurso completo de informatização", url: "/educacao" },
-  { id: "4", type: "material", title: "Manual do e-SUS AB v5.3", description: "Documentação oficial", url: "/repositorio" },
-  { id: "5", type: "forum", title: "Dúvidas sobre CDS", description: "Coleta de Dados Simplificada", url: "/foruns" },
-  { id: "6", type: "documento", title: "Portaria GM/MS 1.434/2020", description: "Legislação do e-SUS", url: "/governanca" },
-  { id: "7", type: "municipio", title: "Belo Horizonte", description: "Capital de Minas Gerais", url: "/municipios" },
-];
+const PER_TYPE = 5;
 
 const typeIcons: Record<SearchResult["type"], typeof BookOpen> = {
   curso: BookOpen,
@@ -81,13 +71,79 @@ const typeLabels: Record<SearchResult["type"], string> = {
   municipio: "Município",
 };
 
+const groupLabels: Record<SearchResult["type"], string> = {
+  curso: "Cursos",
+  trilha: "Trilhas",
+  material: "Materiais",
+  forum: "Fóruns e discussões",
+  documento: "Documentos",
+  municipio: "Municípios",
+};
+
 const typeColors: Record<SearchResult["type"], string> = {
-  curso: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
-  trilha: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
-  material: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-  forum: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-  documento: "bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400",
-  municipio: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400",
+  curso: "bg-primary/10 text-primary",
+  trilha: "bg-secondary/10 text-secondary",
+  material: "bg-info/10 text-info",
+  forum: "bg-success/10 text-success",
+  documento: "bg-muted text-muted-foreground",
+  municipio: "bg-accent/10 text-accent",
+};
+
+/** Escapa curingas do ILIKE para que o texto digitado seja buscado literalmente. */
+const likePattern = (q: string) => `%${q.replace(/[\\%_]/g, (c) => `\\${c}`)}%`;
+
+const runSearch = async (q: string, filters: SearchFilters): Promise<SearchResult[]> => {
+  const pattern = likePattern(q);
+  const tasks: Promise<SearchResult[]>[] = [];
+
+  if (filters.cursos) {
+    tasks.push(
+      supabase.from("courses").select("id, title, description").ilike("title", pattern).limit(PER_TYPE)
+        .then(({ data }) => (data || []).map((c) => ({ id: `curso-${c.id}`, type: "curso" as const, title: c.title, description: c.description || undefined, url: "/educacao" })))
+    );
+  }
+  if (filters.trilhas) {
+    tasks.push(
+      supabase.from("trails").select("id, title, description").ilike("title", pattern).limit(PER_TYPE)
+        .then(({ data }) => (data || []).map((t) => ({ id: `trilha-${t.id}`, type: "trilha" as const, title: t.title, description: t.description || undefined, url: "/educacao?aba=trilhas" })))
+    );
+  }
+  if (filters.materiais) {
+    tasks.push(
+      supabase.from("materials").select("id, title, description").ilike("title", pattern).limit(PER_TYPE)
+        .then(({ data }) => (data || []).map((m) => ({ id: `material-${m.id}`, type: "material" as const, title: m.title, description: m.description || undefined, url: "/repositorio" })))
+    );
+  }
+  if (filters.foruns) {
+    tasks.push(
+      supabase.from("forums").select("id, name, slug, description").ilike("name", pattern).limit(PER_TYPE)
+        .then(({ data }) => (data || []).map((f) => ({ id: `forum-${f.id}`, type: "forum" as const, title: f.name, description: f.description || undefined, url: `/foruns/${f.slug}` })))
+    );
+    tasks.push(
+      supabase.from("forum_topics").select("id, title, forums(slug, name)").ilike("title", pattern).limit(PER_TYPE)
+        .then(({ data }) => (data || []).map((t) => {
+          const forum = t.forums as { slug: string; name: string } | null;
+          return { id: `topico-${t.id}`, type: "forum" as const, title: t.title, description: forum ? `Discussão em ${forum.name}` : undefined, url: forum ? `/foruns/${forum.slug}/topico/${t.id}` : "/foruns" };
+        }))
+    );
+  }
+  if (filters.documentos) {
+    tasks.push(
+      supabase.from("governance_documents").select("id, name, description").ilike("name", pattern).limit(PER_TYPE)
+        .then(({ data }) => (data || []).map((d) => ({ id: `doc-${d.id}`, type: "documento" as const, title: d.name, description: d.description || undefined, url: "/governanca" })))
+    );
+  }
+  if (filters.municipios) {
+    tasks.push(
+      supabase.rpc("list_municipios_safe", { search_term: q, status_filter: null, microregiao_filter: null, urs_filter: null, macrorregiao_filter: null })
+        .then(({ data }) => ((data || []) as { id: string; municipio: string; microregiao: string }[]).slice(0, PER_TYPE).map((m) => ({
+          id: `municipio-${m.id}`, type: "municipio" as const, title: m.municipio, description: `NMSD ${m.microregiao}`, url: `/municipios?microrregiao=${encodeURIComponent(m.microregiao)}`,
+        })))
+    );
+  }
+
+  const settled = await Promise.allSettled(tasks);
+  return settled.flatMap((r) => (r.status === "fulfilled" ? r.value : []));
 };
 
 interface GlobalSearchCommandProps {
@@ -99,6 +155,7 @@ const GlobalSearchCommand = ({ open, onOpenChange }: GlobalSearchCommandProps) =
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [filters, setFilters] = useState<SearchFilters>({
     cursos: true,
@@ -115,41 +172,33 @@ const GlobalSearchCommand = ({ open, onOpenChange }: GlobalSearchCommandProps) =
     if (stored) {
       try {
         setRecentSearches(JSON.parse(stored));
-      } catch (e) {
-        console.error("Failed to parse recent searches:", e);
+      } catch {
+        localStorage.removeItem(RECENT_SEARCHES_KEY);
       }
     }
   }, []);
 
-  // Filter and search
+  // Busca real (com pequena espera para não consultar a cada tecla)
   useEffect(() => {
-    if (query.length < 2) {
+    const q = query.trim();
+    if (q.length < 2) {
       setResults([]);
+      setIsSearching(false);
       return;
     }
-
-    const lowerQuery = query.toLowerCase();
-    const filtered = mockSearchResults.filter((item) => {
-      // Check type filter
-      const typeFilterMap: Record<SearchResult["type"], keyof SearchFilters> = {
-        curso: "cursos",
-        trilha: "trilhas",
-        material: "materiais",
-        forum: "foruns",
-        documento: "documentos",
-        municipio: "municipios",
-      };
-      
-      if (!filters[typeFilterMap[item.type]]) return false;
-
-      // Check text match
-      return (
-        item.title.toLowerCase().includes(lowerQuery) ||
-        item.description?.toLowerCase().includes(lowerQuery)
-      );
-    });
-
-    setResults(filtered);
+    let cancelled = false;
+    setIsSearching(true);
+    const timer = setTimeout(async () => {
+      const found = await runSearch(q, filters);
+      if (!cancelled) {
+        setResults(found);
+        setIsSearching(false);
+      }
+    }, 300);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [query, filters]);
 
   const saveRecentSearch = useCallback((searchTerm: string) => {
