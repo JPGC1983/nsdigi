@@ -21,7 +21,7 @@ const MetricCard = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay, ease: "easeOut" }}
-      className="relative overflow-hidden rounded-xl bg-white p-6 shadow-layered hover-lift card-accent-top cursor-default"
+      className="relative overflow-hidden rounded-xl bg-card p-6 shadow-layered hover-lift card-accent-top cursor-default"
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">

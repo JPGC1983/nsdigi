@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { GraduationCap, Clock, Users, BookOpen, Play, ChevronRight, Filter, Loader2, Plus } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/shared/PageHeader";
@@ -32,10 +33,20 @@ const formatConfig = {
   hibrido: { label: "Híbrido", className: "bg-secondary/10 text-secondary" },
 };
 
+const ABA_PARA_TAB: Record<string, string> = { "meus-cursos": "meus", trilhas: "trilhas", cursos: "cursos" };
+const TAB_PARA_ABA: Record<string, string> = { meus: "meus-cursos", trilhas: "trilhas", cursos: "cursos" };
+
 const Educacao = () => {
   const { user, roles } = useAuth();
   const canManage = !!user && canManageEducation(roles);
-  const [activeTab, setActiveTab] = useState("cursos");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = ABA_PARA_TAB[searchParams.get("aba") || ""] || "cursos";
+  const setActiveTab = (tab: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (tab === "cursos") params.delete("aba");
+    else params.set("aba", TAB_PARA_ABA[tab] || tab);
+    setSearchParams(params, { replace: true });
+  };
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTrilhaModalOpen, setIsTrilhaModalOpen] = useState(false);

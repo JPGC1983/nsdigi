@@ -154,8 +154,17 @@ const NMSDTable = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    className="group hover:bg-muted/30 transition-colors cursor-pointer"
-                    onClick={() => navigate("/municipios")}
+                    className="group hover:bg-muted/30 transition-colors cursor-pointer focus-visible:outline-none focus-visible:bg-muted/40"
+                    tabIndex={0}
+                    role="link"
+                    aria-label={`Ver municípios do NMSD ${nmsd.microregiao}`}
+                    onClick={() => navigate(`/municipios?microrregiao=${encodeURIComponent(nmsd.microregiao)}`)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        navigate(`/municipios?microrregiao=${encodeURIComponent(nmsd.microregiao)}`);
+                      }
+                    }}
                   >
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">

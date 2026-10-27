@@ -22,6 +22,13 @@
       "when": 1793024829601,
       "tag": "0002_materiais_e_colegiado",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793098368053,
+      "tag": "0003_dashboard_counts",
+      "breakpoints": true
     }
   ]
 }

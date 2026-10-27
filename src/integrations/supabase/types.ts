@@ -2016,6 +2016,7 @@ export type Database = {
         Args: { _nmsd_id: string; _user_id: string }
         Returns: boolean
       }
+      count_active_professionals: { Args: never; Returns: number }
       get_municipio_full: { Args: { municipio_id: string }; Returns: Json }
       get_municipios_filter_options: { Args: never; Returns: Json }
       get_profile_public: {
