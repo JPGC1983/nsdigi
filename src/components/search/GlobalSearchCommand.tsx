@@ -95,7 +95,7 @@ const likePattern = (q: string) => `%${q.replace(/[\\%_]/g, (c) => `\\${c}`)}%`;
 
 const runSearch = async (q: string, filters: SearchFilters): Promise<SearchResult[]> => {
   const pattern = likePattern(q);
-  const tasks: Promise<SearchResult[]>[] = [];
+  const tasks: PromiseLike<SearchResult[]>[] = [];
 
   if (filters.cursos) {
     tasks.push(
@@ -345,7 +345,7 @@ const GlobalSearchCommand = ({ open, onOpenChange }: GlobalSearchCommandProps) =
         )}
 
         {/* Search results grouped by type */}
-        {query.length >= 2 && results.length > 0 && (
+        {query.trim().length >= 2 && results.length > 0 && (
           <>
             {(["curso", "trilha", "material", "forum", "documento", "municipio"] as const).map((type) => {
               const typeResults = results.filter(r => r.type === type);
@@ -354,7 +354,7 @@ const GlobalSearchCommand = ({ open, onOpenChange }: GlobalSearchCommandProps) =
               const Icon = typeIcons[type];
               
               return (
-                <CommandGroup key={type} heading={typeLabels[type] + "s"}>
+                <CommandGroup key={type} heading={groupLabels[type]}>
                   {typeResults.map((result) => (
                     <CommandItem
                       key={result.id}
