@@ -31,6 +31,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SearchResult {
   id: string;
@@ -308,9 +309,11 @@ const GlobalSearchCommand = ({ open, onOpenChange }: GlobalSearchCommandProps) =
       
       <CommandList>
         <CommandEmpty>
-          {query.length < 2 
-            ? "Digite pelo menos 2 caracteres para buscar..." 
-            : "Nenhum resultado encontrado."}
+          {query.trim().length < 2
+            ? "Digite pelo menos 2 caracteres para buscar..."
+            : isSearching
+              ? "Buscando..."
+              : "Nenhum resultado encontrado."}
         </CommandEmpty>
 
         {/* Recent searches */}
@@ -416,14 +419,7 @@ const GlobalSearchCommand = ({ open, onOpenChange }: GlobalSearchCommandProps) =
           <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px]">esc</kbd>
           <span>fechar</span>
         </div>
-        <Button 
-          variant="link" 
-          size="sm" 
-          className="h-auto p-0 text-xs"
-          onClick={() => { navigate("/busca-avancada"); onOpenChange(false); }}
-        >
-          Busca Avançada →
-        </Button>
+        <span className="hidden sm:inline">Mostra apenas o que seu território permite ver</span>
       </div>
     </CommandDialog>
   );
