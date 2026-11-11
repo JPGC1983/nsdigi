@@ -9,7 +9,7 @@ export const ROLE_LABELS: Record<AppRole, string> = {
   moderador: "Moderador",
   ponto_focal: "Ponto focal",
   coordenador: "Coordenador do NMSD",
-  admin: "Admin URS/SES",
+  admin: "Super Administrador",
 };
 
 export const ROLE_DESCRIPTIONS: Record<AppRole, string> = {
@@ -17,7 +17,7 @@ export const ROLE_DESCRIPTIONS: Record<AppRole, string> = {
   moderador: "Tudo do profissional, mais moderar fóruns e publicar no repositório do seu domínio.",
   ponto_focal: "Tudo do profissional, mais acompanhar profissionais e maturidade do seu município e participar do colegiado.",
   coordenador: "Gerencia o NMSD: cursos, fóruns, repositório, mentorias, colegiado, indicadores e aprovações.",
-  admin: "Visão de todos os NMSDs, publica conteúdo estadual, consolida indicadores e aprova coordenadores.",
+  admin: "Acesso total à plataforma, sem vínculo territorial: vê e altera todos os NMSDs e municípios, publica para todo o estado e aprova qualquer perfil.",
 };
 
 const ROLE_ORDER: AppRole[] = ["admin", "coordenador", "ponto_focal", "moderador", "membro"];

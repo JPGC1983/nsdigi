@@ -101,7 +101,7 @@ const Aprovacoes = () => {
   if (!allowed) {
     return (
       <MainLayout>
-        <NoPermission message="A aprovação de cadastros é feita pela coordenação do NMSD e pelo Admin URS/SES." />
+        <NoPermission message="A aprovação de cadastros é feita pela coordenação do NMSD e pelo Super Administrador." />
       </MainLayout>
     );
   }
@@ -125,7 +125,7 @@ const Aprovacoes = () => {
           <div className="flex items-start gap-3 rounded-lg border border-warning/30 bg-warning/10 p-4 text-sm" role="status">
             <Info className="h-5 w-5 text-warning shrink-0" aria-hidden="true" />
             <p className="text-foreground">
-              Seu perfil de coordenador ainda não está vinculado a um NMSD. Peça ao Admin URS/SES para vincular seu núcleo;
+              Seu perfil de coordenador ainda não está vinculado a um NMSD. Peça ao Super Administrador para vincular seu núcleo;
               até lá, nenhum cadastro aparecerá aqui.
             </p>
           </div>

@@ -8,7 +8,13 @@ export const useContentScope = () => {
   const { roles } = useAuth();
   const { territoryProfile } = useUserTerritory();
   const getScopeFields = useCallback(
-    (): ScopeFields => defaultScopeFor(roles, territoryProfile ?? null),
+    (): ScopeFields => {
+      const scope = defaultScopeFor(roles, territoryProfile ?? null);
+      if (!scope) {
+        throw new Error("Seu perfil ainda não tem território (município ou NMSD) definido. Peça ao Super Administrador para vincular.");
+      }
+      return scope;
+    },
     [roles, territoryProfile],
   );
   return { getScopeFields };

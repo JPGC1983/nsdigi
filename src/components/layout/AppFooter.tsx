@@ -13,7 +13,10 @@ const AppFooter = ({ className }: AppFooterProps) => {
         className
       )}
     >
-      <p>NMSD – Saúde Digital Minas Gerais</p>
+      <div className="text-center sm:text-left">
+        <p>NMSD – Núcleo Microrregional de Saúde Digital · Minas Gerais</p>
+        <p>Concepção e desenvolvimento da plataforma e do projeto: João Paulo Gomes de Carvalho</p>
+      </div>
       <nav aria-label="Links institucionais" className="flex items-center gap-4">
         <Link
           to="/termo-de-uso"
