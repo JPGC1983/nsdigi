@@ -21,10 +21,12 @@ export interface ScopeFields {
  * Admin e equipe estadual publicam para todos; demais publicam para o próprio território.
  * O banco confere a mesma regra (user_can_manage_content) — isto só evita gravações recusadas.
  */
-export const defaultScopeFor = (roles: AppRole[], territory: TerritoryLike | null | undefined): ScopeFields => {
+export const defaultScopeFor = (roles: AppRole[], territory: TerritoryLike | null | undefined): ScopeFields | null => {
   const global: ScopeFields = { escopo: "global", urs: null, microregiao: null, municipio_id: null };
+  // Super Administrador: não precisa de vínculo territorial.
   if (roles.includes("admin")) return global;
-  if (!territory) return global;
+  // Sem território definido: nega por padrão.
+  if (!territory) return null;
 
   switch (territory.perfil_territorio) {
     case "estado_nsdigi":
@@ -46,7 +48,7 @@ export const defaultScopeFor = (roles: AppRole[], territory: TerritoryLike | nul
         municipio_id: territory.municipio_id ?? null,
       };
     default:
-      return global;
+      return null;
   }
 };
 
