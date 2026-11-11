@@ -3,14 +3,14 @@
 - [x] Prompt 1 — Correções imediatas
 - [x] Prompt 2 — Cadastro, perfis e permissões (ampliando os perfis existentes)
 - [ ] Revisão sistemática de navegação e funcionalidades (out/2026)
-  - [ ] Menu lateral: fechado no celular, recolher no computador sem espaço vazio
-  - [ ] Cabeçalho: itens sem ação, página 404 em português, voltar ao topo ao trocar de página
-  - [ ] Busca global com dados reais (remover resultados fictícios e link quebrado)
-  - [ ] Dashboard com contagens e atividades reais; linha do NMSD abre municípios filtrados
-  - [ ] Municípios paginados
+  - [x] Menu lateral: fechado no celular, recolher no computador sem espaço vazio
+  - [x] Cabeçalho: itens sem ação, página 404 em português, voltar ao topo ao trocar de página
+  - [x] Busca global com dados reais (remover resultados fictícios e link quebrado)
+  - [x] Dashboard com contagens e atividades reais; linha do NMSD abre municípios filtrados
+  - [x] Municípios paginados
   - [ ] Repositório gravando materiais (arquivo privado + link)
   - [ ] Governança gravando membros e reuniões do colegiado; download de documentos por link temporário
-  - [ ] Alcance territorial padrão ao gravar conteúdo (coordenador consegue salvar)
+  - [x] Alcance territorial padrão ao gravar conteúdo (coordenador consegue salvar)
 - [ ] Prompt 3 — Municípios e maturidade digital
 - [ ] Prompt 4 — Educação
 - [ ] Prompt 5 — Fóruns
@@ -22,3 +22,4 @@
 - [ ] Prompt 11 — LGPD, acessibilidade, avisos e qualidade (inclui texto real de Termo de Uso e Política de Privacidade)
 - [ ] Prompt 12 — Conteúdo inicial e modelos
 - [ ] Prompt 13 — Integrações
+  - [x] Arquivos anexados herdam o território do conteúdo
